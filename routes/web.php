@@ -27,6 +27,12 @@ Route::middleware([
     })->name('dashboard');
     Route::resource('programas', \App\Http\Controllers\ProgramaController::class);
     Route::resource('fichas', \App\Http\Controllers\FichaController::class);
-    Route::resource('aprendizs', \App\Http\Controllers\AprendizController::class);
     Route::resource('instructors', \App\Http\Controllers\InstructorController::class);
+    Route::resource('aprendizs', \App\Http\Controllers\AprendizController::class);
+    Route::resource('solicitudComites', \App\Http\Controllers\SolicitudComiteController::class);
+    Route::resource('comites', \App\Http\Controllers\ComiteController::class);
+    Route::resource('pruebas', \App\Http\Controllers\PruebaController::class);
+    Route::resource('capitulos', \App\Http\Controllers\CapituloController::class);
+    Route::resource('articulos', \App\Http\Controllers\ArticuloController::class);
+    Route::resource('numerals', \App\Http\Controllers\NumeralController::class);
 });

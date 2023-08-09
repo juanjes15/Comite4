@@ -20,7 +20,10 @@ class FichaController extends Controller
         $programaIds = $fichas->pluck('pro_id')->unique();
         // Obtener solo los programas relacionados con las fichas consultadas
         $programas = Programa::whereIn('id', $programaIds)->get();
-        $instructors = Instructor::all();
+        // Obtener los IDs únicos de los programas relacionados con las fichas consultadas
+        $instructorIds = $fichas->pluck('ins_id')->unique();
+        // Obtener solo los programas relacionados con las fichas consultadas
+        $instructors = Instructor::whereIn('id', $instructorIds)->get();
         return view('fichas.index', compact('fichas', 'programas', 'instructors'))->with('i', (request()->input('page', 1) - 1) * 5);
     }
 
@@ -29,8 +32,6 @@ class FichaController extends Controller
      */
     public function create()
     {
-        $this->authorize('administrar fichas');
-
         $programas = Programa::all();
         return view('fichas.create', compact('programas'));
     }
@@ -40,8 +41,6 @@ class FichaController extends Controller
      */
     public function store(StoreFichaRequest $request)
     {
-        $this->authorize('administrar fichas');
-
         Ficha::create($request->validated());
         return redirect()->route('fichas.index');
     }
@@ -59,8 +58,6 @@ class FichaController extends Controller
      */
     public function edit(Ficha $ficha)
     {
-        $this->authorize('administrar fichas');
-
         $programas = Programa::all();
         return view('fichas.edit', compact('ficha', 'programas'));
     }
@@ -70,8 +67,6 @@ class FichaController extends Controller
      */
     public function update(UpdateFichaRequest $request, Ficha $ficha)
     {
-        $this->authorize('administrar fichas');
-
         $ficha->update($request->validated());
         return redirect()->route('fichas.index');
     }
@@ -81,8 +76,6 @@ class FichaController extends Controller
      */
     public function destroy(Ficha $ficha)
     {
-        $this->authorize('administrar fichas');
-
         $ficha->delete();
         return redirect()->route('fichas.index');
     }

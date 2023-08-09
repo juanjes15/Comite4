@@ -19,7 +19,7 @@ return new class extends Migration {
             $table->date('fic_finProductiva');
             $table->string('fic_modalidad');
             $table->string('fic_jornada');
-            $table->id('apr_idVocero')->nullable();
+            $table->unsignedBigInteger('apr_idVocero')->nullable();
             $table->unsignedBigInteger('pro_id');
             $table->unsignedBigInteger('ins_id');
             $table->foreign('pro_id')->references('id')->on('programas');
