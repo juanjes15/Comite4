@@ -14,6 +14,7 @@ return new class extends Migration {
             $table->id();
             $table->foreignId('com_id')->constrained('comites')->cascadeOnDelete();
             $table->foreignId('use_id')->constrained('users')->cascadeOnDelete();
+            $table->timestamps();
         });
     }
 

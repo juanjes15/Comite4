@@ -14,6 +14,7 @@ return new class extends Migration {
             $table->id();
             $table->foreignId('sol_id')->constrained('solicitud_comites')->cascadeOnDelete();
             $table->foreignId('num_id')->constrained('numerals')->cascadeOnDelete();
+            $table->timestamps();
         });
     }
 

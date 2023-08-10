@@ -15,6 +15,7 @@ return new class extends Migration {
             $table->string('art_descripcion');
             $table->unsignedBigInteger('cap_id');
             $table->foreign('cap_id')->references('id')->on('capitulos');
+            $table->timestamps();
         });
     }
 

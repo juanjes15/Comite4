@@ -21,6 +21,7 @@ return new class extends Migration {
             $table->date('apr_fechaNacimiento');
             $table->unsignedBigInteger('fic_id');
             $table->foreign('fic_id')->references('id')->on('fichas');
+            $table->timestamps();
         });
     }
 

@@ -15,6 +15,7 @@ return new class extends Migration {
             $table->string('pro_codigo');
             $table->string('pro_nombre');
             $table->string('pro_nivelFormacion');
+            $table->timestamps();
         });
     }
 
