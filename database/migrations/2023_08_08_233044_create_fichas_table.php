@@ -24,7 +24,6 @@ return new class extends Migration {
             $table->unsignedBigInteger('ins_id');
             $table->foreign('pro_id')->references('id')->on('programas');
             $table->foreign('ins_id')->references('id')->on('instructors');
-            $table->timestamps();
         });
     }
 

@@ -10,7 +10,6 @@ class Prueba extends Model
     protected $fillable = [
         'pru_tipo',
         'pru_descripcion',
-        'pru_fecha',
         'pru_url',
         'sol_id',
     ];

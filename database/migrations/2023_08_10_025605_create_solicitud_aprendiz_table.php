@@ -10,11 +10,10 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('programas', function (Blueprint $table) {
+        Schema::create('solicitud_aprendiz', function (Blueprint $table) {
             $table->id();
-            $table->string('pro_codigo');
-            $table->string('pro_nombre');
-            $table->string('pro_nivelFormacion');
+            $table->foreignId('sol_id')->constrained('solicitud_comites')->cascadeOnDelete();
+            $table->foreignId('apr_id')->constrained('aprendizs')->cascadeOnDelete();
         });
     }
 
@@ -23,6 +22,6 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('programas');
+        Schema::dropIfExists('solicitud_aprendiz');
     }
 };

@@ -24,7 +24,6 @@ class UpdatePruebaRequest extends FormRequest
         return [
             'pru_tipo' => 'required',
             'pru_descripcion' => 'required',
-            'pru_fecha' => 'required',
             'pru_url' => 'required',
             'sol_id' => 'required'
         ];

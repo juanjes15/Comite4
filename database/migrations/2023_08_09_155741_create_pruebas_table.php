@@ -14,7 +14,6 @@ return new class extends Migration {
             $table->id();
             $table->string('pru_tipo');
             $table->string('pru_descripcion');
-            $table->date('pru_fecha');
             $table->string('pru_url');
             $table->unsignedBigInteger('sol_id');
             $table->foreign('sol_id')->references('id')->on('solicitud_comites');

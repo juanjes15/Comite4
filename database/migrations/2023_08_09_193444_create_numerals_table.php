@@ -17,7 +17,6 @@ return new class extends Migration {
             $table->string('num_calificacion');
             $table->unsignedBigInteger('art_id');
             $table->foreign('art_id')->references('id')->on('articulos');
-            $table->timestamps();
         });
     }
 

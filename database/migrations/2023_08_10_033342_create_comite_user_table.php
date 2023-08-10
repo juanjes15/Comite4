@@ -10,11 +10,10 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('programas', function (Blueprint $table) {
+        Schema::create('comite_user', function (Blueprint $table) {
             $table->id();
-            $table->string('pro_codigo');
-            $table->string('pro_nombre');
-            $table->string('pro_nivelFormacion');
+            $table->foreignId('com_id')->constrained('comites')->cascadeOnDelete();
+            $table->foreignId('use_id')->constrained('users')->cascadeOnDelete();
         });
     }
 
@@ -23,6 +22,6 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('programas');
+        Schema::dropIfExists('comite_user');
     }
 };

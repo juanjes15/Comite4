@@ -17,7 +17,6 @@ return new class extends Migration {
             $table->string('ins_apellidos');
             $table->string('ins_email');
             $table->string('ins_telefono');
-            $table->timestamps();
         });
     }
 

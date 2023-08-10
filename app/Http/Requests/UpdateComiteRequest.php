@@ -24,7 +24,6 @@ class UpdateComiteRequest extends FormRequest
         return [
             'com_acta' => 'required',
             'com_estado' => 'required',
-            'com_fecha' => 'required',
             'com_recomendacion' => 'required',
             'sol_id' => 'required'
         ];

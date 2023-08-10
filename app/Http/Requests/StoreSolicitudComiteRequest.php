@@ -22,7 +22,6 @@ class StoreSolicitudComiteRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'sol_fecha' => 'required',
             'sol_lugar' => 'required',
             'sol_asunto' => 'required',
             'sol_motivo' => 'required',

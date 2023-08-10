@@ -11,7 +11,6 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 class SolicitudComite extends Model
 {
     protected $fillable = [
-        'sol_fecha',
         'sol_lugar',
         'sol_asunto',
         'sol_motivo',
@@ -56,7 +55,7 @@ class SolicitudComite extends Model
      */
     public function aprendizs(): BelongsToMany
     {
-        return $this->belongsToMany(Aprendiz::class, 'SolicitudxAprendiz', 'sol_id', 'apr_id')->as('SolicitudxAprendiz');
+        return $this->belongsToMany(Aprendiz::class, 'solicitud_aprendiz', 'sol_id', 'apr_id')->as('SolicitudxAprendiz');
     }
 
     /**
@@ -66,6 +65,6 @@ class SolicitudComite extends Model
      */
     public function numerals(): BelongsToMany
     {
-        return $this->belongsToMany(Numeral::class, 'NormaInfringida', 'sol_id', 'num_id')->as('NormaInfringida');
+        return $this->belongsToMany(Numeral::class, 'norma_infringida', 'sol_id', 'num_id')->as('NormaInfringida');
     }
 }

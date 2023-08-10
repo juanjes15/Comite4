@@ -32,6 +32,6 @@ class Numeral extends Model
      */
     public function solicitudComites(): BelongsToMany
     {
-        return $this->belongsToMany(SolicitudComite::class, 'NormaInfringida', 'num_id', 'sol_id')->as('NormaInfringida');
+        return $this->belongsToMany(SolicitudComite::class, 'norma_infringida', 'num_id', 'sol_id')->as('NormaInfringida');
     }
 }

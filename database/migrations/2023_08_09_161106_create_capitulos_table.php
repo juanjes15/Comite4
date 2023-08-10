@@ -13,7 +13,6 @@ return new class extends Migration {
         Schema::create('capitulos', function (Blueprint $table) {
             $table->id();
             $table->string('cap_descripcion');
-            $table->timestamps();
         });
     }
 
