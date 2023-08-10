@@ -11,6 +11,7 @@ class Comite extends Model
     protected $fillable = [
         'com_acta',
         'com_estado',
+        'com_fecha',
         'com_recomendacion',
         'sol_id',
     ];
