@@ -15,9 +15,7 @@ class AprendizController extends Controller
     public function index()
     {
         $aprendizs = Aprendiz::latest()->paginate(5);
-        $fichaIds = $aprendizs->pluck('fic_id')->unique();
-        $fichas = Ficha::whereIn('id', $fichaIds)->get();
-        return view('aprendizs.index', compact('aprendizs', 'fichas'))->with('i', (request()->input('page', 1) - 1) * 5);
+        return view('aprendizs.index', compact('aprendizs'))->with('i', (request()->input('page', 1) - 1) * 5);
     }
 
     /**
@@ -25,6 +23,8 @@ class AprendizController extends Controller
      */
     public function create()
     {
+        $this->authorize('administrar');
+        
         $fichas = Ficha::all();
         return view('aprendizs.create', compact('fichas'));
     }
@@ -34,6 +34,8 @@ class AprendizController extends Controller
      */
     public function store(StoreAprendizRequest $request)
     {
+        $this->authorize('administrar');
+
         Aprendiz::create($request->validated());
         return redirect()->route('aprendizs.index');
     }
@@ -51,6 +53,8 @@ class AprendizController extends Controller
      */
     public function edit(Aprendiz $aprendiz)
     {
+        $this->authorize('administrar');
+
         $fichas = Ficha::all();
         return view('aprendizs.edit', compact('aprendiz', 'fichas'));
     }
@@ -60,6 +64,8 @@ class AprendizController extends Controller
      */
     public function update(UpdateAprendizRequest $request, Aprendiz $aprendiz)
     {
+        $this->authorize('administrar');
+
         $aprendiz->update($request->validated());
         return redirect()->route('aprendizs.index');
     }
@@ -69,6 +75,8 @@ class AprendizController extends Controller
      */
     public function destroy(Aprendiz $aprendiz)
     {
+        $this->authorize('administrar');
+
         $aprendiz->delete();
         return redirect()->route('aprendizs.index');
     }

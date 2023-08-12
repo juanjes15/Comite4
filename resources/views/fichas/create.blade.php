@@ -60,10 +60,21 @@
                                 @endforeach
                             </select>
                         </div>
+                        <div>
+                            <x-label for="ins_id" value="{{ __('Instructor') }}" />
+                            <select name="ins_id"
+                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                                <option value="">--Seleccione el Gestor de esta Ficha--</option>
+                                @foreach ($instructors as $instructor)
+                                    <option value="{{ $instructor->id }}">{{ $instructor->ins_nombres }} {{ $instructor->ins_apellidos }}</option>
+                                @endforeach
+                            </select>
+                        </div>
                         <div class="flex mt-4">
                             <x-button>
                                 {{ __('Crear') }}
                             </x-button>
+                            <x-link href="{{ route('fichas.index') }}" class="mx-3">Atras</x-link>
                         </div>
                 </div>
             </div>

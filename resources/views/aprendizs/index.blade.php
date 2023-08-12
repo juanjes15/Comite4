@@ -9,7 +9,7 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
                 <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
-                    @can('administrar aprendices')
+                    @can('administrar')
                         <x-link href="{{ route('aprendizs.create') }}" class="m-4">Añadir aprendiz</x-link>
                     @endcan
                     <table class="w-full text-sm text-left text-gray-500 ">
@@ -30,7 +30,7 @@
                                 <th scope="col" class="px-6 py-3">
                                     Ficha
                                 </th>
-                                @can('administrar aprendices')
+                                @can('administrar')
                                     <th scope="col" class="px-6 py-3">
                                     </th>
                                 @endcan
@@ -52,13 +52,9 @@
                                         {{ $aprendiz->apr_email }}
                                     </td>
                                     <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap ">
-                                        @foreach ($fichas as $ficha)
-                                            @if ($ficha->id == $aprendiz->fic_id)
-                                                {{ $ficha->fic_codigo }}
-                                            @endif
-                                        @endforeach
+                                        {{ $aprendiz->ficha->fic_codigo }}
                                     </td>
-                                    @can('administrar aprendices')
+                                    @can('administrar')
                                         <td class="px-6 py-4">
                                             <x-link href="{{ route('aprendizs.edit', $aprendiz) }}">Editar</x-link>
                                             <form method="POST" action="{{ route('aprendizs.destroy', $aprendiz) }}"
@@ -83,5 +79,6 @@
                 </div>
             </div>
         </div>
+        {!! $aprendizs->links() !!}
     </div>
 </x-app-layout>

@@ -33,6 +33,7 @@
                             <x-button>
                                 {{ __('Editar') }}
                             </x-button>
+                            <x-link href="{{ route('programas.index') }}" class="mx-3">Atras</x-link>
                         </div>
                 </div>
             </div>

@@ -16,15 +16,7 @@ class FichaController extends Controller
     public function index()
     {
         $fichas = Ficha::latest()->paginate(5);
-        // Obtener los IDs únicos de los programas relacionados con las fichas consultadas
-        $programaIds = $fichas->pluck('pro_id')->unique();
-        // Obtener solo los programas relacionados con las fichas consultadas
-        $programas = Programa::whereIn('id', $programaIds)->get();
-        // Obtener los IDs únicos de los programas relacionados con las fichas consultadas
-        $instructorIds = $fichas->pluck('ins_id')->unique();
-        // Obtener solo los programas relacionados con las fichas consultadas
-        $instructors = Instructor::whereIn('id', $instructorIds)->get();
-        return view('fichas.index', compact('fichas', 'programas', 'instructors'))->with('i', (request()->input('page', 1) - 1) * 5);
+        return view('fichas.index', compact('fichas'))->with('i', (request()->input('page', 1) - 1) * 5);
     }
 
     /**
@@ -32,8 +24,11 @@ class FichaController extends Controller
      */
     public function create()
     {
+        $this->authorize('administrar');
+
         $programas = Programa::all();
-        return view('fichas.create', compact('programas'));
+        $instructors = Instructor::all();
+        return view('fichas.create', compact('programas', 'instructors'));
     }
 
     /**
@@ -41,6 +36,8 @@ class FichaController extends Controller
      */
     public function store(StoreFichaRequest $request)
     {
+        $this->authorize('administrar');
+
         Ficha::create($request->validated());
         return redirect()->route('fichas.index');
     }
@@ -58,8 +55,11 @@ class FichaController extends Controller
      */
     public function edit(Ficha $ficha)
     {
+        $this->authorize('administrar');
+
         $programas = Programa::all();
-        return view('fichas.edit', compact('ficha', 'programas'));
+        $instructors = Instructor::all();
+        return view('fichas.edit', compact('ficha', 'programas', 'instructors'));
     }
 
     /**
@@ -67,6 +67,8 @@ class FichaController extends Controller
      */
     public function update(UpdateFichaRequest $request, Ficha $ficha)
     {
+        $this->authorize('administrar');
+
         $ficha->update($request->validated());
         return redirect()->route('fichas.index');
     }
@@ -76,6 +78,8 @@ class FichaController extends Controller
      */
     public function destroy(Ficha $ficha)
     {
+        $this->authorize('administrar');
+        
         $ficha->delete();
         return redirect()->route('fichas.index');
     }

@@ -47,5 +47,20 @@ class ProgramaSeeder extends Seeder
             'pro_nombre' => 'Análisis y Desarrollo de Software',
             'pro_nivelFormacion' => 'Tecnólogo',
         ]);
+        DB::table('programas')->insert([
+            'pro_codigo' => fake()->randomNumber(7, true),
+            'pro_nombre' => 'Mantenimiento de Equipo Biomédico',
+            'pro_nivelFormacion' => 'Tecnólogo',
+        ]);
+        DB::table('programas')->insert([
+            'pro_codigo' => fake()->randomNumber(7, true),
+            'pro_nombre' => 'Diseño e Integración de Automatismos Mecatrónicos',
+            'pro_nivelFormacion' => 'Tecnólogo',
+        ]);
+        DB::table('programas')->insert([
+            'pro_codigo' => fake()->randomNumber(7, true),
+            'pro_nombre' => 'Producción de Componentes Mecánicos con Máquinas de Control Numérico Computarizado',
+            'pro_nivelFormacion' => 'Tecnólogo',
+        ]);
     }
 }

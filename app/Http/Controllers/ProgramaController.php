@@ -22,7 +22,7 @@ class ProgramaController extends Controller
      */
     public function create()
     {
-        $this->authorize('administrar programas');
+        $this->authorize('administrar');
 
         return view('programas.create');
     }
@@ -32,7 +32,7 @@ class ProgramaController extends Controller
      */
     public function store(StoreProgramaRequest $request)
     {
-        $this->authorize('administrar programas');
+        $this->authorize('administrar');
 
         Programa::create($request->validated());
         return redirect()->route('programas.index');
@@ -51,7 +51,7 @@ class ProgramaController extends Controller
      */
     public function edit(Programa $programa)
     {
-        $this->authorize('administrar programas');
+        $this->authorize('administrar');
 
         return view('programas.edit', compact('programa'));
     }
@@ -61,7 +61,7 @@ class ProgramaController extends Controller
      */
     public function update(UpdateProgramaRequest $request, Programa $programa)
     {
-        $this->authorize('administrar programas');
+        $this->authorize('administrar');
 
         $programa->update($request->validated());
         return redirect()->route('programas.index');
@@ -72,7 +72,7 @@ class ProgramaController extends Controller
      */
     public function destroy(Programa $programa)
     {
-        $this->authorize('administrar programas');
+        $this->authorize('administrar');
 
         $programa->delete();
         return redirect()->route('programas.index');

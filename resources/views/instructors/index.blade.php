@@ -9,7 +9,7 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
                 <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
-                    @can('administrar instructores')
+                    @can('administrar')
                         <x-link href="{{ route('instructors.create') }}" class="m-4">Añadir instructor</x-link>
                     @endcan
                     <table class="w-full text-sm text-left text-gray-500 ">
@@ -30,7 +30,7 @@
                                 <th scope="col" class="px-6 py-3">
                                     Telefono
                                 </th>
-                                @can('administrar instructores')
+                                @can('administrar')
                                     <th scope="col" class="px-6 py-3">
                                     </th>
                                 @endcan
@@ -54,7 +54,7 @@
                                     <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap ">
                                         {{ $instructor->ins_telefono }}
                                     </td>
-                                    @can('administrar instructores')
+                                    @can('administrar')
                                         <td class="px-6 py-4">
                                             <x-link href="{{ route('instructors.edit', $instructor) }}">Editar</x-link>
                                             <form method="POST" action="{{ route('instructors.destroy', $instructor) }}"
@@ -79,5 +79,6 @@
                 </div>
             </div>
         </div>
+        {!! $instructors->links() !!}
     </div>
 </x-app-layout>

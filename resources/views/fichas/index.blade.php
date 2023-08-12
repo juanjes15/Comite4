@@ -9,7 +9,7 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
                 <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
-                    @can('administrar fichas')
+                    @can('administrar')
                         <x-link href="{{ route('fichas.create') }}" class="m-4">Añadir ficha</x-link>
                     @endcan
                     <table class="w-full text-sm text-left text-gray-500 ">
@@ -30,7 +30,7 @@
                                 <th scope="col" class="px-6 py-3">
                                     Programa
                                 </th>
-                                @can('administrar fichas')
+                                @can('administrar')
                                     <th scope="col" class="px-6 py-3">
                                     </th>
                                 @endcan
@@ -52,13 +52,9 @@
                                         {{ $ficha->fic_modalidad }}
                                     </td>
                                     <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap ">
-                                        @foreach ($programas as $programa)
-                                            @if ($programa->id == $ficha->pro_id)
-                                                {{ $programa->pro_nombre }}
-                                            @endif
-                                        @endforeach
+                                        {{ $ficha->programa->pro_nombre }}
                                     </td>
-                                    @can('administrar fichas')
+                                    @can('administrar')
                                         <td class="px-6 py-4">
                                             <x-link href="{{ route('fichas.edit', $ficha) }}">Editar</x-link>
                                             <form method="POST" action="{{ route('fichas.destroy', $ficha) }}"
@@ -83,5 +79,6 @@
                 </div>
             </div>
         </div>
+        {!! $fichas->links() !!}
     </div>
 </x-app-layout>

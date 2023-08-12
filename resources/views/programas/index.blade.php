@@ -9,7 +9,7 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
                 <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
-                    @can('administrar programas')
+                    @can('administrar')
                         <x-link href="{{ route('programas.create') }}" class="m-4">Añadir programa</x-link>
                     @endcan
                     <table class="w-full text-sm text-left text-gray-500 ">
@@ -24,7 +24,7 @@
                                 <th scope="col" class="px-6 py-3">
                                     Nivel de formación
                                 </th>
-                                @can('administrar programas')
+                                @can('administrar')
                                     <th scope="col" class="px-6 py-3">
                                     </th>
                                 @endcan
@@ -42,7 +42,7 @@
                                     <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap ">
                                         {{ $programa->pro_nivelFormacion }}
                                     </td>
-                                    @can('administrar programas')
+                                    @can('administrar')
                                         <td class="px-6 py-4">
                                             <x-link href="{{ route('programas.edit', $programa) }}">Editar</x-link>
                                             <form method="POST" action="{{ route('programas.destroy', $programa) }}"
@@ -64,9 +64,9 @@
                             @endforelse
                         </tbody>
                     </table>
-                    {!! $programas->links() !!}
                 </div>
             </div>
         </div>
+        {!! $programas->links() !!}
     </div>
 </x-app-layout>
