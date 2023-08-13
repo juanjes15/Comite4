@@ -12,7 +12,7 @@ return new class extends Migration {
     {
         Schema::create('numerals', function (Blueprint $table) {
             $table->id();
-            $table->string('num_descripcion');
+            $table->string('num_descripcion', 7000);
             $table->string('num_tipoFalta');
             $table->string('num_calificacion');
             $table->unsignedBigInteger('art_id');

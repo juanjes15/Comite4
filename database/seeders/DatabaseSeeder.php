@@ -24,6 +24,9 @@ class DatabaseSeeder extends Seeder
             InstructorSeeder::class,
             FichaSeeder::class,
             AprendizSeeder::class,
+            CapituloSeeder::class,
+            ArticuloSeeder::class,
+            NumeralSeeder::class,
         ]);
     }
 }

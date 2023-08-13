@@ -15,7 +15,7 @@ class NumeralController extends Controller
     public function index()
     {
         $numerals = Numeral::latest()->paginate(5);
-        return view('numerals.index', compact('numerals', 'articulos'))->with('i', (request()->input('page', 1) - 1) * 5);
+        return view('numerals.index', compact('numerals'))->with('i', (request()->input('page', 1) - 1) * 5);
     }
 
     /**

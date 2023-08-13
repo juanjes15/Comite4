@@ -15,7 +15,7 @@ class ArticuloController extends Controller
     public function index()
     {
         $articulos = Articulo::latest()->paginate(5);
-        return view('articulos.index', compact('articulos', 'capitulos'))->with('i', (request()->input('page', 1) - 1) * 5);
+        return view('articulos.index', compact('articulos'))->with('i', (request()->input('page', 1) - 1) * 5);
     }
 
     /**
