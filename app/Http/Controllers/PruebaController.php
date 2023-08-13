@@ -15,9 +15,7 @@ class PruebaController extends Controller
     public function index()
     {
         $pruebas = Prueba::latest()->paginate(5);
-        $solicitudComiteIds = $pruebas->pluck('sol_id')->unique();
-        $solicitudComites = SolicitudComite::whereIn('id', $solicitudComiteIds)->get();
-        return view('pruebas.index', compact('pruebas', 'solicitudComites'))->with('i', (request()->input('page', 1) - 1) * 5);
+        return view('pruebas.index', compact('pruebas'))->with('i', (request()->input('page', 1) - 1) * 5);
     }
 
     /**
@@ -25,6 +23,8 @@ class PruebaController extends Controller
      */
     public function create()
     {
+        $this->authorize('administrar');
+
         $solicitudComites = SolicitudComite::all();
         return view('pruebas.create', compact('solicitudComites'));
     }
@@ -34,6 +34,8 @@ class PruebaController extends Controller
      */
     public function store(StorePruebaRequest $request)
     {
+        $this->authorize('administrar');
+
         Prueba::create($request->validated());
         return redirect()->route('pruebas.index');
     }
@@ -51,6 +53,8 @@ class PruebaController extends Controller
      */
     public function edit(Prueba $prueba)
     {
+        $this->authorize('administrar');
+
         $solicitudComites = SolicitudComite::all();
         return view('pruebas.edit', compact('prueba', 'solicitudComites'));
     }
@@ -60,6 +64,8 @@ class PruebaController extends Controller
      */
     public function update(UpdatePruebaRequest $request, Prueba $prueba)
     {
+        $this->authorize('administrar');
+
         $prueba->update($request->validated());
         return redirect()->route('pruebas.index');
     }
@@ -69,6 +75,8 @@ class PruebaController extends Controller
      */
     public function destroy(Prueba $prueba)
     {
+        $this->authorize('administrar');
+        
         $prueba->delete();
         return redirect()->route('pruebas.index');
     }

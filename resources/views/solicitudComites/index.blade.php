@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Lista de comites') }}
+            {{ __('Lista de solicitudes a comité') }}
         </h2>
     </x-slot>
 
@@ -10,7 +10,7 @@
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
                 <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
                     @can('administrar')
-                        <x-link href="{{ route('comites.create') }}" class="m-4">Añadir comite</x-link>
+                        <x-link href="{{ route('solicitudComites.create') }}" class="m-4">Solicitar comité</x-link>
                     @endcan
                     <table class="w-full text-sm text-left text-gray-500 ">
                         <thead class="text-xs text-gray-700 uppercase bg-gray-50 ">
@@ -19,13 +19,13 @@
                                     Instructor
                                 </th>
                                 <th scope="col" class="px-6 py-3">
+                                    Asunto
+                                </th>
+                                <th scope="col" class="px-6 py-3">
+                                    Fecha solicitud
+                                </th>
+                                <th scope="col" class="px-6 py-3">
                                     Estado
-                                </th>
-                                <th scope="col" class="px-6 py-3">
-                                    Fecha
-                                </th>
-                                <th scope="col" class="px-6 py-3">
-                                    Recomendación
                                 </th>
                                 @can('administrar')
                                     <th scope="col" class="px-6 py-3">
@@ -34,25 +34,27 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @forelse ($comites as $comite)
+                            @forelse ($solicitudComites as $solicitudComite)
                                 <tr class="bg-white border-b ">
                                     <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap ">
-                                        {{ $comite->solicitudComite->instructor->ins_nombres }}
-                                        {{ $comite->solicitudComite->instructor->ins_apellidos }}
+                                        {{ $solicitudComite->instructor->ins_nombres }}
+                                        {{ $solicitudComite->instructor->ins_apellidos }}
                                     </td>
                                     <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap ">
-                                        {{ $comite->com_estado }}
+                                        {{ $solicitudComite->sol_asunto }}
                                     </td>
                                     <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap ">
-                                        {{ $comite->com_fecha }}
+                                        {{ $solicitudComite->created_at }}
                                     </td>
                                     <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap ">
-                                        {{ $comite->com_recomendacion }}
+                                        {{ $solicitudComite->sol_estado }}
                                     </td>
                                     @can('administrar')
                                         <td class="px-6 py-4">
-                                            <x-link href="{{ route('comites.edit', $comite) }}">Editar</x-link>
-                                            <form method="POST" action="{{ route('comites.destroy', $comite) }}"
+                                            <x-link
+                                                href="{{ route('solicitudComites.edit', $solicitudComite) }}">Editar</x-link>
+                                            <form method="POST"
+                                                action="{{ route('solicitudComites.destroy', $solicitudComite) }}"
                                                 class="inline-block">
                                                 @csrf
                                                 @method('DELETE')
@@ -64,8 +66,8 @@
                                 </tr>
                             @empty
                                 <tr class="bg-white border-b">
-                                    <td colspan="5" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
-                                        {{ __('No se encontraron comites') }}
+                                    <td colspan="4" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
+                                        {{ __('No se encontraron solicitudes de comites') }}
                                     </td>
                                 </tr>
                             @endforelse
@@ -74,6 +76,6 @@
                 </div>
             </div>
         </div>
-        {!! $comites->links() !!}
+        {!! $solicitudComites->links() !!}
     </div>
 </x-app-layout>

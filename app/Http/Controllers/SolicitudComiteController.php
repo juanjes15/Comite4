@@ -13,7 +13,8 @@ class SolicitudComiteController extends Controller
      */
     public function index()
     {
-        //
+        $solicitudComites = SolicitudComite::latest()->paginate(5);
+        return view('solicitudComites.index', compact('solicitudComites'))->with('i', (request()->input('page', 1) - 1) * 5);
     }
 
     /**
@@ -21,7 +22,9 @@ class SolicitudComiteController extends Controller
      */
     public function create()
     {
-        //
+        $this->authorize('administrar');
+
+        return view('solicitudComites.create');
     }
 
     /**
@@ -29,7 +32,10 @@ class SolicitudComiteController extends Controller
      */
     public function store(StoreSolicitudComiteRequest $request)
     {
-        //
+        $this->authorize('administrar');
+        
+        SolicitudComite::create($request->validated());
+        return redirect()->route('solicitudComites.index');
     }
 
     /**
@@ -45,7 +51,9 @@ class SolicitudComiteController extends Controller
      */
     public function edit(SolicitudComite $solicitudComite)
     {
-        //
+        $this->authorize('administrar');
+
+        return view('solicitudComites.edit', compact('solicitudComite'));
     }
 
     /**
@@ -53,7 +61,10 @@ class SolicitudComiteController extends Controller
      */
     public function update(UpdateSolicitudComiteRequest $request, SolicitudComite $solicitudComite)
     {
-        //
+        $this->authorize('administrar');
+
+        $solicitudComite->update($request->validated());
+        return redirect()->route('solicitudComites.index');
     }
 
     /**
@@ -61,6 +72,9 @@ class SolicitudComiteController extends Controller
      */
     public function destroy(SolicitudComite $solicitudComite)
     {
-        //
+        $this->authorize('administrar');
+        
+        $solicitudComite->delete();
+        return redirect()->route('solicitudComites.index');
     }
 }
