@@ -15,8 +15,6 @@ class NumeralController extends Controller
     public function index()
     {
         $numerals = Numeral::latest()->paginate(5);
-        $articuloIds = $numerals->pluck('art_id')->unique();
-        $articulos = Articulo::whereIn('id', $articuloIds)->get();
         return view('numerals.index', compact('numerals', 'articulos'))->with('i', (request()->input('page', 1) - 1) * 5);
     }
 
@@ -25,6 +23,8 @@ class NumeralController extends Controller
      */
     public function create()
     {
+        $this->authorize('administrar');
+
         $articulos = Articulo::all();
         return view('numerals.create', compact('articulos'));
     }
@@ -34,6 +34,8 @@ class NumeralController extends Controller
      */
     public function store(StoreNumeralRequest $request)
     {
+        $this->authorize('administrar');
+
         Numeral::create($request->validated());
         return redirect()->route('numerals.index');
     }
@@ -51,6 +53,8 @@ class NumeralController extends Controller
      */
     public function edit(Numeral $numeral)
     {
+        $this->authorize('administrar');
+
         $articulos = Articulo::all();
         return view('numerals.edit', compact('numeral', 'articulos'));
     }
@@ -60,6 +64,8 @@ class NumeralController extends Controller
      */
     public function update(UpdateNumeralRequest $request, Numeral $numeral)
     {
+        $this->authorize('administrar');
+
         $numeral->update($request->validated());
         return redirect()->route('numerals.index');
     }
@@ -69,6 +75,8 @@ class NumeralController extends Controller
      */
     public function destroy(Numeral $numeral)
     {
+        $this->authorize('administrar');
+        
         $numeral->delete();
         return redirect()->route('numerals.index');
     }

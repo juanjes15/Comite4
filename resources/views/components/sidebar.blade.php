@@ -83,6 +83,20 @@
                         <a class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100" 
                         href="{{ route('aprendizs.index') }}">Aprendices</a>
                     </li>
+                    <hr class="h-px m-8 bg-gray-950 border-2">
+                    <li>
+                        <a class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100" 
+                        href="{{ route('capitulos.index') }}">Capitulos</a>
+                    </li>
+                    <li>
+                        <a class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100" 
+                        href="{{ route('articulos.index') }}">Articulos</a>
+                    </li>
+                    <li>
+                        <a class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100" 
+                        href="{{ route('numerals.index') }}">Numerales</a>
+                    </li>
+                    <hr class="h-px m-8 bg-gray-950 border-2">
                 </ul>
             </li>
         </ul>

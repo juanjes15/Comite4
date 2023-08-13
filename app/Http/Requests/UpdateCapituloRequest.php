@@ -22,6 +22,7 @@ class UpdateCapituloRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'cap_numero' => 'required',
             'cap_descripcion' => 'required'
         ];
     }

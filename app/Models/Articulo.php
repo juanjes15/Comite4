@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class Articulo extends Model
 {
     protected $fillable = [
+        'art_numero',
         'art_descripcion',
         'cap_id',
     ];

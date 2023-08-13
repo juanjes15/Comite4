@@ -15,8 +15,6 @@ class ArticuloController extends Controller
     public function index()
     {
         $articulos = Articulo::latest()->paginate(5);
-        $capituloIds = $articulos->pluck('cap_id')->unique();
-        $capitulos = Capitulo::whereIn('id', $capituloIds)->get();
         return view('articulos.index', compact('articulos', 'capitulos'))->with('i', (request()->input('page', 1) - 1) * 5);
     }
 

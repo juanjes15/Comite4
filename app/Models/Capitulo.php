@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class Capitulo extends Model
 {
     protected $fillable = [
+        'cap_numero',
         'cap_descripcion',
     ];
 

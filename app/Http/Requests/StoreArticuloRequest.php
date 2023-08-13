@@ -22,6 +22,7 @@ class StoreArticuloRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'art_numero' => 'required',
             'art_descripcion' => 'required',
             'cap_id' => 'required'
         ];

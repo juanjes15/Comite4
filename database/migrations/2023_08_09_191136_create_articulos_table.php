@@ -12,6 +12,7 @@ return new class extends Migration {
     {
         Schema::create('articulos', function (Blueprint $table) {
             $table->id();
+            $table->string('art_numero');
             $table->string('art_descripcion');
             $table->unsignedBigInteger('cap_id');
             $table->foreign('cap_id')->references('id')->on('capitulos');
