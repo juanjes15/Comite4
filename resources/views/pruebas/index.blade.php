@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Lista de programas') }}
+            {{ __('Lista de pruebas') }}
         </h2>
     </x-slot>
 
@@ -10,19 +10,19 @@
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
                 <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
                     @can('administrar')
-                        <x-link href="{{ route('programas.create') }}" class="m-4">Añadir programa</x-link>
+                        <x-link href="{{ route('pruebas.create') }}" class="m-4">Añadir prueba</x-link>
                     @endcan
                     <table class="w-full text-sm text-left text-gray-500 ">
                         <thead class="text-xs text-gray-700 uppercase bg-gray-50 ">
                             <tr>
                                 <th scope="col" class="px-6 py-3">
-                                    Código
+                                    Tipo
                                 </th>
                                 <th scope="col" class="px-6 py-3">
-                                    Nombre
+                                    Descripcion
                                 </th>
                                 <th scope="col" class="px-6 py-3">
-                                    Nivel de formación
+                                    Fecha
                                 </th>
                                 @can('administrar')
                                     <th scope="col" class="px-6 py-3">
@@ -31,21 +31,21 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @forelse ($programas as $programa)
+                            @forelse ($pruebas as $prueba)
                                 <tr class="bg-white border-b ">
                                     <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap ">
-                                        {{ $programa->pro_codigo }}
+                                        {{ $prueba->pru_tipo }}
                                     </td>
                                     <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap ">
-                                        {{ $programa->pro_nombre }}
+                                        {{ $prueba->pru_descripcion }}
                                     </td>
                                     <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap ">
-                                        {{ $programa->pro_nivelFormacion }}
+                                        {{ $prueba->pru_fecha }}
                                     </td>
                                     @can('administrar')
                                         <td class="px-6 py-4">
-                                            <x-link href="{{ route('programas.edit', $programa) }}">Editar</x-link>
-                                            <form method="POST" action="{{ route('programas.destroy', $programa) }}"
+                                            <x-link href="{{ route('pruebas.edit', $prueba) }}">Editar</x-link>
+                                            <form method="POST" action="{{ route('pruebas.destroy', $prueba) }}"
                                                 class="inline-block">
                                                 @csrf
                                                 @method('DELETE')
@@ -58,7 +58,7 @@
                             @empty
                                 <tr class="bg-white border-b">
                                     <td colspan="4" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
-                                        {{ __('No se encontraron programas') }}
+                                        {{ __('No se encontraron pruebas') }}
                                     </td>
                                 </tr>
                             @endforelse
@@ -67,6 +67,6 @@
                 </div>
             </div>
         </div>
-        {!! $programas->links() !!}
+        {!! $pruebas->links() !!}
     </div>
 </x-app-layout>

@@ -9,9 +9,6 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
                 <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
-                    @can('administrar')
-                        <x-link href="{{ route('solicitudComites.create') }}" class="m-4">Solicitar comité</x-link>
-                    @endcan
                     <table class="w-full text-sm text-left text-gray-500 ">
                         <thead class="text-xs text-gray-700 uppercase bg-gray-50 ">
                             <tr>
@@ -51,8 +48,6 @@
                                     </td>
                                     @can('administrar')
                                         <td class="px-6 py-4">
-                                            <x-link
-                                                href="{{ route('solicitudComites.edit', $solicitudComite) }}">Editar</x-link>
                                             <form method="POST"
                                                 action="{{ route('solicitudComites.destroy', $solicitudComite) }}"
                                                 class="inline-block">
