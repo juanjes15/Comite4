@@ -13,9 +13,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::view('/', 'welcome');
 
 Route::middleware([
     'auth:sanctum',
@@ -25,14 +23,16 @@ Route::middleware([
     Route::get('/dashboard', function () {
         return view('dashboard');
     })->name('dashboard');
-    Route::resource('programas', \App\Http\Controllers\ProgramaController::class);
-    Route::resource('fichas', \App\Http\Controllers\FichaController::class);
-    Route::resource('instructors', \App\Http\Controllers\InstructorController::class);
-    Route::resource('aprendizs', \App\Http\Controllers\AprendizController::class);
-    Route::resource('solicitudComites', \App\Http\Controllers\SolicitudComiteController::class);
-    Route::resource('comites', \App\Http\Controllers\ComiteController::class);
-    Route::resource('pruebas', \App\Http\Controllers\PruebaController::class);
-    Route::resource('capitulos', \App\Http\Controllers\CapituloController::class);
-    Route::resource('articulos', \App\Http\Controllers\ArticuloController::class);
-    Route::resource('numerals', \App\Http\Controllers\NumeralController::class);
+    Route::resources([
+        'programas' => \App\Http\Controllers\ProgramaController::class,
+        'fichas' => \App\Http\Controllers\FichaController::class,
+        'instructors' => \App\Http\Controllers\InstructorController::class,
+        'aprendizs' => \App\Http\Controllers\AprendizController::class,
+        'solicitudComites' => \App\Http\Controllers\SolicitudComiteController::class,
+        'comites' => \App\Http\Controllers\ComiteController::class,
+        'pruebas' => \App\Http\Controllers\PruebaController::class,
+        'capitulos' => \App\Http\Controllers\CapituloController::class,
+        'articulos' => \App\Http\Controllers\ArticuloController::class,
+        'numerals' => \App\Http\Controllers\NumeralController::class,
+    ]);
 });
