@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -24,7 +23,7 @@ Route::middleware([
     Route::get('/dashboard', function () {
         return view('dashboard');
     })->name('dashboard');
-    Route::get('/users', [UserController::class, 'index'])->name('users.index');
+    //Route::get('/users', [UserController::class, 'index'])->name('users.index');
     //Route::view('/register', 'auth/register')->name('register');
     Route::resources([
         'programas' => \App\Http\Controllers\ProgramaController::class,
@@ -37,5 +36,6 @@ Route::middleware([
         'capitulos' => \App\Http\Controllers\CapituloController::class,
         'articulos' => \App\Http\Controllers\ArticuloController::class,
         'numerals' => \App\Http\Controllers\NumeralController::class,
+        'users' => \App\Http\Controllers\UserController::class,
     ]);
 });

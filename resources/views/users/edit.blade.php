@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Editar programa') }}
+            {{ __('Editar usuario') }}
         </h2>
     </x-slot>
 
@@ -10,18 +10,18 @@
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
                 <div class="relative overflow-x-auto shadow-md sm:rounded-lg px-4 py-4">
                     <x-validation-errors class="mb-4" />
-                    <form method="POST" action="{{ route('programas.update', $programa) }}">
+                    <form method="POST" action="{{ route('users.update', $user) }}">
                         @csrf
                         @method('PUT')
                         <div>
-                            <x-label for="pro_codigo" value="{{ __('Código') }}" />
-                            <x-input id="pro_codigo" class="block mt-1 w-full" type="text" name="pro_codigo"
-                                :value="$programa->pro_codigo" required autofocus autocomplete="pro_codigo" />
+                            <x-label for="name" value="{{ __('Nombre') }}" />
+                            <x-input id="name" class="block mt-1 w-full" type="text" name="name"
+                                :value="$user->name" required autofocus autocomplete="name" />
                         </div>
                         <div>
-                            <x-label for="pro_nombre" value="{{ __('Nombre') }}" />
-                            <x-input id="pro_nombre" class="block mt-1 w-full" type="text" name="pro_nombre"
-                                :value="$programa->pro_nombre" required autofocus autocomplete="pro_nombre" />
+                            <x-label for="email" value="{{ __('Email') }}" />
+                            <x-input id="email" class="block mt-1 w-full" type="text" name="email"
+                                :value="$programa->email" required autofocus autocomplete="email" />
                         </div>
                         <div>
                             <x-label for="pro_nivelFormacion" value="{{ __('Nivel de Formación') }}" />

@@ -10,7 +10,7 @@
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
                 <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
                     @can('administrar')
-                        <x-link href="{{ route('programas.create') }}" class="m-4">Añadir programa</x-link>
+                        <x-link href="{{ route('users.create') }}" class="m-4">Añadir usuario</x-link>
                     @endcan
                     <table class="w-full text-sm text-left text-gray-500 ">
                         <thead class="text-xs text-gray-700 uppercase bg-gray-50 ">
@@ -45,7 +45,7 @@
                                     @can('administrar')
                                         <td class="px-6 py-4">
                                             <x-link href="{{ route('users.edit', $user) }}">Editar</x-link>
-                                            <form method="POST" action="{{ route('programas.destroy', $user) }}"
+                                            <form method="POST" action="{{ route('users.destroy', $user) }}"
                                                 class="inline-block">
                                                 @csrf
                                                 @method('DELETE')
