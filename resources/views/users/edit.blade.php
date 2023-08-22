@@ -21,19 +21,19 @@
                         <div>
                             <x-label for="email" value="{{ __('Email') }}" />
                             <x-input id="email" class="block mt-1 w-full" type="text" name="email"
-                                :value="$programa->email" required autofocus autocomplete="email" />
+                                :value="$user->email" required autofocus autocomplete="email" />
                         </div>
                         <div>
-                            <x-label for="pro_nivelFormacion" value="{{ __('Nivel de Formación') }}" />
-                            <x-input id="pro_nivelFormacion" class="block mt-1 w-full" type="text"
-                                name="pro_nivelFormacion" :value="$programa->pro_nivelFormacion" required autofocus
-                                autocomplete="pro_nivelFormacion" />
+                            <x-label for="rol" value="{{ __('Nivel de Formación') }}" />
+                            <x-input id="rol" class="block mt-1 w-full" type="text"
+                                name="rol" :value="$user->rol" required autofocus
+                                autocomplete="rol" />
                         </div>
                         <div class="flex mt-4">
                             <x-button>
                                 {{ __('Editar') }}
                             </x-button>
-                            <x-link href="{{ route('programas.index') }}" class="mx-3">Atras</x-link>
+                            <x-link href="{{ route('users.index') }}" class="mx-3">Atras</x-link>
                         </div>
                 </div>
             </div>
