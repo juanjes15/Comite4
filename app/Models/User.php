@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -30,6 +31,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'rol',
     ];
 
     /**
@@ -70,5 +72,25 @@ class User extends Authenticatable
     public function comites(): BelongsToMany
     {
         return $this->belongsToMany(Comite::class, 'comite_user', 'use_id', 'com_id')->as('ComitexUser');
+    }
+
+    /**
+     * Get the aprendiz that owns the User
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function aprendiz(): BelongsTo
+    {
+        return $this->belongsTo(Aprendiz::class, 'apr_id');
+    }
+
+    /**
+     * Get the instructor that owns the User
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function instructor(): BelongsTo
+    {
+        return $this->belongsTo(Instructor::class, 'ins_id');
     }
 }

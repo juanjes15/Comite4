@@ -14,9 +14,8 @@
                         @csrf
                         <div>
                             <x-label for="num_descripcion" value="{{ __('Descripcion') }}" />
-                            <x-input id="num_descripcion" class="block mt-1 w-full" type="text"
-                                name="num_descripcion" :value="old('num_descripcion')" required autofocus
-                                autocomplete="num_descripcion" />
+                            <textarea id="num_descripcion" rows="4" name="num_descripcion" required autofocus autocomplete="num_descripcion"
+                                class="block mt-1 p-2.5 w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm"></textarea>
                         </div>
                         <div>
                             <x-label for="num_tipoFalta" value="{{ __('Tipo de Falta') }}" />

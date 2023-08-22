@@ -36,7 +36,7 @@
                                     <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap ">
                                         {{ $programa->pro_codigo }}
                                     </td>
-                                    <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap ">
+                                    <td class="px-6 py-4 font-medium text-gray-900 truncate max-w-xs">
                                         {{ $programa->pro_nombre }}
                                     </td>
                                     <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap ">

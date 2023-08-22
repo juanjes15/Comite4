@@ -51,7 +51,7 @@
                                     <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap ">
                                         {{ $ficha->fic_modalidad }}
                                     </td>
-                                    <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap ">
+                                    <td class="px-6 py-4 font-medium text-gray-900 truncate max-w-xs">
                                         {{ $ficha->programa->pro_nombre }}
                                     </td>
                                     @can('administrar')

@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Lista de numerales') }}
+            {{ __('Lista de usuarios') }}
         </h2>
     </x-slot>
 
@@ -10,22 +10,19 @@
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
                 <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
                     @can('administrar')
-                        <x-link href="{{ route('numerals.create') }}" class="m-4">Añadir numeral</x-link>
+                        <x-link href="{{ route('programas.create') }}" class="m-4">Añadir programa</x-link>
                     @endcan
                     <table class="w-full text-sm text-left text-gray-500 ">
                         <thead class="text-xs text-gray-700 uppercase bg-gray-50 ">
                             <tr>
                                 <th scope="col" class="px-6 py-3">
-                                    Descripción
+                                    Nombre
                                 </th>
                                 <th scope="col" class="px-6 py-3">
-                                    Tipo de Falta
+                                    Email
                                 </th>
                                 <th scope="col" class="px-6 py-3">
-                                    Calificación
-                                </th>
-                                <th scope="col" class="px-6 py-3">
-                                    Artículo
+                                    Rol
                                 </th>
                                 @can('administrar')
                                     <th scope="col" class="px-6 py-3">
@@ -34,24 +31,21 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @forelse ($numerals as $numeral)
+                            @forelse ($users as $user)
                                 <tr class="bg-white border-b ">
+                                    <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap ">
+                                        {{ $user->name }}
+                                    </td>
                                     <td class="px-6 py-4 font-medium text-gray-900 truncate max-w-xs">
-                                        {{ $numeral->num_descripcion }}
+                                        {{ $user->email }}
                                     </td>
                                     <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap ">
-                                        {{ $numeral->num_tipoFalta }}
-                                    </td>
-                                    <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap ">
-                                        {{ $numeral->num_calificacion }}
-                                    </td>
-                                    <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap ">
-                                        {{ $numeral->articulo->art_numero }}
+                                        {{ $user->rol }}
                                     </td>
                                     @can('administrar')
                                         <td class="px-6 py-4">
-                                            <x-link href="{{ route('numerals.edit', $numeral) }}">Editar</x-link>
-                                            <form method="POST" action="{{ route('numerals.destroy', $numeral) }}"
+                                            <x-link href="{{ route('users.edit', $user) }}">Editar</x-link>
+                                            <form method="POST" action="{{ route('programas.destroy', $user) }}"
                                                 class="inline-block">
                                                 @csrf
                                                 @method('DELETE')
@@ -64,7 +58,7 @@
                             @empty
                                 <tr class="bg-white border-b">
                                     <td colspan="4" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
-                                        {{ __('No se encontraron numerales') }}
+                                        {{ __('No se encontraron usuarios') }}
                                     </td>
                                 </tr>
                             @endforelse
@@ -73,6 +67,6 @@
                 </div>
             </div>
         </div>
-        {!! $numerals->links() !!}
+        {!! $users->links() !!}
     </div>
 </x-app-layout>

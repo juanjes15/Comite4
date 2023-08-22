@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Instructor extends Model
 {
@@ -33,5 +34,15 @@ class Instructor extends Model
     public function solicitudComites(): HasMany
     {
         return $this->hasMany(SolicitudComite::class, 'ins_id');
+    }
+
+    /**
+     * Get the user associated with the Instructor
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function user(): HasOne
+    {
+        return $this->hasOne(User::class, 'ins_id');
     }
 }
