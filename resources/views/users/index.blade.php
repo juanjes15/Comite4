@@ -10,7 +10,7 @@
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
                 <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
                     @can('administrar')
-                        <x-link href="{{ route('users.create') }}" class="m-4">Añadir usuario</x-link>
+                        <x-link href="{{ route('register') }}" class="m-4">Añadir usuario</x-link>
                     @endcan
                     <table class="w-full text-sm text-left text-gray-500 ">
                         <thead class="text-xs text-gray-700 uppercase bg-gray-50 ">
