@@ -37,5 +37,6 @@ Route::middleware([
         'capitulos' => \App\Http\Controllers\CapituloController::class,
         'articulos' => \App\Http\Controllers\ArticuloController::class,
         'numerals' => \App\Http\Controllers\NumeralController::class,
+        'gestorComiteViews' => \App\Http\Controllers\GestorController::class,
     ]);
 });
