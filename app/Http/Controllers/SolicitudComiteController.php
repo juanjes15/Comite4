@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreSolicitudComiteRequest;
 use App\Http\Requests\UpdateSolicitudComiteRequest;
 use App\Models\SolicitudComite;
+use App\Models\Instructor;
 
 class SolicitudComiteController extends Controller
 {
@@ -17,15 +18,17 @@ class SolicitudComiteController extends Controller
         return view('solicitudComites.index', compact('solicitudComites'))->with('i', (request()->input('page', 1) - 1) * 5);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
+
+
     public function create()
     {
         $this->authorize('administrar');
+        
+        $instructors = Instructor::all(); // Obtén todos los instructores
 
-        return view('solicitudComites.create');
+        return view('solicitudComites.create', compact('instructors'));
     }
+
 
     /**
      * Store a newly created resource in storage.
@@ -52,8 +55,8 @@ class SolicitudComiteController extends Controller
     public function edit(SolicitudComite $solicitudComite)
     {
         $this->authorize('administrar');
-
-        return view('solicitudComites.edit', compact('solicitudComite'));
+        $instructors = Instructor::all(); // Obtén todos los instructores
+        return view('solicitudComites.edit', compact('solicitudComite','instructors'));
     }
 
     /**
