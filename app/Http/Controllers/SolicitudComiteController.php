@@ -46,8 +46,10 @@ class SolicitudComiteController extends Controller
      */
     public function show(SolicitudComite $solicitudComite)
     {
-        //
+        $this->authorize('administrar');
+        return view('solicitudComites.show', compact('solicitudComite'));
     }
+
 
     /**
      * Show the form for editing the specified resource.
