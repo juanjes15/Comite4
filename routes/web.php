@@ -38,6 +38,7 @@ Route::middleware([
         'numerals' => \App\Http\Controllers\NumeralController::class,
         'users' => \App\Http\Controllers\UserController::class,
         'gestorComiteViews' => \App\Http\Controllers\GestorController::class,
+        'aprendiz_Views' => \App\Http\Controllers\AprenController::class,
 
     ]);
 });
