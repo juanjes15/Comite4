@@ -39,5 +39,8 @@ Route::middleware([
         'users' => \App\Http\Controllers\UserController::class,
         'gestorComiteViews' => \App\Http\Controllers\GestorController::class,
     ]);
-    Route::post('/subir','Controller@subirArchivo')->name('subir');
+    Route::post('/subir', 'Controller@subirArchivo')->name('subir');
+    Route::get('/InstructorViews/solicitar1', [\App\Http\Controllers\InstructorViewController::class, 'solicitar1'])->name('instructorViews.solicitar1');
+    Route::get('/InstructorViews/solicitar2', [\App\Http\Controllers\InstructorViewController::class, 'solicitar2'])->name('instructorViews.solicitar2');
+    Route::post('/InstructorViews/solicitar2', [\App\Http\Controllers\InstructorViewController::class, 'storeSolicitar2'])->name('instructorViews.storeSolicitar2');
 });
