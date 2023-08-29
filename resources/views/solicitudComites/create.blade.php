@@ -21,11 +21,68 @@
                                 @endforeach
                             </select>
                         </div>
+
+                        <div>
+                            <x-label for="apr_id" value="{{ __('Aprendiz') }}" />
+                            <select name="apr_id" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                                <option value="">--Seleccione el aprendiz--</option>
+                                @foreach ($aprendizs as $aprendiz)
+                                    <option value="{{ $aprendiz->id }}">{{ $aprendiz->apr_nombres }} {{ $aprendiz->apr_apellidos }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        <div>
+                            <x-label for="pro_id" value="{{ __('Programas') }}" />
+                            <select name="pro_id" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                                <option value="">--Seleccione el Programa--</option>
+                                @foreach ($programas as $programa)
+                                    <option value="{{ $programa->id }}">{{ $programa->pro_codigo }}-{{ $programa->pro_nombre }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        <div>
+                            <x-label for="cap_id" value="{{ __('Capitulo') }}" />
+                            <select name="cap_id" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                                <option value="">--Seleccione el capitulo--</option>
+                                @foreach ($capitulos as $capitulo)
+                                    <option value="{{ $capitulo->id }}">{{ $capitulo->cap_numero }}-{{ $capitulo->cap_descripcion}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        <div>
+                            <x-label for="art_id" value="{{ __('Articulo') }}" />
+                            <select name="art_id" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                                <option value="">--Seleccione el articulo-</option>
+                                @foreach ($articulos as $articulo)
+                                    <option value="{{ $articulo->id }}">{{ $articulo->art_numero }}-{{ $articulo->art_descripcion}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        <div>
+                            <x-label for="num_id" value="{{ __('Numeral') }}" />
+                            <select name="num_id" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                                <option value="">--Seleccione el Numeral-</option>
+                                @foreach ($numerals as $numeral)
+                                    <option value="{{ $numeral->id }}">
+                                        {{ Illuminate\Support\Str::limit($numeral->num_descripcion, 50) }}
+                                        -
+                                        {{ Illuminate\Support\Str::limit($numeral->num_tipoFalta, 50) }}
+                                        -
+                                        {{ Illuminate\Support\Str::limit($numeral->num_calificacion, 50) }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+                        
                         
 
                         <div>
                             <x-label for="sol_fecha" value="{{ __('Fecha') }}" />
-                            <x-input id="sol_fecha" class="block mt-1 w-full" type="text" name="sol_fecha"
+                            <x-input id="sol_fecha" class="block mt-1 w-full" type="date" name="sol_fecha"
                                 :value="old('sol_fecha')" required autofocus autocomplete="sol_fecha" />
                         </div>
 
@@ -52,6 +109,17 @@
                             <x-input id="sol_estado" class="block mt-1 w-full" type="text" name="sol_estado"
                                 :value="old('sol_estado')" required autofocus autocomplete="sol_estado" />
                         </div>
+
+                        {{-- <div>
+                            
+                            <form method="POST" action="{{route('subir')}}" accept-charset="UTF-8" enctype="multipart/form-data">
+                                {{ csrf_field() }}
+                                <label for="archivo"><b>Archivo: </b></label><br>
+                                <input type="file" name="archivo" required>
+                                <input class="btn btn-success" type="submit" value="Enviar" >
+                              </form>
+
+                        </div> --}}
                         
                         <div class="flex mt-4">
                             <x-button>

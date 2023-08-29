@@ -4,8 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreSolicitudComiteRequest;
 use App\Http\Requests\UpdateSolicitudComiteRequest;
+use App\Models\Aprendiz;
 use App\Models\SolicitudComite;
 use App\Models\Instructor;
+use App\Models\Programa;
+use App\Models\Capitulo;
+use App\Models\Articulo;
+use App\Models\Numeral;
+use Illuminate\Http\Request;
 
 class SolicitudComiteController extends Controller
 {
@@ -14,6 +20,7 @@ class SolicitudComiteController extends Controller
      */
     public function index()
     {
+        
         $solicitudComites = SolicitudComite::latest()->paginate(5);
         return view('solicitudComites.index', compact('solicitudComites'))->with('i', (request()->input('page', 1) - 1) * 5);
     }
@@ -24,9 +31,15 @@ class SolicitudComiteController extends Controller
     {
         $this->authorize('administrar');
         
-        $instructors = Instructor::all(); // Obtén todos los instructores
+        $instructors = Instructor::all(); 
+        $aprendizs = Aprendiz::all(); 
+        $programas = Programa::all(); 
+        $capitulos = Capitulo::all();
+        $articulos = Articulo::all();  
+        $numerals = Numeral::all();  
+        
 
-        return view('solicitudComites.create', compact('instructors'));
+        return view('solicitudComites.create', compact('instructors','aprendizs','programas','capitulos','articulos','numerals'));
     }
 
 
@@ -81,5 +94,16 @@ class SolicitudComiteController extends Controller
         
         $solicitudComite->delete();
         return redirect()->route('solicitudComites.index');
+    }
+
+
+    
+    public function subirArchivo(Request $request){
+     {
+            //Recibimos el archivo y lo guardamos en la carpeta storage/app/public
+            $request->file('archivo')->store('public');
+            dd("subido y guardado");
+     }
+    
     }
 }

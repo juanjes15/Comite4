@@ -23,9 +23,9 @@ class CapituloController extends Controller
     public function create()
     {
         $this->authorize('administrar');
-
         return view('capitulos.create');
     }
+
 
     /**
      * Store a newly created resource in storage.

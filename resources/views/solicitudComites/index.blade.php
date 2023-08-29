@@ -18,6 +18,9 @@
                                 <th scope="col" class="px-6 py-3">
                                     Instructor
                                 </th>
+                                {{-- <th scope="col" class="px-6 py-3">
+                                    Programas
+                                </th> --}}
                                 <th scope="col" class="px-6 py-3">
                                     lugar
                                 </th>
@@ -44,6 +47,14 @@
                                         {{ $solicitudComite->instructor->ins_nombres }}
                                         {{ $solicitudComite->instructor->ins_apellidos }}
                                     </td>
+                                    {{-- <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
+                                        @foreach ($solicitudComite->Aprendizs as $aprendiz)
+                                            {{ $aprendiz->apr_nombres }} {{ $aprendiz->apr_apellidos }}<br>
+                                        @endforeach
+                                    </td> --}}
+                                    {{-- <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap ">
+                                        {{ $solicitudComite->programa->pro_codigo }}
+                                    </td> --}}
                                     <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap ">
                                         {{ $solicitudComite->sol_lugar }}
                                     </td>
