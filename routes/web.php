@@ -41,4 +41,5 @@ Route::middleware([
         'instructorViews' => \App\Http\Controllers\InstructorViewController::class,
 
     ]);
+    Route::post('/subir','Controller@subirArchivo')->name('subir');
 });

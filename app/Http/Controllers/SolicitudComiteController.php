@@ -4,7 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreSolicitudComiteRequest;
 use App\Http\Requests\UpdateSolicitudComiteRequest;
+use App\Models\Aprendiz;
 use App\Models\SolicitudComite;
+use App\Models\Instructor;
+use App\Models\Programa;
+use App\Models\Capitulo;
+use App\Models\Articulo;
+use App\Models\Numeral;
+use Illuminate\Http\Request;
 
 class SolicitudComiteController extends Controller
 {
@@ -13,19 +20,28 @@ class SolicitudComiteController extends Controller
      */
     public function index()
     {
+        
         $solicitudComites = SolicitudComite::latest()->paginate(5);
         return view('solicitudComites.index', compact('solicitudComites'))->with('i', (request()->input('page', 1) - 1) * 5);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
+
+
     public function create()
     {
         $this->authorize('administrar');
+        
+        $instructors = Instructor::all(); 
+        $aprendizs = Aprendiz::all(); 
+        $programas = Programa::all(); 
+        $capitulos = Capitulo::all();
+        $articulos = Articulo::all();  
+        $numerals = Numeral::all();  
+        
 
-        return view('solicitudComites.create');
+        return view('solicitudComites.create', compact('instructors','aprendizs','programas','capitulos','articulos','numerals'));
     }
+
 
     /**
      * Store a newly created resource in storage.
@@ -43,8 +59,10 @@ class SolicitudComiteController extends Controller
      */
     public function show(SolicitudComite $solicitudComite)
     {
-        //
+        $this->authorize('administrar');
+        return view('solicitudComites.show', compact('solicitudComite'));
     }
+
 
     /**
      * Show the form for editing the specified resource.
@@ -52,8 +70,8 @@ class SolicitudComiteController extends Controller
     public function edit(SolicitudComite $solicitudComite)
     {
         $this->authorize('administrar');
-
-        return view('solicitudComites.edit', compact('solicitudComite'));
+        $instructors = Instructor::all(); // Obtén todos los instructores
+        return view('solicitudComites.edit', compact('solicitudComite','instructors'));
     }
 
     /**
@@ -76,5 +94,16 @@ class SolicitudComiteController extends Controller
         
         $solicitudComite->delete();
         return redirect()->route('solicitudComites.index');
+    }
+
+
+    
+    public function subirArchivo(Request $request){
+     {
+            //Recibimos el archivo y lo guardamos en la carpeta storage/app/public
+            $request->file('archivo')->store('public');
+            dd("subido y guardado");
+     }
+    
     }
 }
