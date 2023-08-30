@@ -26,14 +26,8 @@ class InstructorViewController extends Controller
         $this->authorize('administrar');
 
         $instructors = Instructor::all();
-        $aprendizs = Aprendiz::all();
-        $programas = Programa::all();
-        $capitulos = Capitulo::all();
-        $articulos = Articulo::all();
-        $numerals = Numeral::all();
 
-
-        return view('instructorViews.solicitar2', compact('instructors','aprendizs','programas','capitulos','articulos','numerals'));
+        return view('instructorViews.solicitar2', compact('instructors'));
     }
 
     public function storeSolicitar2(StoreSolicitudComiteRequest $request)

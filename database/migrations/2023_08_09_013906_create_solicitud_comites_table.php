@@ -12,7 +12,7 @@ return new class extends Migration {
     {
         Schema::create('solicitud_comites', function (Blueprint $table) {
             $table->id();
-            $table->dateTime('sol_fecha');
+            $table->date('sol_fecha');
             $table->string('sol_lugar');
             $table->string('sol_asunto');
             $table->string('sol_motivo');
