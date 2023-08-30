@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 class SolicitudComite extends Model
 {
     protected $fillable = [
+        'sol_fecha',
         'sol_lugar',
         'sol_asunto',
         'sol_motivo',
