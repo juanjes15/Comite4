@@ -60,6 +60,7 @@
                     <span class="flex-1 ml-3 whitespace-nowrap">Aprendiz</span>
                 </a>
             </li>
+            
             <!-- CRUD'S -->
             <li>
                 <button type="button"
