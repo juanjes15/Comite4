@@ -37,4 +37,14 @@ class InstructorViewController extends Controller
         SolicitudComite::create($request->validated());
         return redirect()->route('instructorViews.solicitar3');
     }
+   
+    public function plan_MejoramientoP()
+    {
+        return view('instructorViews.plan_MejoramientoP');
+    }
+    public function plan_Mejoramiento()
+    {
+        return view('instructorViews.plan_Mejoramiento');
+    }
+
 }

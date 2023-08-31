@@ -38,11 +38,13 @@ Route::middleware([
         'numerals' => \App\Http\Controllers\NumeralController::class,
         'users' => \App\Http\Controllers\UserController::class,
         'gestorComiteViews' => \App\Http\Controllers\GestorController::class,
-        'instructorViews' => \App\Http\Controllers\InstructorViewController::class,
+
 
     ]);
     Route::post('/subir', 'Controller@subirArchivo')->name('subir');
     Route::get('/InstructorViews/solicitar1', [\App\Http\Controllers\InstructorViewController::class, 'solicitar1'])->name('instructorViews.solicitar1');
     Route::get('/InstructorViews/solicitar2', [\App\Http\Controllers\InstructorViewController::class, 'solicitar2'])->name('instructorViews.solicitar2');
     Route::post('/InstructorViews/solicitar2', [\App\Http\Controllers\InstructorViewController::class, 'storeSolicitar2'])->name('instructorViews.storeSolicitar2');
+    Route::get('/instructorViews/plan_MejoramientoP', [\App\Http\Controllers\InstructorViewController::class, 'plan_MejoramientoP'])->name('instructorViews.plan_MejoramientoP');
+    Route::get('/instructorViews/plan_Mejoramiento', [\App\Http\Controllers\InstructorViewController::class, 'plan_Mejoramiento'])->name('instructorViews.plan_Mejoramiento');
 });
