@@ -20,9 +20,9 @@ class SolicitudComiteController extends Controller
      */
     public function index()
     {
-        
+        $programas = Programa::all();
         $solicitudComites = SolicitudComite::latest()->paginate(5);
-        return view('solicitudComites.index', compact('solicitudComites'))->with('i', (request()->input('page', 1) - 1) * 5);
+        return view('solicitudComites.index', compact('solicitudComites','programas'))->with('i', (request()->input('page', 1) - 1) * 5);
     }
 
 
@@ -30,14 +30,14 @@ class SolicitudComiteController extends Controller
     public function create()
     {
         $this->authorize('administrar');
-        
-        $instructors = Instructor::all(); 
-        $aprendizs = Aprendiz::all(); 
-        $programas = Programa::all(); 
+
+        $instructors = Instructor::all();
+        $aprendizs = Aprendiz::all();
+        $programas = Programa::all();
         $capitulos = Capitulo::all();
-        $articulos = Articulo::all();  
-        $numerals = Numeral::all();  
-        
+        $articulos = Articulo::all();
+        $numerals = Numeral::all();
+
 
         return view('solicitudComites.create', compact('instructors','aprendizs','programas','capitulos','articulos','numerals'));
     }
@@ -49,7 +49,7 @@ class SolicitudComiteController extends Controller
     public function store(StoreSolicitudComiteRequest $request)
     {
         $this->authorize('administrar');
-        
+
         SolicitudComite::create($request->validated());
         return redirect()->route('solicitudComites.index');
     }
@@ -91,19 +91,19 @@ class SolicitudComiteController extends Controller
     public function destroy(SolicitudComite $solicitudComite)
     {
         $this->authorize('administrar');
-        
+
         $solicitudComite->delete();
         return redirect()->route('solicitudComites.index');
     }
 
 
-    
+
     public function subirArchivo(Request $request){
      {
             //Recibimos el archivo y lo guardamos en la carpeta storage/app/public
             $request->file('archivo')->store('public');
             dd("subido y guardado");
      }
-    
+
     }
 }

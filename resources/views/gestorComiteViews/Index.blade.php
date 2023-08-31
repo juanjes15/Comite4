@@ -24,10 +24,11 @@
                                 <th scope="col" class="px-6 py-3">
                                     Asunto
                                 </th>
-                                
+
                                 <th scope="col" class="px-6 py-3">
                                     Fecha solicitud
                                 </th>
+                                
                                 <th scope="col" class="px-6 py-3">
                                     Estado
                                 </th>

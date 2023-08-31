@@ -43,4 +43,8 @@ Route::middleware([
     Route::get('/InstructorViews/solicitar1', [\App\Http\Controllers\InstructorViewController::class, 'solicitar1'])->name('instructorViews.solicitar1');
     Route::get('/InstructorViews/solicitar2', [\App\Http\Controllers\InstructorViewController::class, 'solicitar2'])->name('instructorViews.solicitar2');
     Route::post('/InstructorViews/solicitar2', [\App\Http\Controllers\InstructorViewController::class, 'storeSolicitar2'])->name('instructorViews.storeSolicitar2');
+    Route::get('/InstructorViews/solicitar3', [\App\Http\Controllers\InstructorViewController::class, 'solicitar3'])->name('instructorViews.solicitar3');
+    Route::post('/InstructorViews/solicitar3', [\App\Http\Controllers\InstructorViewController::class, 'storeSolicitar3'])->name('instructorViews.storeSolicitar3');
+    Route::get('/InstructorViews/solicitar4', [\App\Http\Controllers\InstructorViewController::class, 'solicitar4'])->name('instructorViews.solicitar4');
+    
 });
