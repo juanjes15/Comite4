@@ -35,25 +35,26 @@ class InstructorViewController extends Controller
         return view('instructorViews.solicitar2', compact('instructors'));
     }
 
-    public function solicitar3(): View
-    {
-        $this->authorize('administrar');
+    public function solicitar3()
+{
+    $this->authorize('administrar');
 
-        $solicitud = session('solicitud');
-        $aprendizs = Aprendiz::all();
-        $solicitud_comites = SolicitudComite::all();
+    $solicitud = session('solicitud');
+    $aprendizs = Aprendiz::all();
 
-        return view('instructorViews.solicitar3', compact('aprendizs','solicitud_comites', 'solicitud'));
-    }
+    // Guarda el ID de la solicitud en la sesión
+    session(['solicitudid' => $solicitud->id]);
+
+    return view('instructorViews.solicitar3', compact('aprendizs', 'solicitud'));
+}
+
 
     public function solicitar4(): View
     {
         $this->authorize('administrar');
+        $solicitudid = session('solicitudid');
 
-        $aprendizs = Aprendiz::all();
-        $solicitud_comites = SolicitudComite::all();
-
-        return view('instructorViews.solicitar4', compact('aprendizs','solicitud_comites'));
+        return view('instructorViews.solicitar4', compact('solicitudid'));
     }
 
     public function storeSolicitar2(StoreSolicitudComiteRequest $request)
@@ -68,10 +69,13 @@ class InstructorViewController extends Controller
     public function storeSolicitar3(StoreSolicitar3Request $request)
     {
         $this->authorize('administrar');
-
+        $solicitudid = $request->input('sol_id');
         SolicitudxAprendiz::create($request->validated());
-        return redirect()->route('instructorViews.solicitar4');
+        return redirect()->route('instructorViews.solicitar4')->with('solicitudid', $solicitudid);
     }
+
+
+
 
     /**
      * Store a newly created resource in storage.

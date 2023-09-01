@@ -14,9 +14,11 @@
                         @csrf
                         <div>
                             <x-label for="sol_id" value="{{ __('Código') }}" />
-                            <x-input id="sol_id" class="block mt-1 w-full" type="text" name="sol_id"
-                                :value="$solicitud->id" required autofocus autocomplete="sol_id" />
+                            <x-input  id="sol_id" class="block mt-1 w-full" type="text" name="sol_id"
+                                :value="$solicitud->id" required autofocus autocomplete="sol_id"/>
                         </div>
+
+
                         <div>
                             <x-label for="apr_id" value="{{ __('Aprendiz') }}" />
                             <select name="apr_id"
