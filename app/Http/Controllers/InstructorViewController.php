@@ -55,6 +55,15 @@ class InstructorViewController extends Controller
         return view('instructorViews.solicitar4', compact('sol_id'));
     }
 
+    public function solicitar5(): View
+    {
+        $this->authorize('administrar');
+
+        $instructors = Instructor::all();
+
+        return view('instructorViews.solicitar5', compact('instructors'));
+    }
+
     public function storeSolicitar2(StoreSolicitudComiteRequest $request)
     {
         $this->authorize('administrar');
@@ -75,18 +84,27 @@ class InstructorViewController extends Controller
 
 
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(StorePruebaRequest $request)
+    public function storeSolicitar4(StorePruebaRequest $request)
     {
         $this->authorize('administrar');
-        $img = $request->file('file')->store('');
-        $url = Storage::url($img);
 
-        Prueba::create([
-            'url' => $url
+        // Subir y almacenar el archivo
+        if ($request->hasFile('pru_url')) {
+            $file = $request->file('pru_url');
+            $path = $file->store('pruebas'); // Almacena el archivo en la carpeta 'pruebas' dentro del almacenamiento
 
-        ]);
+            // Crea un registro en la tabla 'pruebas'
+            Prueba::create([
+                'pru_tipo' => $request->pru_tipo,
+                'pru_descripcion' => $request->pru_descripcion,
+                'pru_fecha' => $request->pru_fecha,
+                'pru_url' => $path,
+                'sol_id' => $request->sol_id,
+            ]);
+
+            return redirect()->route('instructorViews.solicitar5')->with('success', 'La prueba se ha subido exitosamente.');
+        }
+
+        return back()->with('error', 'Ocurrió un error al subir la prueba.');
     }
 }

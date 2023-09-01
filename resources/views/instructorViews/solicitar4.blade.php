@@ -10,12 +10,12 @@
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
                 <div class="relative overflow-x-auto shadow-md sm:rounded-lg px-4 py-4">
                     <x-validation-errors class="mb-4" />
-                    <form method="POST" action="{{ route('pruebas.store') }}" enctype="multipart/form-data">
+                    <form method="POST" action="{{ route('instructorViews.storeSolicitar4') }}" enctype="multipart/form-data">
                         @csrf
                         <div>
                             <x-label for="sol_id" value="{{ __('ID Solicitud') }}" />
                             <x-input id="sol_id" class="block mt-1 w-full" type="text" name="sol_id"
-                                :value="$sol_id" required autofocus autocomplete="sol_id" disabled/>
+                                :value="$sol_id" required autofocus autocomplete="sol_id" />
                         </div>
                         <div>
                             <x-label for="pru_tipo" value="{{ __('Tipo') }}" />
@@ -35,11 +35,12 @@
                         </div>
                         <div>
                             <x-label for="pru_url" value="{{ __('Anexar prueba') }}" />
-                            <input class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" id="pru_url" type="file"  accept="image/*" >
-                            @error('file')
-                                <small class="text-danger" >{{$message}}</small>
+                            <input class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" id="pru_url" type="file" name="pru_url" accept="image/*">
+                            @error('pru_url')
+                                <small class="text-danger">{{ $message }}</small>
                             @enderror
                         </div>
+
 
 
 
@@ -49,6 +50,7 @@
                             </x-button>
                             <x-link href="{{ url()->previous() }}" class="mx-3">Atras</x-link>
                         </div>
+                    </form>
                 </div>
             </div>
         </div>
