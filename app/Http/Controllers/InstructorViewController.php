@@ -39,10 +39,11 @@ class InstructorViewController extends Controller
     {
         $this->authorize('administrar');
 
+        $solicitud = session('solicitud');
         $aprendizs = Aprendiz::all();
         $solicitud_comites = SolicitudComite::all();
 
-        return view('instructorViews.solicitar3', compact('aprendizs','solicitud_comites'));
+        return view('instructorViews.solicitar3', compact('aprendizs','solicitud_comites', 'solicitud'));
     }
 
     public function solicitar4(): View
@@ -59,8 +60,9 @@ class InstructorViewController extends Controller
     {
         $this->authorize('administrar');
 
-        SolicitudComite::create($request->validated());
-        return redirect()->route('instructorViews.solicitar3');
+        $solicitud = SolicitudComite::create($request->validated());
+
+        return redirect()->route('instructorViews.solicitar3')->with('solicitud', $solicitud);
     }
 
     public function storeSolicitar3(StoreSolicitar3Request $request)

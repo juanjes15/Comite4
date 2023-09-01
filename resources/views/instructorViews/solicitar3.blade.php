@@ -13,14 +13,9 @@
                     <form method="POST" action="{{ route('instructorViews.storeSolicitar3') }}">
                         @csrf
                         <div>
-                            <x-label for="sol_id" value="{{ __('Numero de solicitud') }}" />
-                            <select name="sol_id"
-                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
-                                <option value="">--Seleccione La solicitud--</option>
-                                @foreach ($solicitud_comites as $sol)
-                                    <option value="{{ $sol->id }}">{{ $sol->id }}</option>
-                                @endforeach
-                            </select>
+                            <x-label for="sol_id" value="{{ __('Código') }}" />
+                            <x-input id="sol_id" class="block mt-1 w-full" type="text" name="sol_id"
+                                :value="$solicitud->id" required autofocus autocomplete="sol_id" />
                         </div>
                         <div>
                             <x-label for="apr_id" value="{{ __('Aprendiz') }}" />
