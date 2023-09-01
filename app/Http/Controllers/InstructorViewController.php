@@ -36,25 +36,23 @@ class InstructorViewController extends Controller
     }
 
     public function solicitar3()
-{
-    $this->authorize('administrar');
+    {
+        $this->authorize('administrar');
 
-    $solicitud = session('solicitud');
-    $aprendizs = Aprendiz::all();
+        $sol_id = session('sol_id');
+        $aprendizs = Aprendiz::all();
 
-    // Guarda el ID de la solicitud en la sesión
-    session(['solicitudid' => $solicitud->id]);
-
-    return view('instructorViews.solicitar3', compact('aprendizs', 'solicitud'));
-}
+        return view('instructorViews.solicitar3', compact('aprendizs', 'sol_id'));
+    }
 
 
     public function solicitar4(): View
     {
         $this->authorize('administrar');
-        $solicitudid = session('solicitudid');
 
-        return view('instructorViews.solicitar4', compact('solicitudid'));
+        $sol_id = session('sol_id');
+
+        return view('instructorViews.solicitar4', compact('sol_id'));
     }
 
     public function storeSolicitar2(StoreSolicitudComiteRequest $request)
@@ -62,16 +60,16 @@ class InstructorViewController extends Controller
         $this->authorize('administrar');
 
         $solicitud = SolicitudComite::create($request->validated());
+        session(['sol_id' => $solicitud->id]);
 
-        return redirect()->route('instructorViews.solicitar3')->with('solicitud', $solicitud);
+        return redirect()->route('instructorViews.solicitar3');
     }
 
     public function storeSolicitar3(StoreSolicitar3Request $request)
     {
         $this->authorize('administrar');
-        $solicitudid = $request->input('sol_id');
         SolicitudxAprendiz::create($request->validated());
-        return redirect()->route('instructorViews.solicitar4')->with('solicitudid', $solicitudid);
+        return redirect()->route('instructorViews.solicitar4');
     }
 
 
@@ -87,9 +85,8 @@ class InstructorViewController extends Controller
         $url = Storage::url($img);
 
         Prueba::create([
-            'url'=> $url
+            'url' => $url
 
         ]);
     }
-
 }

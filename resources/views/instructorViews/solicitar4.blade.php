@@ -15,7 +15,7 @@
                         <div>
                             <x-label for="sol_id" value="{{ __('ID Solicitud') }}" />
                             <x-input id="sol_id" class="block mt-1 w-full" type="text" name="sol_id"
-                                :value="$solicitudid" required autofocus autocomplete="sol_id" disabled/>
+                                :value="$sol_id" required autofocus autocomplete="sol_id" disabled/>
                         </div>
                         <div>
                             <x-label for="pru_tipo" value="{{ __('Tipo') }}" />
