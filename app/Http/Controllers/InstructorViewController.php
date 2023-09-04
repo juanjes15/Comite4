@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreSolicitar3Request;
+use App\Http\Requests\StoreSolicitar5Request;
+use App\Http\Requests\StoreSolicitarResumenRequest;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreSolicitudComiteRequest;
 use App\Http\Requests\StorePruebaRequest;
@@ -14,6 +16,7 @@ use App\Models\Instructor;
 use App\Models\Programa;
 use App\Models\Capitulo;
 use App\Models\Articulo;
+use App\Models\Norma_Infringida;
 use App\Models\Numeral;
 use App\Models\Prueba;
 use App\Models\SolicitudxAprendiz;
@@ -31,8 +34,9 @@ class InstructorViewController extends Controller
         $this->authorize('administrar');
 
         $instructors = Instructor::all();
+        $ins_nombres = session('ins_nombres');
 
-        return view('instructorViews.solicitar2', compact('instructors'));
+        return view('instructorViews.solicitar2', compact('instructors','ins_nombres'));
     }
 
     public function solicitar3()
@@ -40,9 +44,10 @@ class InstructorViewController extends Controller
         $this->authorize('administrar');
 
         $sol_id = session('sol_id');
+        $ins_nombres = session('ins_nombres');
         $aprendizs = Aprendiz::all();
 
-        return view('instructorViews.solicitar3', compact('aprendizs', 'sol_id'));
+        return view('instructorViews.solicitar3', compact('aprendizs', 'sol_id','ins_nombres'));
     }
 
 
@@ -51,32 +56,52 @@ class InstructorViewController extends Controller
         $this->authorize('administrar');
 
         $sol_id = session('sol_id');
-
-        return view('instructorViews.solicitar4', compact('sol_id'));
+        $ins_nombres = session('ins_nombres');
+        return view('instructorViews.solicitar4', compact('sol_id','ins_nombres'));
     }
 
     public function solicitar5(): View
     {
         $this->authorize('administrar');
-
+        $sol_id = session('sol_id');
         $instructors = Instructor::all();
+        $capitulos = Capitulo::all();
+        $articulos = Articulo::all();
+        $numerals = Numeral::all();
+        $ins_nombres = session('ins_nombres');
 
-        return view('instructorViews.solicitar5', compact('instructors'));
+        return view('instructorViews.solicitar5', compact('instructors','capitulos','articulos','numerals','sol_id','ins_nombres'));
     }
+
+    public function solicitarResumen(): View
+    {
+        $this->authorize('administrar');
+
+        $sol_id = session('sol_id');
+        $ins_nombres = session('ins_nombres');
+
+        $solicitud = SolicitudComite::find($sol_id);
+
+        return view('instructorViews.solicitarResumen', compact('sol_id', 'ins_nombres'))
+            ->with('solicitud', $solicitud);
+    }
+
 
     public function storeSolicitar2(StoreSolicitudComiteRequest $request)
     {
         $this->authorize('administrar');
 
         $solicitud = SolicitudComite::create($request->validated());
-        session(['sol_id' => $solicitud->id]);
+        session(['sol_id' => $solicitud->id, 'ins_nombres' => $solicitud->ins_nombres]);
 
-        return redirect()->route('instructorViews.solicitar3');
+        return redirect()->route('instructorViews.solicitar3',compact('solicitud'));
     }
+
 
     public function storeSolicitar3(StoreSolicitar3Request $request)
     {
         $this->authorize('administrar');
+
         SolicitudxAprendiz::create($request->validated());
         return redirect()->route('instructorViews.solicitar4');
     }
@@ -107,4 +132,18 @@ class InstructorViewController extends Controller
 
         return back()->with('error', 'Ocurrió un error al subir la prueba.');
     }
+
+    public function storeSolicitar5(StoreSolicitar5Request $request)
+    {
+        $this->authorize('administrar');
+        Norma_Infringida::create($request->validated());
+        return redirect()->route('instructorViews.solicitarResumen');
+    }
+
+
+
+
+
+
+
 }
