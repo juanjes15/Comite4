@@ -47,4 +47,24 @@ class InstructorViewController extends Controller
         return view('instructorViews.plan_Mejoramiento');
     }
 
+    public function registrar_novedades()
+    {
+        return view('instructorViews.registrar_novedades');
+    }
+
+    public function anexar_info()
+    {
+        return view('instructorViews.anexar_info');
+    }
+
+    public function consultar_antecedentes()
+    {
+        return view('instructorViews.consultar_antecedentes');
+    }
+
+    public function detalles_antecedentes()
+    {
+        //$instructors = Instructor::all();
+        return view ('instructorViews.detalles_antecedentes');
+    }
 }

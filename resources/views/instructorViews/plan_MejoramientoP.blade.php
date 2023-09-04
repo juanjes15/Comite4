@@ -4,7 +4,9 @@
             {{ __('Plan Mejoramiento') }}
         </h2>
     </x-slot>
-    <x-link href="{{ route('instructorViews.plan_Mejoramiento') }}" class="mx-3 mt-5">Concertar plan</x-link>
+    <div class="flex justify mt-5">
+        <x-link href="{{ route('instructorViews.plan_Mejoramiento') }}" class="ml-3">Concertar plan</x-link>
+    </div>
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
@@ -41,7 +43,7 @@
                             
                             </td>
                             <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap ">
-                                    
+                                
                             </td> 
                             <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap ">
                         
