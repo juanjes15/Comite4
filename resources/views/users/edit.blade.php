@@ -24,10 +24,16 @@
                                 :value="$user->email" required autofocus autocomplete="email" />
                         </div>
                         <div>
-                            <x-label for="rol" value="{{ __('Nivel de Formación') }}" />
-                            <x-input id="rol" class="block mt-1 w-full" type="text"
-                                name="rol" :value="$user->rol" required autofocus
-                                autocomplete="rol" />
+                            <x-label for="rol" value="{{ __('Rol') }}" />
+                            <select id="rol" name="rol"
+                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                                <option>--Seleccione el rol--</option>
+                                <option value="estudiante">Estudiante</option>
+                                <option value="instructor">Instructor</option>
+                                <option value="gestor">Gestor de comités</option>
+                                <option value="subdirector">Subdirector</option>
+                                <option value="administrador">Administrador</option>
+                            </select>
                         </div>
                         <div class="flex mt-4">
                             <x-button>

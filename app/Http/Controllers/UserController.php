@@ -41,7 +41,14 @@ class UserController extends Controller
         $this->authorize('administrar');
 
         $user->update($request->validated());
-        return redirect()->route('users.index');
+
+        if ($user->rol === 'estudiante') {
+            return redirect()->route('users.addEstudiante', $user);
+        } else if ($user->rol === 'instructor') {
+            return redirect()->route('users.addInstructor', $user);
+        } else {
+            return redirect()->route('users.index');
+        }
     }
 
     public function destroy(User $user)
@@ -50,5 +57,17 @@ class UserController extends Controller
 
         $user->delete();
         return redirect()->route('users.index');
+    }
+
+    public function addEstudiante(User $user)
+    {
+        // Implementa la lógica para agregar un estudiante aquí
+        return view('users.addEstudiante', compact('user'));
+    }
+
+    public function addInstructor(User $user)
+    {
+        // Implementa la lógica para agregar un instructor aquí
+        return view('users.addInstructor', compact('user'));
     }
 }
