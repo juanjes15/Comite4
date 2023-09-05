@@ -1,6 +1,6 @@
 <x-app-layout>
     <div class="max-w-3x1 mx-auto p-6 mt-10">
-        <p class="text-center text-2xl font-semibold mb-4">Consultar antecedentes</p>
+        <p class="text-center text-2xl font-semibold mb-4">Consultar comité</p>
         <form class="flex items-center">   
             <label for="voice-search" class="sr-only">Search</label>
             <div class="relative w-full">
@@ -44,7 +44,7 @@
                                 
                         </td>
                         <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap ">
-                            Finalizado    
+                                
                         </td>
 
                         <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
@@ -55,7 +55,7 @@
                         </td> 
 
                         <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap ">
-                            <x-link href="{{ route('instructorViews.detalles_antecedentes') }}" class="mx-3 mt-5">Detalles</x-link>
+                            <x-link href="{{ route('instructorViews.detalles_comite') }}" class="mx-3 mt-5">Detalles</x-link>
                         </td>
                     </tr>    
                 </tbody>

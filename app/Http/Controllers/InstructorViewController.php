@@ -67,4 +67,12 @@ class InstructorViewController extends Controller
         //$instructors = Instructor::all();
         return view ('instructorViews.detalles_antecedentes');
     }
+    public function consultar_comite()
+    {
+        return view('instructorViews.consultar_comite');
+    }
+    public function detalles_comite()
+    {
+        return view ('instructorViews.detalles_comite');
+    }
 }

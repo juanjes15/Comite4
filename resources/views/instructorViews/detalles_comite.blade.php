@@ -1,7 +1,7 @@
 <x-app-layout>    
 <div class="max-w-3x1 mx-auto p-6 mt-10">
     <div>
-        <h1 class="text-2xl font-semibold text-gray-800 mb-4">Detalles antecedentes</h1>
+        <h1 class="text-2xl font-semibold text-gray-800 mb-4">Detalles comité</h1>
         <div class="flex flex-wrap -mx-4 mb-4">
             <div class="w-1/2 px-4 mb-4">
                 <label class="block text-sm font-medium text-gray-700">Código</label>
@@ -17,9 +17,7 @@
         <div class="flex flex-wrap -mx-4 mb-4">
             <div class="w-1/2 px-4 mb-4">
                 <label class="block text-sm font-medium text-gray-700">Estado</label>
-                <div class="mt-1 p-2 w-full border-black rounded-md focus:ring focus:ring-blue-400 bg-white">
-                    Finalizado
-                </div>
+                <input type="text" class="mt-1 p-2 w-full border rounded-md focus:ring focus:ring-blue-400">
             </div>
 
             <div class="w-1/2 px-4 mb-4">
