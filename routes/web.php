@@ -36,9 +36,21 @@ Route::middleware([
         'capitulos' => \App\Http\Controllers\CapituloController::class,
         'articulos' => \App\Http\Controllers\ArticuloController::class,
         'numerals' => \App\Http\Controllers\NumeralController::class,
-        'users' => \App\Http\Controllers\UserController::class,
         'gestorComiteViews' => \App\Http\Controllers\GestorController::class,
     ]);
+    Route::get('/users', [\App\Http\Controllers\UserController::class, 'index'])->name('users.index');
+    Route::get('/users/create', [\App\Http\Controllers\UserController::class, 'create'])->name('users.create');
+    Route::post('/users', [\App\Http\Controllers\UserController::class, 'store'])->name('users.store');
+    Route::get('/users/{user}/edit', [\App\Http\Controllers\UserController::class, 'edit'])->name('users.edit');
+    Route::put('/users/{user}', [\App\Http\Controllers\UserController::class, 'update'])->name('users.update');
+    Route::delete('/users/{user}', [\App\Http\Controllers\UserController::class, 'destroy'])->name('users.destroy');
+
+    Route::get('/users/addEstudiante/', [\App\Http\Controllers\UserController::class, 'addEstudiante'])->name('users.addEstudiante');
+    Route::post('/users/storeEstudiante', [\App\Http\Controllers\UserController::class, 'storeEstudiante'])->name('users.storeEstudiante');
+
+    Route::get('/users/addInstructor/', [\App\Http\Controllers\UserController::class, 'addInstructor'])->name('users.addInstructor');
+    Route::post('/users/storeInstructor', [\App\Http\Controllers\UserController::class, 'storeInstructor'])->name('users.storeInstructor');
+
     Route::post('/subir', 'Controller@subirArchivo')->name('subir');
     Route::get('/InstructorViews/solicitar1', [\App\Http\Controllers\InstructorViewController::class, 'solicitar1'])->name('instructorViews.solicitar1');
     Route::get('/InstructorViews/solicitar2', [\App\Http\Controllers\InstructorViewController::class, 'solicitar2'])->name('instructorViews.solicitar2');
@@ -55,5 +67,4 @@ Route::middleware([
     Route::post('/InstructorViews/solicitar5', [\App\Http\Controllers\InstructorViewController::class, 'storeSolicitar5'])->name('instructorViews.storeSolicitar5');
 
     Route::get('/InstructorViews/solicitarResumen', [\App\Http\Controllers\InstructorViewController::class, 'solicitarResumen'])->name('instructorViews.solicitarResumen');
-
 });
