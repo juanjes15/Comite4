@@ -39,6 +39,12 @@ Route::middleware([
         'users' => \App\Http\Controllers\UserController::class,
         'gestorComiteViews' => \App\Http\Controllers\GestorController::class,
     ]);
+    Route::get('/users/addEstudiante', [\App\Http\Controllers\UserController::class, 'addEstudiante'])->name('users.addEstudiante');
+    Route::post('/users/addEstudiante', [\App\Http\Controllers\UserController::class, 'addEstudiante'])->name('users.addEstudiante');
+
+    Route::get('/users/addInstructor', [\App\Http\Controllers\UserController::class, 'addInstructor'])->name('users.addInstructor');
+    Route::post('/users/addInstructor', [\App\Http\Controllers\UserController::class, 'addInstructor'])->name('users.addInstructor');
+
     Route::post('/subir', 'Controller@subirArchivo')->name('subir');
     Route::get('/InstructorViews/solicitar1', [\App\Http\Controllers\InstructorViewController::class, 'solicitar1'])->name('instructorViews.solicitar1');
     Route::get('/InstructorViews/solicitar2', [\App\Http\Controllers\InstructorViewController::class, 'solicitar2'])->name('instructorViews.solicitar2');
@@ -55,5 +61,4 @@ Route::middleware([
     Route::post('/InstructorViews/solicitar5', [\App\Http\Controllers\InstructorViewController::class, 'storeSolicitar5'])->name('instructorViews.storeSolicitar5');
 
     Route::get('/InstructorViews/solicitarResumen', [\App\Http\Controllers\InstructorViewController::class, 'solicitarResumen'])->name('instructorViews.solicitarResumen');
-
 });
