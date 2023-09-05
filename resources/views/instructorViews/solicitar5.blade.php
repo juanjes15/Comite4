@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Crear Solicitud - Agrega las acciones ') }}
+            {{ __('Solicitud N° ') . $sol_id . ('   - Añadir acciones') }}
         </h2>
     </x-slot>
 
@@ -13,8 +13,7 @@
                     <form method="POST" action="{{ route('instructorViews.storeSolicitar5') }}" enctype="multipart/form-data">
                         @csrf
                         <div>
-                            <x-label for="sol_id" value="{{ __('ID Solicitud') }}" />
-                            <x-input id="sol_id" class="block mt-1 w-full" type="text" name="sol_id"
+                            <x-input id="sol_id" class="block mt-1 w-full" type="hidden" name="sol_id"
                                 :value="$sol_id" required autofocus autocomplete="sol_id" />
                         </div>
                         <div>
@@ -42,16 +41,20 @@
                         </div>
 
                         <div>
-                            <x-label for="num_id" value="{{ __('Descripcion') }}" />
-                            <select name="num_id"
+                            <x-label for="num_id" value="{{ __('Descripción') }}" />
+                            <select id="num_id" name="num_id[]"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
-                                <option value="">--Seleccione la descripcion-</option>
+                                <option value="">--Seleccione la descripción--</option>
                                 @foreach ($numerals as $num)
                                     <option value="{{ $num->id }}" title="{{ $num->num_descripcion }}">{{ substr($num->num_descripcion, 0, 100) }}{{ strlen($num->num_descripcion) > 50 ? '...' : '' }}{{$num->num_calificacion}}</option>
                                 @endforeach
                             </select>
                         </div>
+                        <div id="contenedorSelects" class="mt-4">
+                            <!-- Este será el contenedor de los nuevos campos <select> -->
+                        </div>
                         <div class="flex mt-4">
+                            <x-button type="button" id="agregarSelect">Agregar Otra descripción</x-button>
                             <x-button>
                                 {{ __('Siguiente') }}
                             </x-button>
@@ -62,4 +65,25 @@
             </div>
         </div>
     </div>
+    <script>
+        document.getElementById('agregarSelect').addEventListener('click', function () {
+            var selectOriginal = document.getElementById('num_id');
+            var nuevoSelect = selectOriginal.cloneNode(true);
+
+            // Cambiar el id para evitar conflictos de ids
+            var nuevoID = 'nuevo_descripcion_' + (document.querySelectorAll('select[name^="num_id"]').length + 1);
+            nuevoSelect.setAttribute('id', nuevoID);
+
+            // Cambiar el nombre para que todos tengan el mismo nombre
+            nuevoSelect.setAttribute('name', 'num_id[]');
+
+            var contenedorSelects = document.getElementById('contenedorSelects');
+
+            // Agregar un elemento <br> para dar espacio
+            var br = document.createElement('br');
+
+            contenedorSelects.appendChild(nuevoSelect);
+            contenedorSelects.appendChild(br);
+        });
+    </script>
 </x-app-layout>

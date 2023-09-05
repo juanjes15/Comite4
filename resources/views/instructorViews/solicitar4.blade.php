@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Crear Solicitud - Agregar las pruebas requeridas') }}
+            {{ __('Solicitud N° ') . $sol_id . ('   - Agregar las pruebas requeridas') }}
         </h2>
     </x-slot>
 
@@ -13,8 +13,7 @@
                     <form method="POST" action="{{ route('instructorViews.storeSolicitar4') }}" enctype="multipart/form-data">
                         @csrf
                         <div>
-                            <x-label for="sol_id" value="{{ __('ID Solicitud') }}" />
-                            <x-input id="sol_id" class="block mt-1 w-full" type="text" name="sol_id"
+                            <x-input id="sol_id" class="block mt-1 w-full" type="hidden" name="sol_id"
                                 :value="$sol_id" required autofocus autocomplete="sol_id" />
                         </div>
                         <div>

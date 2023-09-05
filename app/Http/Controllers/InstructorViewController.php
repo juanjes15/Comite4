@@ -30,14 +30,20 @@ class InstructorViewController extends Controller
     }
 
     public function solicitar2(): View
-    {
-        $this->authorize('administrar');
+{
+    $this->authorize('administrar');
 
-        $instructors = Instructor::all();
-        $ins_nombres = session('ins_nombres');
+    // Obtener las áreas de los instructores
+    $areas = Instructor::distinct()->pluck('ins_area');
 
-        return view('instructorViews.solicitar2', compact('instructors','ins_nombres'));
-    }
+    // Obtener los instructores ordenados alfabéticamente por ins_nombres
+    $instructors = Instructor::orderBy('ins_area')->get();
+
+    $ins_nombres = session('ins_nombres');
+
+    return view('instructorViews.solicitar2', compact('instructors', 'areas', 'ins_nombres'));
+}
+
 
     public function solicitar3()
     {
@@ -134,14 +140,32 @@ class InstructorViewController extends Controller
     }
 
     public function storeSolicitar5(StoreSolicitar5Request $request)
-    {
-        $this->authorize('administrar');
-        Norma_Infringida::create($request->validated());
-        return redirect()->route('instructorViews.solicitarResumen');
+{
+    $this->authorize('administrar');
+
+    $sol_id = $request->sol_id;
+    $numIds = $request->num_id;
+
+    foreach ($numIds as $numId) {
+        Norma_Infringida::create([
+            'sol_id' => $sol_id,
+            'num_id' => $numId,
+        ]);
     }
 
+    return redirect()->route('instructorViews.solicitarResumen');
+}
 
 
+
+    public function getInstructoresPorArea($area)
+    {
+        // Consulta instructores filtrados por área
+        $instructores = Instructor::where('ins_area', $area)->get();
+
+        // Devuelve los instructores en formato JSON
+        return response()->json($instructores);
+    }
 
 
 

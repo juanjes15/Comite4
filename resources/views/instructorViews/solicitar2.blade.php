@@ -19,7 +19,7 @@
                                 <option value="">--Seleccione el Instructor--</option>
                                 @foreach ($instructors as $instructor)
                                     <option value="{{ $instructor->id }}">{{ $instructor->ins_nombres }}
-                                        {{ $instructor->ins_apellidos }}</option>
+                                        {{ $instructor->ins_apellidos }} - {{ $instructor->ins_area }} </option>
                                 @endforeach
                             </select>
                         </div>

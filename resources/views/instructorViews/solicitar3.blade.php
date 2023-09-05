@@ -1,9 +1,10 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Crear Solicitud - Añadir aprendices a la solicitud') }}
+            {{ __('Solicitud N° ') . $sol_id . ('   - Añadir aprendices a la solicitud') }}
         </h2>
     </x-slot>
+
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
@@ -12,16 +13,15 @@
                     <x-validation-errors class="mb-4" />
                     <form method="POST" action="{{ route('instructorViews.storeSolicitar3') }}">
                         @csrf
+                        <x-button type="button" id="agregarSelect"  class="mb-6  mt-6"  >Agregar Aprendiz</x-button>
                         <div>
-                            <x-label for="sol_id" value="{{ __('Código') }}" />
-                            <x-input  id="sol_id" class="block mt-1 w-full" type="text" name="sol_id"
-                                :value="$sol_id" required autofocus autocomplete="sol_id"/>
+                            <x-input id="sol_id" class="block mt-1 w-full" type="hidden" name="sol_id"
+                                :value="$sol_id" required autofocus autocomplete="sol_id" />
                         </div>
-
 
                         <div>
                             <x-label for="apr_id" value="{{ __('Aprendiz') }}" />
-                            <select name="apr_id"
+                            <select name="apr_id" id="apr_id"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
                                 <option value="">--Seleccione el Aprendiz--</option>
                                 @foreach ($aprendizs as $aprendiz)
@@ -29,27 +29,42 @@
                                         {{ $aprendiz->apr_apellidos }}</option>
                                 @endforeach
                             </select>
+
                         </div>
-
-                        {{-- <div>
-
-                            <form method="POST" action="{{route('subir')}}" accept-charset="UTF-8" enctype="multipart/form-data">
-                                {{ csrf_field() }}
-                                <label for="archivo"><b>Archivo: </b></label><br>
-                                <input type="file" name="archivo" required>
-                                <input class="btn btn-success" type="submit" value="Enviar" >
-                              </form>
-
-                        </div> --}}
-
+                        <br>
+                        <div id="contenedorSelects" class="mt-4">
+                            <!-- Este será el contenedor de los nuevos campos <select> -->
+                        </div>
+                        <br>
                         <div class="flex mt-4">
                             <x-button>
                                 {{ __('Siguiente') }}
                             </x-button>
                             <x-link href="{{ url()->previous() }}" class="mx-3">Atras</x-link>
                         </div>
+                    </form>
                 </div>
             </div>
         </div>
     </div>
+
+    <script>
+        document.getElementById('agregarSelect').addEventListener('click', function () {
+            var selectOriginal = document.getElementById('apr_id');
+            var nuevoSelect = selectOriginal.cloneNode(true);
+
+            // Cambiar el nombre para evitar conflictos de nombres
+            var nuevoNombre = 'nuevo_aprendiz_' + (document.querySelectorAll('select[name^="nuevo_aprendiz"]').length + 1);
+            nuevoSelect.setAttribute('name', nuevoNombre);
+
+            var contenedorSelects = document.getElementById('contenedorSelects');
+
+            // Agregar un elemento <br> para dar espacio
+            var br = document.createElement('br');
+
+            contenedorSelects.appendChild(nuevoSelect);
+            contenedorSelects.appendChild(br);
+        });
+    </script>
 </x-app-layout>
+

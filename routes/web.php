@@ -42,6 +42,7 @@ Route::middleware([
     Route::post('/subir', 'Controller@subirArchivo')->name('subir');
     Route::get('/InstructorViews/solicitar1', [\App\Http\Controllers\InstructorViewController::class, 'solicitar1'])->name('instructorViews.solicitar1');
     Route::get('/InstructorViews/solicitar2', [\App\Http\Controllers\InstructorViewController::class, 'solicitar2'])->name('instructorViews.solicitar2');
+    Route::get('/obtener-instructores-por-area/{area}', [InstructorController::class, 'getInstructoresPorArea']);
     Route::post('/InstructorViews/solicitar2', [\App\Http\Controllers\InstructorViewController::class, 'storeSolicitar2'])->name('instructorViews.storeSolicitar2');
 
     Route::get('/InstructorViews/solicitar3', [\App\Http\Controllers\InstructorViewController::class, 'solicitar3'])->name('instructorViews.solicitar3');
@@ -54,4 +55,5 @@ Route::middleware([
     Route::post('/InstructorViews/solicitar5', [\App\Http\Controllers\InstructorViewController::class, 'storeSolicitar5'])->name('instructorViews.storeSolicitar5');
 
     Route::get('/InstructorViews/solicitarResumen', [\App\Http\Controllers\InstructorViewController::class, 'solicitarResumen'])->name('instructorViews.solicitarResumen');
+
 });

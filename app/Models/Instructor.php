@@ -14,6 +14,7 @@ class Instructor extends Model
         'ins_apellidos',
         'ins_email',
         'ins_telefono',
+        'ins_area'
     ];
 
     /**
