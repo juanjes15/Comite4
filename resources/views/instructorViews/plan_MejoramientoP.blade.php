@@ -52,7 +52,7 @@
                             
                             </td>
                             <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap ">
-                                <x-link href="{{ route('instructorViews.plan_Mejoramiento') }}" class="mx-3 mt-5">Registrar resultado</x-link>
+                                <x-link href="{{ route('instructorViews.registrar_resultado') }}" class="mx-3 mt-5">Registrar resultado</x-link>
                             </td>
                         </tr>    
                     </tbody>

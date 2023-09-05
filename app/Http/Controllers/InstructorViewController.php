@@ -44,12 +44,21 @@ class InstructorViewController extends Controller
     }
     public function plan_Mejoramiento()
     {
-        return view('instructorViews.plan_Mejoramiento');
+        $instructors = Instructor::all();
+        $aprendizs = Aprendiz::all();
+        $programas = Programa::all();
+        return view('instructorViews.plan_Mejoramiento', compact('aprendizs','instructors','programas'));
+    }
+    public function registrar_resultado()
+    {
+        return view ('instructorViews.registrar_resultado');
     }
 
     public function registrar_novedades()
     {
-        return view('instructorViews.registrar_novedades');
+        $aprendizs = Aprendiz::all();
+        $programas = Programa::all();
+        return view('instructorViews.registrar_novedades', compact('aprendizs','programas'));
     }
 
     public function anexar_info()
