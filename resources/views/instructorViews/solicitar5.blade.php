@@ -12,6 +12,7 @@
                     <x-validation-errors class="mb-4" />
                     <form method="POST" action="{{ route('instructorViews.storeSolicitar5') }}" enctype="multipart/form-data">
                         @csrf
+                        <x-button type="button" id="agregarSelect">Agregar Otra descripción</x-button>
                         <div>
                             <x-input id="sol_id" class="block mt-1 w-full" type="hidden" name="sol_id"
                                 :value="$sol_id" required autofocus autocomplete="sol_id" />
@@ -54,9 +55,9 @@
                             <!-- Este será el contenedor de los nuevos campos <select> -->
                         </div>
                         <div class="flex mt-4">
-                            <x-button type="button" id="agregarSelect">Agregar Otra descripción</x-button>
+
                             <x-button>
-                                {{ __('Siguiente') }}
+                                {{ __('Finalizar') }}
                             </x-button>
                             <x-link href="{{ url()->previous() }}" class="mx-3">Atras</x-link>
                         </div>

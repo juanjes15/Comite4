@@ -30,19 +30,36 @@ class InstructorViewController extends Controller
     }
 
     public function solicitar2(): View
-{
-    $this->authorize('administrar');
+    {
+        $this->authorize('administrar');
 
-    // Obtener las áreas de los instructores
-    $areas = Instructor::distinct()->pluck('ins_area');
+        // Obtener las áreas de los instructores
+        $areas = Instructor::distinct()->pluck('ins_area');
 
-    // Obtener los instructores ordenados alfabéticamente por ins_nombres
-    $instructors = Instructor::orderBy('ins_area')->get();
+        // Obtener los instructores ordenados alfabéticamente por ins_nombres
+        $instructors = Instructor::orderBy('ins_area')->get();
 
-    $ins_nombres = session('ins_nombres');
+        $ins_nombres = session('ins_nombres');
+        $ins_apellidos = session('ins_apellidos');
+        $sol_fecha = session('sol_fecha');
+        $sol_lugar = session('sol_lugar');
+        $sol_asunto = session('sol_asunto');
+        $sol_motivo = session('sol_motivo');
+        $sol_estado = session('sol_estado');
 
-    return view('instructorViews.solicitar2', compact('instructors', 'areas', 'ins_nombres'));
-}
+
+        return view('instructorViews.solicitar2', compact(
+            'instructors',
+            'areas',
+            'ins_nombres',
+            'ins_apellidos',
+            'sol_fecha',
+            'sol_lugar',
+            'sol_asunto',
+            'sol_motivo',
+            'sol_estado',
+        ));
+    }
 
 
     public function solicitar3()
@@ -50,10 +67,12 @@ class InstructorViewController extends Controller
         $this->authorize('administrar');
 
         $sol_id = session('sol_id');
-        $ins_nombres = session('ins_nombres');
+        $apr_nombres = session('apr_nombres');
+        $apr_apellidos = session('apr_apellidos');
         $aprendizs = Aprendiz::all();
 
-        return view('instructorViews.solicitar3', compact('aprendizs', 'sol_id','ins_nombres'));
+
+        return view('instructorViews.solicitar3', compact('aprendizs', 'sol_id', 'apr_nombres', 'apr_apellidos'));
     }
 
 
@@ -63,7 +82,7 @@ class InstructorViewController extends Controller
 
         $sol_id = session('sol_id');
         $ins_nombres = session('ins_nombres');
-        return view('instructorViews.solicitar4', compact('sol_id','ins_nombres'));
+        return view('instructorViews.solicitar4', compact('sol_id', 'ins_nombres'));
     }
 
     public function solicitar5(): View
@@ -76,7 +95,7 @@ class InstructorViewController extends Controller
         $numerals = Numeral::all();
         $ins_nombres = session('ins_nombres');
 
-        return view('instructorViews.solicitar5', compact('instructors','capitulos','articulos','numerals','sol_id','ins_nombres'));
+        return view('instructorViews.solicitar5', compact('instructors', 'capitulos', 'articulos', 'numerals', 'sol_id', 'ins_nombres'));
     }
 
     public function solicitarResumen(): View
@@ -84,13 +103,35 @@ class InstructorViewController extends Controller
         $this->authorize('administrar');
 
         $sol_id = session('sol_id');
-        $ins_nombres = session('ins_nombres');
-
+        $apr_id = session('apr_id');
         $solicitud = SolicitudComite::find($sol_id);
+        $aprendiz = Aprendiz::find(session('apr_id'));
 
-        return view('instructorViews.solicitarResumen', compact('sol_id', 'ins_nombres'))
-            ->with('solicitud', $solicitud);
+        // Obtén los datos de la prueba
+        $prueba = Prueba::where('sol_id', $sol_id)->first();
+
+        // Obtén los datos del capítulo y artículo
+        $cap_numero = session('cap_numero');
+        $cap_descripcion = session('cap_descripcion');
+        $art_numero = session('art_numero');
+
+        return view('instructorViews.solicitarResumen', compact(
+            'solicitud',
+            'aprendiz',
+            'prueba',
+            'cap_numero',
+            'cap_descripcion',
+            'art_numero'
+        ));
     }
+
+
+
+
+
+
+
+
 
 
     public function storeSolicitar2(StoreSolicitudComiteRequest $request)
@@ -98,19 +139,36 @@ class InstructorViewController extends Controller
         $this->authorize('administrar');
 
         $solicitud = SolicitudComite::create($request->validated());
-        session(['sol_id' => $solicitud->id, 'ins_nombres' => $solicitud->ins_nombres]);
 
-        return redirect()->route('instructorViews.solicitar3',compact('solicitud'));
+        // Redirige a la siguiente vista pasando el ID de la solicitud
+        return redirect()->route('instructorViews.solicitar3', ['sol_id' => $solicitud->id]);
     }
+
+
 
 
     public function storeSolicitar3(StoreSolicitar3Request $request)
     {
         $this->authorize('administrar');
 
-        SolicitudxAprendiz::create($request->validated());
-        return redirect()->route('instructorViews.solicitar4');
+        $solicitudxAprendiz = SolicitudxAprendiz::create($request->validated());
+
+        // Obtén el aprendiz asociado a la solicitud
+        $aprendiz = Aprendiz::find(session('apr_id'));
+
+        // Establece las variables de sesión aquí
+        session([
+            'sol_id' => $solicitudxAprendiz->sol_id, // Asegúrate de que este sea el campo correcto que identifica la solicitud
+            'apr_id' => $aprendiz->id, // Asegúrate de almacenar el ID del aprendiz si lo necesitas en la vista
+            // Otras variables de sesión si es necesario
+        ]);
+
+        // Redirige a la vista 'solicitarResumen'
+        return redirect()->route('instructorViews.solicitarResumen');
     }
+
+
+
 
 
 
@@ -140,34 +198,19 @@ class InstructorViewController extends Controller
     }
 
     public function storeSolicitar5(StoreSolicitar5Request $request)
-{
-    $this->authorize('administrar');
-
-    $sol_id = $request->sol_id;
-    $numIds = $request->num_id;
-
-    foreach ($numIds as $numId) {
-        Norma_Infringida::create([
-            'sol_id' => $sol_id,
-            'num_id' => $numId,
-        ]);
-    }
-
-    return redirect()->route('instructorViews.solicitarResumen');
-}
-
-
-
-    public function getInstructoresPorArea($area)
     {
-        // Consulta instructores filtrados por área
-        $instructores = Instructor::where('ins_area', $area)->get();
+        $this->authorize('administrar');
 
-        // Devuelve los instructores en formato JSON
-        return response()->json($instructores);
+        $sol_id = $request->sol_id;
+        $numIds = $request->num_id;
+
+        foreach ($numIds as $numId) {
+            Norma_Infringida::create([
+                'sol_id' => $sol_id,
+                'num_id' => $numId,
+            ]);
+        }
+
+        return redirect()->route('instructorViews.solicitarResumen');
     }
-
-
-
-
 }
