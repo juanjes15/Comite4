@@ -17,9 +17,20 @@
                             <x-input id="user" class="block mt-1 w-full" type="text" name="user"
                                 :value="$user->id" required autofocus autocomplete="user" />
                         </div>
+                        <div>
+                            <x-label for="apr_id" value="{{ __('Aprendices') }}" />
+                            <select name="apr_id"
+                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                                <option value="">--Seleccione un Aprendiz--</option>
+                                @foreach ($aprendizs as $aprendiz)
+                                    <option value="{{ $aprendiz->id }}">
+                                        {{ $aprendiz->apr_nombres }} {{ $aprendiz->apr_apellidos }}</option>
+                                @endforeach
+                            </select>
+                        </div>
                         <div class="flex mt-4">
                             <x-button>
-                                {{ __('Siguiente') }}
+                                {{ __('Guardar') }}
                             </x-button>
                             <x-link href="{{ url()->previous() }}" class="mx-3">Atras</x-link>
                         </div>
