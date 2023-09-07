@@ -37,6 +37,7 @@ Route::middleware([
         'articulos' => \App\Http\Controllers\ArticuloController::class,
         'numerals' => \App\Http\Controllers\NumeralController::class,
         'gestorComiteViews' => \App\Http\Controllers\GestorController::class,
+
     ]);
     Route::get('/users', [\App\Http\Controllers\UserController::class, 'index'])->name('users.index');
     Route::get('/users/create', [\App\Http\Controllers\UserController::class, 'create'])->name('users.create');
