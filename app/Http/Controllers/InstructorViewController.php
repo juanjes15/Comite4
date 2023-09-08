@@ -99,31 +99,36 @@ class InstructorViewController extends Controller
     }
 
     public function solicitarResumen(): View
-    {
-        $this->authorize('administrar');
+{
+    $this->authorize('administrar');
 
-        $sol_id = session('sol_id');
-        $apr_id = session('apr_id');
-        $solicitud = SolicitudComite::find($sol_id);
-        $aprendiz = Aprendiz::find(session('apr_id'));
+    $sol_id = session('sol_id');
+    $apr_id = session('apr_id');
+    $solicitud = SolicitudComite::find($sol_id);
+    $aprendiz = Aprendiz::find(session('apr_id'));
+    $apr_nombres = session('apr_nombres');
+    $apr_apellidos = session('apr_apellidos');
 
-        // Obtén los datos de la prueba
-        $prueba = Prueba::where('sol_id', $sol_id)->first();
+    // Obtén los datos de la prueba
+    $prueba = Prueba::where('sol_id', $sol_id)->first();
 
-        // Obtén los datos del capítulo y artículo
-        $cap_numero = session('cap_numero');
-        $cap_descripcion = session('cap_descripcion');
-        $art_numero = session('art_numero');
+    // Obtén los datos del capítulo y artículo
+    $cap_numero = session('cap_numero');
+    $cap_descripcion = session('cap_descripcion');
+    $art_numero = session('art_numero');
 
-        return view('instructorViews.solicitarResumen', compact(
-            'solicitud',
-            'aprendiz',
-            'prueba',
-            'cap_numero',
-            'cap_descripcion',
-            'art_numero'
-        ));
-    }
+    return view('instructorViews.solicitarResumen', compact(
+        'solicitud',
+        'aprendiz',
+        'apr_nombres',
+        'apr_apellidos',
+        'prueba',
+        'cap_numero',
+        'cap_descripcion',
+        'art_numero'
+    ));
+}
+
 
 
 

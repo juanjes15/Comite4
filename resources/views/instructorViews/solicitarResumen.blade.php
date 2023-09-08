@@ -38,10 +38,9 @@
                      <!-- Faltas -->
                     <div class="bg-gray-100 p-4 rounded-lg mb-4">
                         <h3 class="text-lg font-semibold mb-2">Informacion de las Faltas</h3>
-                        <p>Tipo de Prueba: {{ $prueba->pru_tipo }}</p>
-                        <p>Url: {{ $prueba->pru_url }}</p>
-                        <p><strong>Descripción de la Prueba:</strong> {{ $prueba->pru_descripcion }}</p>
-                        <p><strong>Fecha de la Prueba:</strong> {{ $prueba->pru_fecha }}</p>
+                        <p><strong>Número del Capítulo:</strong> {{ $cap_numero }}</p>
+                        <p><strong>Descripción del Capítulo:</strong> {{ $cap_descripcion }}</p>
+                        <p><strong>Número del Artículo:</strong> {{ $art_numero }}</p>
                     </div>
 
                     <!-- Botones -->
