@@ -84,4 +84,9 @@ class InstructorViewController extends Controller
     {
         return view ('instructorViews.detalles_comite');
     }
+    public function reglamento_aprendiz()
+    {
+        return view ('instructorViews.reglamento_aprendiz');
+    }
 }
+
