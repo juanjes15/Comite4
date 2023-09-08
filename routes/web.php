@@ -67,4 +67,13 @@ Route::middleware([
     Route::post('/InstructorViews/solicitar5', [\App\Http\Controllers\InstructorViewController::class, 'storeSolicitar5'])->name('instructorViews.storeSolicitar5');
 
     Route::get('/InstructorViews/solicitarResumen', [\App\Http\Controllers\InstructorViewController::class, 'solicitarResumen'])->name('instructorViews.solicitarResumen');
+    Route::get('/instructorViews/plan_MejoramientoP', [\App\Http\Controllers\InstructorViewController::class, 'plan_MejoramientoP'])->name('instructorViews.plan_MejoramientoP');
+    Route::get('/instructorViews/plan_Mejoramiento', [\App\Http\Controllers\InstructorViewController::class, 'plan_Mejoramiento'])->name('instructorViews.plan_Mejoramiento');
+    Route::get('/instructorViews/registrar_resultado', [\App\Http\Controllers\InstructorViewController::class, 'registrar_resultado'])->name('instructorViews.registrar_resultado');
+    Route::get('/instructorViews/registrar_novedades', [\App\Http\Controllers\InstructorViewController::class, 'registrar_novedades'])->name('instructorViews.registrar_novedades');
+    Route::get('/instructorViews/anexar_info', [\App\Http\Controllers\InstructorViewController::class, 'anexar_info'])->name('instructorViews.anexar_info');
+    Route::get('/instructorViews/consultar_antecedentes', [\App\Http\Controllers\InstructorViewController::class, 'consultar_antecedentes'])->name('instructorViews.consultar_antecedentes');
+    Route::get('/instructorViews/detalles_antecedentes', [\App\Http\Controllers\InstructorViewController::class, 'detalles_antecedentes'])->name('instructorViews.detalles_antecedentes');
+    Route::get('/instructorViews/consultar_comite', [\App\Http\Controllers\InstructorViewController::class, 'consultar_comite'])->name('instructorViews.consultar_comite');
+    Route::get('/instructorViews/detalles_comite', [\App\Http\Controllers\InstructorViewController::class, 'detalles_comite'])->name('instructorViews.detalles_comite');
 });

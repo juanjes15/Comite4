@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\UpdateUserRequest;
+use App\Models\Aprendiz;
+use App\Models\Instructor;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -43,9 +45,11 @@ class UserController extends Controller
         $user->update($request->validated());
 
         if ($user->rol === 'estudiante') {
-            return redirect()->route('users.addEstudiante', $user);
+            $aprendizs = Aprendiz::all();
+            return view('users.addEstudiante', compact('user', 'aprendizs'));
         } else if ($user->rol === 'instructor') {
-            return redirect()->route('users.addInstructor', $user);
+            $instructors = Instructor::all();
+            return view('users.addInstructor', compact('user', 'instructors'));
         } else {
             return redirect()->route('users.index');
         }
@@ -69,5 +73,32 @@ class UserController extends Controller
     {
         // Implementa la lógica para agregar un instructor aquí
         return view('users.addInstructor', compact('user'));
+    }
+
+    public function storeEstudiante(Request $request, User $user)
+    {
+        $this->authorize('administrar');
+
+        $validatedData = $request->validate([
+            'apr_id' => 'required',
+        ]);
+
+        $user->update(['apr_id' => $validatedData['apr_id']]);
+
+        return redirect()->route('users.index');
+    }
+
+    public function storeInstructor(Request $request, User $user)
+    {
+        $this->authorize('administrar');
+
+        $validatedData = $request->validate([
+            'ins_id' => 'required',
+        ]);
+
+        $user->instructor()->associate($validatedData['ins_id']);
+        $user->save();
+
+        return redirect()->route('users.index');
     }
 }
