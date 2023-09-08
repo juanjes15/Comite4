@@ -86,7 +86,15 @@ class InstructorViewController extends Controller
     }
     public function reglamento_aprendiz()
     {
-        return view ('instructorViews.reglamento_aprendiz');
+        /*$this->authorize('administrar');
+        $sol_id = session('sol_id');
+        $instructors = Instructor::all();
+        $capitulos = Capitulo::all();
+        $articulos = Articulo::all();
+        $numerals = Numeral::all();
+        $ins_nombres = session('ins_nombres');*/
+
+        return view('instructorViews.reglamento_aprendiz', compact('instructors', 'capitulos', 'articulos', 'numerals', 'sol_id', 'ins_nombres'));
     }
 }
 
