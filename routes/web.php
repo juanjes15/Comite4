@@ -44,4 +44,12 @@ Route::middleware([
     Route::get('/InstructorViews/solicitar1', [\App\Http\Controllers\InstructorViewController::class, 'solicitar1'])->name('instructorViews.solicitar1');
     Route::get('/InstructorViews/solicitar2', [\App\Http\Controllers\InstructorViewController::class, 'solicitar2'])->name('instructorViews.solicitar2');
     Route::post('/InstructorViews/solicitar2', [\App\Http\Controllers\InstructorViewController::class, 'storeSolicitar2'])->name('instructorViews.storeSolicitar2');
+    Route::get('/aprendiz/consultas', [\App\Http\Controllers\AprenController::class, 'consultas'])->name('aprendiz_Views.consultas');
+    Route::get('/aprendiz/plan_mejoramiento', [\App\Http\Controllers\AprenController::class, 'plan_mejoramiento'])->name('aprendiz_Views.plan_mejoramiento');
+    Route::get('/aprendiz/detalles', [\App\Http\Controllers\AprenController::class, 'detalles'])->name('aprendiz_Views.detalles');
+    Route::get('/aprendiz/impugnaciones', [\App\Http\Controllers\AprenController::class, 'impugnaciones'])->name('aprendiz_Views.impugnaciones');
+    Route::get('/aprendiz/reglamento', [\App\Http\Controllers\AprenController::class, 'reglamento'])->name('aprendiz_Views.reglamento');
+
+
+
 });
