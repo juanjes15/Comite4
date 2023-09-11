@@ -13,6 +13,7 @@ use App\Models\Programa;
 use App\Models\Capitulo;
 use App\Models\Articulo;
 use App\Models\Numeral;
+use Illuminate\Support\Facades\Storage;
 
 class InstructorViewController extends Controller
 {
@@ -83,18 +84,6 @@ class InstructorViewController extends Controller
     public function detalles_comite()
     {
         return view ('instructorViews.detalles_comite');
-    }
-    public function reglamento_aprendiz()
-    {
-        /*$this->authorize('administrar');
-        $sol_id = session('sol_id');
-        $instructors = Instructor::all();
-        $capitulos = Capitulo::all();
-        $articulos = Articulo::all();
-        $numerals = Numeral::all();
-        $ins_nombres = session('ins_nombres');*/
-
-        return view('instructorViews.reglamento_aprendiz');
     }
 }
 

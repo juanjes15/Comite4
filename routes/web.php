@@ -54,5 +54,5 @@ Route::middleware([
     Route::get('/instructorViews/detalles_antecedentes', [\App\Http\Controllers\InstructorViewController::class, 'detalles_antecedentes'])->name('instructorViews.detalles_antecedentes');
     Route::get('/instructorViews/consultar_comite', [\App\Http\Controllers\InstructorViewController::class, 'consultar_comite'])->name('instructorViews.consultar_comite');
     Route::get('/instructorViews/detalles_comite', [\App\Http\Controllers\InstructorViewController::class, 'detalles_comite'])->name('instructorViews.detalles_comite');
-    Route::get('/instructorViews/reglamento_aprendiz', [\App\Http\Controllers\InstructorViewController::class, 'reglamento_aprendiz'])->name('instructorViews.reglamento_aprendiz');
+    
 });
