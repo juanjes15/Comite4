@@ -34,7 +34,11 @@ class AprendizController extends Controller
     {
         $this->authorize('administrar');
 
-        $fichas = Ficha::all();
+        $fichas = Ficha::with('programa')
+                ->join('programas', 'fichas.pro_id', '=', 'programas.id')
+                ->orderBy('programas.pro_nombre')
+                ->orderBy('fichas.fic_codigo')
+                ->get();
         return view('aprendizs.create', compact('fichas'));
     }
 
