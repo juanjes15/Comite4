@@ -29,7 +29,7 @@ class InstructorViewController extends Controller
         return view('instructorViews.solicitar1');
     }
 
-    public function solicitar2(): View
+    public function solicitar2()
     {
         $this->authorize('administrar');
 
@@ -39,146 +39,120 @@ class InstructorViewController extends Controller
         // Obtener los instructores ordenados alfabéticamente por ins_nombres
         $instructors = Instructor::orderBy('ins_area')->get();
 
-        $ins_nombres = session('ins_nombres');
-        $ins_apellidos = session('ins_apellidos');
-        $sol_fecha = session('sol_fecha');
-        $sol_lugar = session('sol_lugar');
-        $sol_asunto = session('sol_asunto');
-        $sol_motivo = session('sol_motivo');
-        $sol_estado = session('sol_estado');
-
-
-        return view('instructorViews.solicitar2', compact(
-            'instructors',
-            'areas',
-            'ins_nombres',
-            'ins_apellidos',
-            'sol_fecha',
-            'sol_lugar',
-            'sol_asunto',
-            'sol_motivo',
-            'sol_estado',
-        ));
+        return view('instructorViews.solicitar2', compact('instructors', 'areas'));
     }
-
 
     public function solicitar3()
     {
         $this->authorize('administrar');
 
-        $sol_id = session('sol_id');
-        $apr_nombres = session('apr_nombres');
-        $apr_apellidos = session('apr_apellidos');
         $aprendizs = Aprendiz::all();
+        // Accede al valor de 'sol_id' almacenado en la sesión
+        $sol_id = session('sol_id');
 
-
-        return view('instructorViews.solicitar3', compact('aprendizs', 'sol_id', 'apr_nombres', 'apr_apellidos'));
+        return view('instructorViews.solicitar3', compact('aprendizs', 'sol_id'));
     }
 
-
-    public function solicitar4(): View
+    public function solicitar4()
     {
         $this->authorize('administrar');
-
+        // Accede al valor de 'sol_id' almacenado en la sesión
         $sol_id = session('sol_id');
-        $ins_nombres = session('ins_nombres');
-        return view('instructorViews.solicitar4', compact('sol_id', 'ins_nombres'));
+
+        return view('instructorViews.solicitar4', compact('sol_id'));
     }
 
-    public function solicitar5(): View
+    public function solicitar5()
     {
         $this->authorize('administrar');
+        // Accede al valor de 'sol_id' almacenado en la sesión
         $sol_id = session('sol_id');
+
         $instructors = Instructor::all();
         $capitulos = Capitulo::all();
         $articulos = Articulo::all();
         $numerals = Numeral::all();
-        $ins_nombres = session('ins_nombres');
 
-        return view('instructorViews.solicitar5', compact('instructors', 'capitulos', 'articulos', 'numerals', 'sol_id', 'ins_nombres'));
+        return view('instructorViews.solicitar5', compact('instructors', 'capitulos', 'articulos', 'numerals', 'sol_id'));
     }
 
-    public function solicitarResumen(): View
-{
-    $this->authorize('administrar');
+    public function solicitarResumen()
+    {
+        $this->authorize('administrar');
+    
+        // Obtén el ID de la solicitud desde la sesión
+        $sol_id = session('sol_id');
+    
+        // Obtén las faltas relacionadas con la solicitud
+        $normasInfringidas = Norma_Infringida::where('sol_id', $sol_id)->get();
+    
+        // Obtén el ID del aprendiz desde la sesión
+        $apr_id = session('apr_id');
+    
+        // Obtén los datos de la solicitud
+        $solicitud = SolicitudComite::find($sol_id);
+    
+        // Obtén los datos del aprendiz
+        $aprendiz = Aprendiz::find($apr_id);
+    
+        // Obtén los datos de la prueba
+        $prueba = Prueba::where('sol_id', $sol_id)->first();
+    
+        // Combina los datos de las faltas de la base de datos
+        $faltas = [];
+        foreach ($normasInfringidas as $norma) {
+            $faltas[] = [
+                'cap_numero' => $norma->cap_numero,
+                'cap_descripcion' => $norma->cap_descripcion,
+                'art_numero' => $norma->art_numero,
+            ];
+        }
+    
+        return view('instructorViews.solicitarResumen', compact(
+            'solicitud',
+            'aprendiz',
+            'prueba',
+            'faltas'
+        ));
+    }
+    
 
-    $sol_id = session('sol_id');
-    $apr_id = session('apr_id');
-    $solicitud = SolicitudComite::find($sol_id);
-    $aprendiz = Aprendiz::find(session('apr_id'));
-    $apr_nombres = session('apr_nombres');
-    $apr_apellidos = session('apr_apellidos');
-
-    // Obtén los datos de la prueba
-    $prueba = Prueba::where('sol_id', $sol_id)->first();
-
-    // Obtén los datos del capítulo y artículo
-    $cap_numero = session('cap_numero');
-    $cap_descripcion = session('cap_descripcion');
-    $art_numero = session('art_numero');
-
-    return view('instructorViews.solicitarResumen', compact(
-        'solicitud',
-        'aprendiz',
-        'apr_nombres',
-        'apr_apellidos',
-        'prueba',
-        'cap_numero',
-        'cap_descripcion',
-        'art_numero'
-    ));
-}
 
 
 
 
-
-
-
-
-
-
-
-    public function storeSolicitar2(StoreSolicitudComiteRequest $request)
+    public function storeSolicitar2(Request $request)
     {
         $this->authorize('administrar');
 
-        $solicitud = SolicitudComite::create($request->validated());
+        $solicitud = SolicitudComite::create($request->all());
 
-        // Redirige a la siguiente vista pasando el ID de la solicitud
-        return redirect()->route('instructorViews.solicitar3', ['sol_id' => $solicitud->id]);
+        // Almacena el ID de solicitud en la sesión
+        session(['sol_id' => $solicitud->id]);
+
+        // Almacena el ID de solicitud en una variable local
+        $sol_id = $solicitud->id;
+
+
+        return redirect()->route('instructorViews.solicitar3', compact('sol_id'));
     }
 
 
-
-
-    public function storeSolicitar3(StoreSolicitar3Request $request)
+    public function storeSolicitar3(Request $request)
     {
         $this->authorize('administrar');
 
-        $solicitudxAprendiz = SolicitudxAprendiz::create($request->validated());
-
-        // Obtén el aprendiz asociado a la solicitud
-        $aprendiz = Aprendiz::find(session('apr_id'));
-
-        // Establece las variables de sesión aquí
-        session([
-            'sol_id' => $solicitudxAprendiz->sol_id, // Asegúrate de que este sea el campo correcto que identifica la solicitud
-            'apr_id' => $aprendiz->id, // Asegúrate de almacenar el ID del aprendiz si lo necesitas en la vista
-            // Otras variables de sesión si es necesario
-        ]);
-
-        // Redirige a la vista 'solicitarResumen'
-        return redirect()->route('instructorViews.solicitarResumen');
+        $solicitudxAprendiz = SolicitudxAprendiz::create($request->all());
+        // Almacena el ID del aprendiz en la sesión
+        session(['apr_id' => $solicitudxAprendiz->apr_id]);
+        // Almacena el ID de solicitud en la sesión
+        session(['sol_id' => $solicitudxAprendiz->sol_id]);
+        // Almacena el ID de solicitud en una variable local
+        $sol_id = $solicitudxAprendiz->sol_id;
+        return redirect()->route('instructorViews.solicitar4', compact('sol_id'));
     }
 
-
-
-
-
-
-
-    public function storeSolicitar4(StorePruebaRequest $request)
+    public function storeSolicitar4(Request $request)
     {
         $this->authorize('administrar');
 
@@ -193,7 +167,7 @@ class InstructorViewController extends Controller
                 'pru_descripcion' => $request->pru_descripcion,
                 'pru_fecha' => $request->pru_fecha,
                 'pru_url' => $path,
-                'sol_id' => $request->sol_id,
+                'sol_id' => session('sol_id'),
             ]);
 
             return redirect()->route('instructorViews.solicitar5')->with('success', 'La prueba se ha subido exitosamente.');
@@ -202,23 +176,41 @@ class InstructorViewController extends Controller
         return back()->with('error', 'Ocurrió un error al subir la prueba.');
     }
 
-    public function storeSolicitar5(StoreSolicitar5Request $request)
+    public function storeSolicitar5(Request $request)
     {
         $this->authorize('administrar');
 
-        $sol_id = $request->sol_id;
+        $sol_id = session('sol_id');
         $numIds = $request->num_id;
+        $cap_ids = $request->cap_id; // Agrega esta línea
+        $art_ids = $request->art_id; // Agrega esta línea
+        $cap_descripciones = $request->cap_descripcion; // Agrega esta línea
 
-        foreach ($numIds as $numId) {
-            Norma_Infringida::create([
+    //     // Agrega dd() para verificar los datos
+    // dd($sol_id, $numIds, $cap_ids, $art_ids, $cap_descripciones);
+
+
+        foreach ($numIds as $key => $numId) {
+            $norma_Infringida = Norma_Infringida::create([
                 'sol_id' => $sol_id,
                 'num_id' => $numId,
+                'cap_numero' => isset($cap_ids[$key]) ? $cap_ids[$key] : null,
+                'cap_descripcion' => isset($cap_descripciones[$key]) ? $cap_descripciones[$key] : null,
+                'art_numero' => isset($art_ids[$key]) ? $art_ids[$key] : null,
             ]);
         }
 
+        // Redirecciona a la vista 'solicitarResumen'
         return redirect()->route('instructorViews.solicitarResumen');
     }
-   
+
+
+
+
+
+
+
+
     public function plan_MejoramientoP()
     {
         return view('instructorViews.plan_MejoramientoP');
@@ -228,18 +220,18 @@ class InstructorViewController extends Controller
         $instructors = Instructor::all();
         $aprendizs = Aprendiz::all();
         $programas = Programa::all();
-        return view('instructorViews.plan_Mejoramiento', compact('aprendizs','instructors','programas'));
+        return view('instructorViews.plan_Mejoramiento', compact('aprendizs', 'instructors', 'programas'));
     }
     public function registrar_resultado()
     {
-        return view ('instructorViews.registrar_resultado');
+        return view('instructorViews.registrar_resultado');
     }
 
     public function registrar_novedades()
     {
         $aprendizs = Aprendiz::all();
         $programas = Programa::all();
-        return view('instructorViews.registrar_novedades', compact('aprendizs','programas'));
+        return view('instructorViews.registrar_novedades', compact('aprendizs', 'programas'));
     }
 
     public function anexar_info()
@@ -255,7 +247,7 @@ class InstructorViewController extends Controller
     public function detalles_antecedentes()
     {
         //$instructors = Instructor::all();
-        return view ('instructorViews.detalles_antecedentes');
+        return view('instructorViews.detalles_antecedentes');
     }
     public function consultar_comite()
     {
@@ -263,6 +255,6 @@ class InstructorViewController extends Controller
     }
     public function detalles_comite()
     {
-        return view ('instructorViews.detalles_comite');
+        return view('instructorViews.detalles_comite');
     }
 }

@@ -3,6 +3,7 @@
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
             {{ __('Solicitud N° ') . $sol_id . ('   - Añadir aprendices a la solicitud') }}
         </h2>
+        <p>Sol_id: {{ $sol_id }}</p>
     </x-slot>
 
 

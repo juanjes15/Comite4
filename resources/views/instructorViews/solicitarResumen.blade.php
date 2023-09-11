@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Solicitud N° ') . $solicitud->id . ('   - Resumen de la Solicitud') }}
+            {{ __('Solicitud N° ') . $solicitud->id . '   - Resumen de la Solicitud' }}
         </h2>
     </x-slot>
 
@@ -16,7 +16,25 @@
                     <!-- Solicitante Information -->
                     <div class="bg-gray-100 p-4 rounded-lg mb-4">
                         <h3 class="text-lg font-semibold mb-2">Información del Solicitante</h3>
-                        <p><strong>Nombre Completo del Solicitante:</strong> {{ $solicitud->instructor->ins_nombres }} {{ $solicitud->instructor->ins_apellidos }}</p>
+                        <p><strong>Nombre Completo del Solicitante:</strong> {{ $solicitud->instructor->ins_nombres }}
+                            {{ $solicitud->instructor->ins_apellidos }}</p>
+                        <p><strong>Nombre del Aprendiz Solicitado: </strong>
+                            <!-- Detalles del Aprendiz -->
+                            @if (session('apr_id'))
+                                @php
+                                    $apr_id = session('apr_id');
+                                    $aprendiz = \App\Models\Aprendiz::find($apr_id);
+                                @endphp
+
+                                @if ($aprendiz)
+                                    {{ $aprendiz->apr_nombres }} {{ $aprendiz->apr_apellidos }}
+                                @else
+                                    Aprendiz no encontrado
+                                @endif
+                            @endif
+                        </p>
+
+
                         <p><strong>Fecha de Solicitud:</strong> {{ $solicitud->sol_fecha }}</p>
                         <p><strong>Lugar:</strong> {{ $solicitud->sol_lugar }}</p>
                         <p><strong>Asunto:</strong> {{ $solicitud->sol_asunto }}</p>
@@ -35,20 +53,28 @@
                         </div>
                     @endif
 
-                     <!-- Faltas -->
-                    <div class="bg-gray-100 p-4 rounded-lg mb-4">
-                        <h3 class="text-lg font-semibold mb-2">Informacion de las Faltas</h3>
-                        <p><strong>Número del Capítulo:</strong> {{ $cap_numero }}</p>
-                        <p><strong>Descripción del Capítulo:</strong> {{ $cap_descripcion }}</p>
-                        <p><strong>Número del Artículo:</strong> {{ $art_numero }}</p>
-                    </div>
+                    <!-- Información de las Faltas -->
+                    @if (!empty($faltas))
+                        <div class="bg-gray-100 p-4 rounded-lg mb-4">
+                            <h3 class="text-lg font-semibold mb-2">Información de las Faltas</h3>
+                            @foreach ($faltas as $falta)
+                                <p><strong>Número del Capítulo:</strong> {{ $falta['cap_numero'] }}</p>
+                                <p><strong>Descripción del Capítulo:</strong> {{ $falta['cap_descripcion'] }}</p>
+                                <p><strong>Número del Artículo:</strong> {{ $falta['art_numero'] }}</p>
+                            @endforeach
+                        </div>
+                    @endif
+
+
+
 
                     <!-- Botones -->
                     <div class="flex mt-4">
                         <x-button class="bg-blue-500 hover:bg-blue-700 text-white">
                             {{ __('Finalizar') }}
                         </x-button>
-                        <x-link href="{{ url()->previous() }}" class="mx-3 text-blue-500 hover:underline">Atrás</x-link>
+                        <x-link href="{{ url()->previous() }}"
+                            class="mx-3 text-blue-500 hover:underline">Atrás</x-link>
                     </div>
                 </div>
             </div>
