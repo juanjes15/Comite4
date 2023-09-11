@@ -94,7 +94,7 @@ class InstructorViewController extends Controller
         $numerals = Numeral::all();
         $ins_nombres = session('ins_nombres');*/
 
-        return view('instructorViews.reglamento_aprendiz', compact('instructors', 'capitulos', 'articulos', 'numerals', 'sol_id', 'ins_nombres'));
+        return view('instructorViews.reglamento_aprendiz');
     }
 }
 
