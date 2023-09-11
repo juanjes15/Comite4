@@ -79,25 +79,25 @@ class InstructorViewController extends Controller
     public function solicitarResumen()
     {
         $this->authorize('administrar');
-    
+
         // Obtén el ID de la solicitud desde la sesión
         $sol_id = session('sol_id');
-    
+
         // Obtén las faltas relacionadas con la solicitud
         $normasInfringidas = Norma_Infringida::where('sol_id', $sol_id)->get();
-    
+
         // Obtén el ID del aprendiz desde la sesión
         $apr_id = session('apr_id');
-    
+
         // Obtén los datos de la solicitud
         $solicitud = SolicitudComite::find($sol_id);
-    
+
         // Obtén los datos del aprendiz
         $aprendiz = Aprendiz::find($apr_id);
-    
+
         // Obtén los datos de la prueba
         $prueba = Prueba::where('sol_id', $sol_id)->first();
-    
+
         // Combina los datos de las faltas de la base de datos
         $faltas = [];
         foreach ($normasInfringidas as $norma) {
@@ -107,19 +107,22 @@ class InstructorViewController extends Controller
                 'art_numero' => $norma->art_numero,
             ];
         }
-    
+
+        //Consulta JJ
+        // Recupera la solicitud de comité con sus aprendices relacionados
+        $solicitudComite = SolicitudComite::with('aprendizs')->find($sol_id);
+        // Ahora, puedes acceder a los aprendices relacionados
+        $aprendices = $solicitudComite->aprendizs;
+
+
         return view('instructorViews.solicitarResumen', compact(
             'solicitud',
             'aprendiz',
             'prueba',
-            'faltas'
+            'faltas',
+            'aprendices'
         ));
     }
-    
-
-
-
-
 
     public function storeSolicitar2(Request $request)
     {
@@ -186,8 +189,8 @@ class InstructorViewController extends Controller
         $art_ids = $request->art_id; // Agrega esta línea
         $cap_descripciones = $request->cap_descripcion; // Agrega esta línea
 
-    //     // Agrega dd() para verificar los datos
-    // dd($sol_id, $numIds, $cap_ids, $art_ids, $cap_descripciones);
+        //     // Agrega dd() para verificar los datos
+        // dd($sol_id, $numIds, $cap_ids, $art_ids, $cap_descripciones);
 
 
         foreach ($numIds as $key => $numId) {
