@@ -141,19 +141,32 @@ class InstructorViewController extends Controller
     }
 
 
-    public function storeSolicitar3(Request $request)
-    {
-        $this->authorize('administrar');
+    // En el controlador InstructorViewController
+public function storeSolicitar3(Request $request)
+{
+    $this->authorize('administrar');
 
-        $solicitudxAprendiz = SolicitudxAprendiz::create($request->all());
-        // Almacena el ID del aprendiz en la sesión
-        session(['apr_id' => $solicitudxAprendiz->apr_id]);
-        // Almacena el ID de solicitud en la sesión
-        session(['sol_id' => $solicitudxAprendiz->sol_id]);
-        // Almacena el ID de solicitud en una variable local
-        $sol_id = $solicitudxAprendiz->sol_id;
-        return redirect()->route('instructorViews.solicitar4', compact('sol_id'));
+    // Obtén el ID de solicitud almacenado en la sesión
+    $sol_id = session('sol_id');
+
+    // Itera a través de los campos <select> dinámicos
+    foreach ($request->all() as $key => $value) {
+        // Verifica si el campo comienza con 'nuevo_aprendiz_'
+        if (strpos($key, 'nuevo_aprendiz_') === 0) {
+            // El campo es un aprendiz seleccionado
+            $apr_id = $value;
+
+            // Crea una entrada en la tabla 'solicitudxaprendiz'
+            SolicitudxAprendiz::create([
+                'sol_id' => $sol_id,
+                'apr_id' => $apr_id,
+            ]);
+        }
     }
+
+    return redirect()->route('instructorViews.solicitar4', compact('sol_id'));
+}
+
 
     public function storeSolicitar4(Request $request)
     {
