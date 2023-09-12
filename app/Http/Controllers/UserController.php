@@ -83,7 +83,11 @@ class UserController extends Controller
             'apr_id' => 'required',
         ]);
 
-        $user->update(['apr_id' => $validatedData['apr_id']]);
+        $user->aprendiz()->associate($validatedData['apr_id']);
+        if ($user->ins_id !== null) {
+            $user->instructor()->dissociate();
+        }
+        $user->save();
 
         return redirect()->route('users.index');
     }
@@ -97,6 +101,9 @@ class UserController extends Controller
         ]);
 
         $user->instructor()->associate($validatedData['ins_id']);
+        if ($user->apr_id !== null) {
+            $user->aprendiz()->dissociate();
+        }
         $user->save();
 
         return redirect()->route('users.index');

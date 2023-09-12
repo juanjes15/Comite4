@@ -46,10 +46,10 @@ Route::middleware([
     Route::delete('/users/{user}', [\App\Http\Controllers\UserController::class, 'destroy'])->name('users.destroy');
 
     Route::get('/users/addEstudiante/', [\App\Http\Controllers\UserController::class, 'addEstudiante'])->name('users.addEstudiante');
-    Route::post('/users/storeEstudiante', [\App\Http\Controllers\UserController::class, 'storeEstudiante'])->name('users.storeEstudiante');
+    Route::put('/users/storeEstudiante/{user}', [\App\Http\Controllers\UserController::class, 'storeEstudiante'])->name('users.storeEstudiante');
 
     Route::get('/users/addInstructor/', [\App\Http\Controllers\UserController::class, 'addInstructor'])->name('users.addInstructor');
-    Route::post('/users/storeInstructor', [\App\Http\Controllers\UserController::class, 'storeInstructor'])->name('users.storeInstructor');
+    Route::put('/users/storeInstructor/{user}', [\App\Http\Controllers\UserController::class, 'storeInstructor'])->name('users.storeInstructor');
 
     Route::post('/subir', 'Controller@subirArchivo')->name('subir');
     Route::get('/InstructorViews/solicitar1', [\App\Http\Controllers\InstructorViewController::class, 'solicitar1'])->name('instructorViews.solicitar1');
