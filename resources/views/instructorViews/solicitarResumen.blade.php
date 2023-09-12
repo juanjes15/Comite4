@@ -16,7 +16,7 @@
                     <!-- Solicitante Information -->
                     <div class="bg-gray-100 p-4 rounded-lg mb-4">
                         <h3 class="text-lg font-semibold mb-2">Información del Solicitante</h3>
-                        <p><strong>Nombre Completo del Solicitante:</strong> {{ $solicitud->instructor->ins_nombres }}
+                        <p><strong>Nombre Completo del instructor Solicitante:</strong> {{ $solicitud->instructor->ins_nombres }}
                             {{ $solicitud->instructor->ins_apellidos }}
                         </p>
 

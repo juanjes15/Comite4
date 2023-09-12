@@ -20,7 +20,7 @@
                                 :value="$sol_id" required autofocus autocomplete="sol_id" />
                         </div>
 
-                        <div>
+                        <div style="display: none;">
                             <x-label for="apr_id" value="{{ __('Aprendiz') }}" />
                             <select name="apr_id" id="apr_id"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
@@ -30,8 +30,8 @@
                                         {{ $aprendiz->apr_apellidos }}</option>
                                 @endforeach
                             </select>
-
                         </div>
+
                         <br>
                         <div id="contenedorSelects" class="mt-4">
                             <!-- Este será el contenedor de los nuevos campos <select> -->
@@ -50,12 +50,17 @@
     </div>
 
     <script>
+        var contadorSelects = 0; // Inicializamos el contador en 0
+
         document.getElementById('agregarSelect').addEventListener('click', function () {
             var selectOriginal = document.getElementById('apr_id');
             var nuevoSelect = selectOriginal.cloneNode(true);
 
+            // Incrementar el contador antes de cambiar el nombre
+            contadorSelects++;
+
             // Cambiar el nombre para evitar conflictos de nombres
-            var nuevoNombre = 'nuevo_aprendiz_' + (document.querySelectorAll('select[name^="nuevo_aprendiz"]').length + 1);
+            var nuevoNombre = 'nuevo_aprendiz_' + contadorSelects;
             nuevoSelect.setAttribute('name', nuevoNombre);
 
             var contenedorSelects = document.getElementById('contenedorSelects');
@@ -67,5 +72,7 @@
             contenedorSelects.appendChild(br);
         });
     </script>
+
+
 </x-app-layout>
 
