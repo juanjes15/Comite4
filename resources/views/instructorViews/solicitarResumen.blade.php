@@ -17,22 +17,17 @@
                     <div class="bg-gray-100 p-4 rounded-lg mb-4">
                         <h3 class="text-lg font-semibold mb-2">Información del Solicitante</h3>
                         <p><strong>Nombre Completo del Solicitante:</strong> {{ $solicitud->instructor->ins_nombres }}
-                            {{ $solicitud->instructor->ins_apellidos }}</p>
-                        <p><strong>Nombre del Aprendiz Solicitado: </strong>
-                            <!-- Detalles del Aprendiz -->
-                            @if (session('apr_id'))
-                                @php
-                                    $apr_id = session('apr_id');
-                                    $aprendiz = \App\Models\Aprendiz::find($apr_id);
-                                @endphp
-
-                                @if ($aprendiz)
-                                    {{ $aprendiz->apr_nombres }} {{ $aprendiz->apr_apellidos }}
-                                @else
-                                    Aprendiz no encontrado
-                                @endif
-                            @endif
+                            {{ $solicitud->instructor->ins_apellidos }}
                         </p>
+
+                        {{-- Aprendices --}}
+                        @foreach ($aprendices as $aprendiz)
+                            <p><strong>Nombre del Aprendiz Solicitado: </strong>
+                                <!-- Detalles del Aprendiz -->
+                                {{ $aprendiz->apr_nombres }} {{ $aprendiz->apr_apellidos }}
+                            </p>
+                        @endforeach
+
 
 
                         <p><strong>Fecha de Solicitud:</strong> {{ $solicitud->sol_fecha }}</p>
