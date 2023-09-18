@@ -73,8 +73,11 @@ class InstructorController extends Controller
     public function destroy(Instructor $instructor)
     {
         $this->authorize('administrar');
-        
+
         $instructor->delete();
         return redirect()->route('instructors.index');
     }
+
+
+
 }

@@ -44,7 +44,7 @@
                                     </td>
                                     @can('administrar')
                                         <td class="px-6 py-4">
-                                            <x-link href="{{ route('users.edit', $user) }}">Editar</x-link>
+                                            <x-link href="{{ route('users.edit', $user) }}">Asignar rol</x-link>
                                             <form method="POST" action="{{ route('users.destroy', $user) }}"
                                                 class="inline-block">
                                                 @csrf

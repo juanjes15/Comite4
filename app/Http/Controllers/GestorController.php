@@ -13,8 +13,8 @@ class GestorController extends Controller
 
     public function index()
     {
-        $solicituds = SolicitudComite::latest()->paginate(5);
-        return view('gestorComiteViews.index', compact('solicituds'))->with('i', (request()->input('page', 1) - 1) * 5);
+        $solicitudComites = SolicitudComite::latest()->paginate(5);
+        return view('gestorComiteViews.index', compact('solicitudComites'))->with('i', (request()->input('page', 1) - 1) * 5);
     }
    
 
