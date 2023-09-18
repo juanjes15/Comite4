@@ -31,6 +31,7 @@
 
 
 
+
                         <p><strong>Fecha de Solicitud:</strong> {{ $solicitud->sol_fecha }}</p>
                         <p><strong>Lugar:</strong> {{ $solicitud->sol_lugar }}</p>
                         <p><strong>Asunto:</strong> {{ $solicitud->sol_asunto }}</p>
@@ -75,7 +76,7 @@
 
 
 
-                    <!-- Botones -->
+
                     <div class="flex mt-4">
                         <x-button class="bg-blue-500 hover:bg-blue-700 text-white">
                             {{ __('Finalizar') }}
