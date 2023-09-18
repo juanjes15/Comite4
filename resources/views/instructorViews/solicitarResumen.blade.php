@@ -16,7 +16,8 @@
                     <!-- Solicitante Information -->
                     <div class="bg-gray-100 p-4 rounded-lg mb-4">
                         <h3 class="text-lg font-semibold mb-2">Información del Solicitante</h3>
-                        <p><strong>Nombre Completo del instructor Solicitante:</strong> {{ $solicitud->instructor->ins_nombres }}
+                        <p><strong>Nombre Completo del instructor Solicitante:</strong>
+                            {{ $solicitud->instructor->ins_nombres }}
                             {{ $solicitud->instructor->ins_apellidos }}
                         </p>
 
@@ -49,16 +50,27 @@
                     @endif
 
                     <!-- Información de las Faltas -->
-                    @if (!empty($faltas))
-                        <div class="bg-gray-100 p-4 rounded-lg mb-4">
-                            <h3 class="text-lg font-semibold mb-2">Información de las Faltas</h3>
-                            @foreach ($faltas as $falta)
-                                <p><strong>Número del Capítulo:</strong> {{ $falta['cap_numero'] }}</p>
-                                <p><strong>Descripción del Capítulo:</strong> {{ $falta['cap_descripcion'] }}</p>
-                                <p><strong>Número del Artículo:</strong> {{ $falta['art_numero'] }}</p>
-                            @endforeach
-                        </div>
-                    @endif
+
+                    <div class="bg-gray-100 p-4 rounded-lg mb-4">
+                        <h3 class="text-lg font-semibold mb-2">Información de las Faltas</h3>
+
+                        <p><strong>Número del Capítulo: </strong>{{ $cap_numero }} </p>
+                        <p><strong>Descripción del Capítulo:</strong>{{ $cap_descripcion }}</p>
+
+
+                        {{-- Articulos --}}
+                        @foreach ($articulos as $articulo)
+                            <strong>
+                                <p> Articulo seleccionado :
+                            </strong> {{ $articulo->art_descripcion }}</p>
+                        @endforeach
+
+                        <!-- Dentro de tu vista "solicitarResumen.blade.php" -->
+                        @foreach ($numerals as $numeral)
+                            <p><strong>Descripción del Numeral: </strong>{{ $numeral->num_descripcion }}</p>
+
+                        @endforeach
+                    </div>
 
 
 

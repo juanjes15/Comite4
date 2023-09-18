@@ -19,6 +19,7 @@ class Aprendiz extends Model
         'apr_fechaNacimiento',
         'fic_id',
     ];
+    
 
     /**
      * Get the ficha that owns the Aprendiz
