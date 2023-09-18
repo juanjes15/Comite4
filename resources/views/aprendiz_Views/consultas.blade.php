@@ -112,7 +112,7 @@
         <td class="border px-4 py-2">{{ $comite->com_recomendacion }}</td>
         <td class="border px-4 py-2">
             
-        <a href="{{ route('Plan_mejoramientoViews.index', ['id' => $comite->id]) }}" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 flex items-center">
+        <a href="{{ route('aprendiz_Views.plan_mejoramiento', ['id' => $comite->id]) }}" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 flex items-center">
     <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns:xlink="http://www.w3.org/1999/xlink">
         <defs>
             <path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm0 18c-4.418 0-8-3.582-8-8s3.582-8 8-8 8 3.582 8 8-3.582 8-8 8zm-1-9.732L6.5 10.65l1.414-1.414L11 9.207l5.086-5.086L18.5 6.65 11 14.268z" id="a"/>
@@ -123,7 +123,7 @@
 </a>
 
 <br>
-<a href="" class="bg-gray-300 text-gray-700 px-4 py-2 rounded hover:bg-gray-400 flex items-center ml-2">
+<a href="{{ route('aprendiz_Views.detalles', ['id' => $comite->id]) }}" class="bg-gray-300 text-gray-700 px-4 py-2 rounded hover:bg-gray-400 flex items-center ml-2">
     <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns:xlink="http://www.w3.org/1999/xlink">
         <defs>
             <path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm0 18c-4.418 0-8-3.582-8-8s3.582-8 8-8 8 3.582 8 8-3.582 8-8 8zm-2-8a2 2 0 114 0 2 2 0 01-4 0z" id="a"/>
