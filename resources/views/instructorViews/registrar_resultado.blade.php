@@ -1,7 +1,11 @@
 <x-app-layout>    
-<div class="max-w-3x1 mx-auto p-6 mt-10">
+<div class="max-w-6xl mx-auto p-6 mt-14">
     <div>
-        <h1 class="text-2xl font-semibold text-gray-800 mb-4">Registrar resultado del plan</h1>
+    <x-slot name="header">
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+            {{ __('Registar resultado plan') }}
+        </h2>
+    </x-slot>
         <div class="mb-4">
             <label class="block text-sm font-medium text-gray-700">Calificación</label>
             <select name="estado" class="mt-1 p-2 w-full border rounded-md focus:ring focus:ring-blue-400">

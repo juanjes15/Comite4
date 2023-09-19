@@ -1,6 +1,10 @@
 <x-app-layout>
     <div class="max-w-3xl mx-auto p-6 mt-10">
-        <p class="text-center text-2xl font-semibold mb-4">Registar Novedades</p>
+    <x-slot name="header">
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+            {{ __('Registrar novedad') }}
+        </h2>
+    </x-slot>
         <div class="flex mb-4">
             <div class="w-1/2 mr-2">
                 <label class="block text-sm font-medium text-gray-700">Aprendiz</label>

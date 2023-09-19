@@ -1,7 +1,11 @@
 <x-app-layout>
     <div class="max-w-3x1 mx-auto p-6 mt-10">
-        <p class="text-center text-2xl font-semibold mb-4">Consultar antecedentes</p>
-        <form class="flex items-center">   
+        <x-slot name="header">
+            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+                {{ __('Consultar Antecedentes') }}
+            </h2>
+        </x-slot>
+        <form class="flex items-center ">   
             <label for="voice-search" class="sr-only">Search</label>
             <div class="relative w-full">
                 <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
@@ -17,7 +21,7 @@
                 </svg>Buscar
             </button>
         </form>
-        <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+        <div class="relative overflow-x-auto shadow-md sm:rounded-lg max-w-3x1 mx-auto p-6 mt-10 bg-green-50 ">
             <table class="w-full text-sm text-left text-gray-500 ">
                 <thead class="text-xs text-gray-700 uppercase bg-gray-50 ">
                     <tr>

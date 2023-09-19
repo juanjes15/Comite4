@@ -1,6 +1,10 @@
 <x-app-layout>
     <div class="max-w-3x1 mx-auto p-6 mt-10">
-        <p class="text-center text-2xl font-semibold mb-4">Consultar comité</p>
+    <x-slot name="header">
+            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+                {{ __('Consultar Comité') }}
+            </h2>
+        </x-slot>
         <form class="flex items-center">   
             <label for="voice-search" class="sr-only">Search</label>
             <div class="relative w-full">
