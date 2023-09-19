@@ -1,4 +1,4 @@
-<nav x-data="{ open: false }" class="bg-gradient-to-r from-[#39a900] to-white border-b border-gray-200 px-4 py-2.5 fixed left-0 right-0 top-0 z-50">
+<nav x-data="{ open: false }" class="bg-gradient-to-l from-[#39a900] to-green-50 px-4 py-2.5 fixed left-0 right-0 top-0 z-50 shadow-md shadow-green-800">
     <div class="flex flex-wrap justify-between items-center">
         <div class="flex items-center justify-start">
             <button data-drawer-target="logo-sidebar" data-drawer-toggle="logo-sidebar" aria-controls="logo-sidebar"
