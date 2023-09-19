@@ -7,14 +7,14 @@
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
+            <div class="bg-green-50 shadow-xl overflow-hidden shadow-xl sm:rounded-lg">
                 <div class="relative overflow-x-auto shadow-md sm:rounded-lg px-4 py-4">
 
                     <!-- Validation Errors -->
                     <x-validation-errors class="mb-4" />
 
                     <!-- Solicitante Information -->
-                    <div class="bg-gray-100 p-4 rounded-lg mb-4">
+                    <div class="bg-green-100 p-4 rounded-lg mb-4">
                         <h3 class="text-lg font-semibold mb-2">Información del Solicitante</h3>
                         <p><strong>Nombre Completo del instructor Solicitante:</strong>
                             {{ $solicitud->instructor->ins_nombres }}
@@ -41,7 +41,7 @@
 
                     <!-- Prueba Information -->
                     @if ($prueba)
-                        <div class="bg-gray-100 p-4 rounded-lg mb-4">
+                        <div class="bg-green-100 p-4 rounded-lg mb-4">
                             <h3 class="text-lg font-semibold mb-2">Información de la Prueba</h3>
                             <p>Tipo de Prueba: {{ $prueba->pru_tipo }}</p>
                             <p>Url: {{ $prueba->pru_url }}</p>
@@ -49,10 +49,9 @@
                             <p><strong>Fecha de la Prueba:</strong> {{ $prueba->pru_fecha }}</p>
                         </div>
                     @endif
-
                     <!-- Información de las Faltas -->
 
-                    <div class="bg-gray-100 p-4 rounded-lg mb-4">
+                    <div class="bg-green-100 p-4 rounded-lg mb-4">
                         <h3 class="text-lg font-semibold mb-2">Información de las Faltas</h3>
 
                         <p><strong>Número del Capítulo: </strong>{{ $cap_numero }} </p>
@@ -78,7 +77,7 @@
 
 
                     <div class="flex mt-4">
-                        <x-button class="bg-blue-500 hover:bg-blue-700 text-white">
+                        <x-button class="bg-green-700 hover:bg-green-500 border-2 border-geen-950">
                             {{ __('Finalizar') }}
                         </x-button>
                         <x-link href="{{ url()->previous() }}"

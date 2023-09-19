@@ -7,7 +7,7 @@
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
+            <div class="bg-green-50 shadow-xl overflow-hidden shadow-xl sm:rounded-lg">
                 <div class="relative overflow-x-auto shadow-md sm:rounded-lg px-4 py-4">
                     <x-validation-errors class="mb-4" />
                     <form method="POST" action="{{ route('instructorViews.storeSolicitar4') }}" enctype="multipart/form-data">
@@ -44,7 +44,7 @@
 
 
                         <div class="flex mt-4">
-                            <x-button>
+                            <x-button class="bg-green-700 hover:bg-green-500 border-2 border-geen-950">
                                 {{ __('Siguiente') }}
                             </x-button>
                             <x-link href="{{ url()->previous() }}" class="mx-3">Atras</x-link>
