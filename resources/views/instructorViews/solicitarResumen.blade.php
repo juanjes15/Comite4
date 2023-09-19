@@ -7,16 +7,17 @@
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
+            <div class="bg-green-50 shadow-xl overflow-hidden shadow-xl sm:rounded-lg">
                 <div class="relative overflow-x-auto shadow-md sm:rounded-lg px-4 py-4">
 
                     <!-- Validation Errors -->
                     <x-validation-errors class="mb-4" />
 
                     <!-- Solicitante Information -->
-                    <div class="bg-gray-100 p-4 rounded-lg mb-4">
+                    <div class="bg-green-100 p-4 rounded-lg mb-4">
                         <h3 class="text-lg font-semibold mb-2">Información del Solicitante</h3>
-                        <p><strong>Nombre Completo del instructor Solicitante:</strong> {{ $solicitud->instructor->ins_nombres }}
+                        <p><strong>Nombre Completo del instructor Solicitante:</strong>
+                            {{ $solicitud->instructor->ins_nombres }}
                             {{ $solicitud->instructor->ins_apellidos }}
                         </p>
 
@@ -30,6 +31,7 @@
 
 
 
+
                         <p><strong>Fecha de Solicitud:</strong> {{ $solicitud->sol_fecha }}</p>
                         <p><strong>Lugar:</strong> {{ $solicitud->sol_lugar }}</p>
                         <p><strong>Asunto:</strong> {{ $solicitud->sol_asunto }}</p>
@@ -39,7 +41,7 @@
 
                     <!-- Prueba Information -->
                     @if ($prueba)
-                        <div class="bg-gray-100 p-4 rounded-lg mb-4">
+                        <div class="bg-green-100 p-4 rounded-lg mb-4">
                             <h3 class="text-lg font-semibold mb-2">Información de la Prueba</h3>
                             <p>Tipo de Prueba: {{ $prueba->pru_tipo }}</p>
                             <p>Url: {{ $prueba->pru_url }}</p>
@@ -47,25 +49,35 @@
                             <p><strong>Fecha de la Prueba:</strong> {{ $prueba->pru_fecha }}</p>
                         </div>
                     @endif
-
                     <!-- Información de las Faltas -->
-                    @if (!empty($faltas))
-                        <div class="bg-gray-100 p-4 rounded-lg mb-4">
-                            <h3 class="text-lg font-semibold mb-2">Información de las Faltas</h3>
-                            @foreach ($faltas as $falta)
-                                <p><strong>Número del Capítulo:</strong> {{ $falta['cap_numero'] }}</p>
-                                <p><strong>Descripción del Capítulo:</strong> {{ $falta['cap_descripcion'] }}</p>
-                                <p><strong>Número del Artículo:</strong> {{ $falta['art_numero'] }}</p>
-                            @endforeach
-                        </div>
-                    @endif
+
+                    <div class="bg-green-100 p-4 rounded-lg mb-4">
+                        <h3 class="text-lg font-semibold mb-2">Información de las Faltas</h3>
+
+                        <p><strong>Número del Capítulo: </strong>{{ $cap_numero }} </p>
+                        <p><strong>Descripción del Capítulo:</strong>{{ $cap_descripcion }}</p>
+
+
+                        {{-- Articulos --}}
+                        @foreach ($articulos as $articulo)
+                            <strong>
+                                <p> Articulo seleccionado :
+                            </strong> {{ $articulo->art_descripcion }}</p>
+                        @endforeach
+
+                        <!-- Dentro de tu vista "solicitarResumen.blade.php" -->
+                        @foreach ($numerals as $numeral)
+                            <p><strong>Descripción del Numeral: </strong>{{ $numeral->num_descripcion }}</p>
+
+                        @endforeach
+                    </div>
 
 
 
 
-                    <!-- Botones -->
+
                     <div class="flex mt-4">
-                        <x-button class="bg-blue-500 hover:bg-blue-700 text-white">
+                        <x-button class="bg-green-700 hover:bg-green-500 border-2 border-geen-950">
                             {{ __('Finalizar') }}
                         </x-button>
                         <x-link href="{{ url()->previous() }}"

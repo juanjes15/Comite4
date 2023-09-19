@@ -98,31 +98,51 @@ class InstructorViewController extends Controller
         // Obtén los datos de la prueba
         $prueba = Prueba::where('sol_id', $sol_id)->first();
 
-        // Combina los datos de las faltas de la base de datos
-        $faltas = [];
-        foreach ($normasInfringidas as $norma) {
-            $faltas[] = [
-                'cap_numero' => $norma->cap_numero,
-                'cap_descripcion' => $norma->cap_descripcion,
-                'art_numero' => $norma->art_numero,
-            ];
-        }
+        // Obtén el valor seleccionado en la sesión para capítulo
+        $selectedCapId = session('selected_cap_id');
+        // Obtén el capítulo relacionado con el $selectedCapId
+        $capitulo = Capitulo::find($selectedCapId);
+
+        // Ahora, puedes acceder al campo cap_numero
+        $cap_numero = $capitulo->cap_numero;
+        $cap_descripcion = $capitulo->cap_descripcion;
+
+        // Obtén los valores seleccionados en la sesión para artículos
+        $selectedArtIds = session('selected_art_ids', []); // Obtener los valores, si no hay ninguno, se usará un array vacío
+        // Obtén los artículos relacionados con los $selectedArtIds
+        $articulos = Articulo::where('id', $selectedArtIds)->get();
 
         //Consulta JJ
         // Recupera la solicitud de comité con sus aprendices relacionados
-        $solicitudComite = SolicitudComite::with('aprendizs')->find($sol_id);
+        $solicitudComite = SolicitudComite::with('aprendizs', 'numerals')->find($sol_id);
         // Ahora, puedes acceder a los aprendices relacionados
         $aprendices = $solicitudComite->aprendizs;
+        $normaxd = $solicitudComite->numerals;
+
+
+        // Obtén los IDs de numerales almacenados en la sesión
+        $selectedNumIds = session('selected_num_ids', []);
+        // Filtra los numerales por los IDs almacenados en la sesión
+        $numerals = Numeral::whereIn('id', $selectedNumIds)->get();
+
+
 
 
         return view('instructorViews.solicitarResumen', compact(
             'solicitud',
             'aprendiz',
             'prueba',
-            'faltas',
-            'aprendices'
+            'aprendices',
+            'selectedCapId',
+            'cap_numero',
+            'selectedArtIds',
+            'articulos', // Agregamos la variable $articulos aquí
+            'cap_descripcion',
+            'numerals',
+            'normaxd'
         ));
     }
+
 
     public function storeSolicitar2(Request $request)
     {
@@ -196,29 +216,41 @@ class InstructorViewController extends Controller
     {
         $this->authorize('administrar');
 
+        // Obtén los valores seleccionados en la sesión
+        $selectedCapId = $request->input('cap_id');
+        $selectedArtIds = $request->input('art_id', []);
+        $selectedNumIds = $request->input('num_id', []);
+
+        // Almacenar los valores seleccionados en la sesión
+        session([
+            'selected_cap_id' => $selectedCapId,
+            'selected_art_ids' => $selectedArtIds,
+            'selected_num_ids' => $selectedNumIds,
+        ]);
+
         $sol_id = session('sol_id');
-        $numIds = $request->num_id;
-        $cap_ids = $request->cap_id; // Agrega esta línea
-        $art_ids = $request->art_id; // Agrega esta línea
-        $cap_descripciones = $request->cap_descripcion; // Agrega esta línea
 
-        //     // Agrega dd() para verificar los datos
-        // dd($sol_id, $numIds, $cap_ids, $art_ids, $cap_descripciones);
-
-
-        foreach ($numIds as $key => $numId) {
-            $norma_Infringida = Norma_Infringida::create([
-                'sol_id' => $sol_id,
-                'num_id' => $numId,
-                'cap_numero' => isset($cap_ids[$key]) ? $cap_ids[$key] : null,
-                'cap_descripcion' => isset($cap_descripciones[$key]) ? $cap_descripciones[$key] : null,
-                'art_numero' => isset($art_ids[$key]) ? $art_ids[$key] : null,
-            ]);
+        // Verificar si se han seleccionado descripciones
+        if (!empty($selectedNumIds) && is_array($selectedNumIds) && !empty($selectedArtIds) && is_array($selectedArtIds)) {
+            // Itera sobre los valores seleccionados y crea un registro para cada combinación
+            foreach ($selectedNumIds as $numId) {
+                foreach ($selectedArtIds as $artId) {
+                    Norma_Infringida::create([
+                        'sol_id' => $sol_id,
+                        'num_id' => $numId,
+                        'art_id' => $artId
+                    ]);
+                }
+            }
         }
+
 
         // Redirecciona a la vista 'solicitarResumen'
         return redirect()->route('instructorViews.solicitarResumen');
     }
+
+
+
 
 
 

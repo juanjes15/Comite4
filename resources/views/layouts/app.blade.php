@@ -25,7 +25,7 @@
     <div class="p-4 sm:ml-64">
         <div class="p-4 border-2 border-gray-200 border-dashed rounded-lg mt-14">
             @if (isset($header))
-                <header class="bg-gray-300 shadow">
+                <header class="bg-gradient-to-l from-[#39a900] to-green-50 rounded-lg shadow-lg shadow-green-500/40 text-xl">
                     <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
                         {{ $header }}
                     </div>

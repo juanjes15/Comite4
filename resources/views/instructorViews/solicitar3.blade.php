@@ -3,18 +3,17 @@
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
             {{ __('Solicitud N° ') . $sol_id . ('   - Añadir aprendices a la solicitud') }}
         </h2>
-        <p>Sol_id: {{ $sol_id }}</p>
     </x-slot>
 
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
+            <div class="bg-green-50 shadow-xl overflow-hidden shadow-xl sm:rounded-lg">
                 <div class="relative overflow-x-auto shadow-md sm:rounded-lg px-4 py-4">
                     <x-validation-errors class="mb-4" />
                     <form method="POST" action="{{ route('instructorViews.storeSolicitar3') }}">
                         @csrf
-                        <x-button type="button" id="agregarSelect"  class="mb-6  mt-6"  >Agregar Aprendiz</x-button>
+                        <x-button type="button" id="agregarSelect"  class="mb-6  mt-6 bg-green-700 hover:bg-green-500 border-2 border-geen-950"  >Agregar Aprendiz</x-button>
                         <div>
                             <x-input id="sol_id" class="block mt-1 w-full" type="hidden" name="sol_id"
                                 :value="$sol_id" required autofocus autocomplete="sol_id" />
@@ -38,7 +37,7 @@
                         </div>
                         <br>
                         <div class="flex mt-4">
-                            <x-button>
+                            <x-button class="bg-green-700 hover:bg-green-500 border-2 border-geen-950">
                                 {{ __('Siguiente') }}
                             </x-button>
                             <x-link href="{{ url()->previous() }}" class="mx-3">Atras</x-link>

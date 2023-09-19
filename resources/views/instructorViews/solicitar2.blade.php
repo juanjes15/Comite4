@@ -7,7 +7,7 @@
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
+            <div class="bg-green-50 shadow-xl overflow-hidden shadow-xl sm:rounded-lg">
                 <div class="relative overflow-x-auto shadow-md sm:rounded-lg px-4 py-4">
                     <x-validation-errors class="mb-4" />
                     <form method="POST" action="{{ route('instructorViews.storeSolicitar2') }}">
@@ -53,19 +53,8 @@
                                 :value="old('sol_estado')" required autofocus autocomplete="sol_estado" />
                         </div>
 
-                        {{-- <div>
-
-                            <form method="POST" action="{{route('subir')}}" accept-charset="UTF-8" enctype="multipart/form-data">
-                                {{ csrf_field() }}
-                                <label for="archivo"><b>Archivo: </b></label><br>
-                                <input type="file" name="archivo" required>
-                                <input class="btn btn-success" type="submit" value="Enviar" >
-                              </form>
-
-                        </div> --}}
-
-                        <div class="flex mt-4">
-                            <x-button>
+                        <div class="flex mt-4 ">
+                            <x-button class="bg-green-700 hover:bg-green-500 border-2 border-geen-950">
                                 {{ __('Siguiente') }}
                             </x-button>
                             <x-link href="{{ url()->previous() }}" class="mx-3">Atras</x-link>
