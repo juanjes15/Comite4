@@ -5,7 +5,7 @@
         </h2>
     </x-slot>
     <body class="bg-gray-100">
-        <div class="container mx-auto mt-8">
+        <div class="container max-w-6xl mx-auto p-6 mt-10">
             <form class="mt-4" action="" method="POST" enctype="multipart/form-data">
                 @csrf
 

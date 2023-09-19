@@ -6,7 +6,7 @@
     </x-slot>
 <body class="bg-gray-100">
 
-<div class="container mx-auto p-4">
+<div class="container max-w-6xl mx-auto p-6 mt-10">
     <h2 class="text-2xl font-semibold mb-4">Anexar pruebas</h2>
     <form>
 
