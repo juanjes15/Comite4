@@ -12,7 +12,7 @@
                     <x-validation-errors class="mb-4" />
                     <form method="POST" action="{{ route('instructorViews.storeSolicitar5') }}" enctype="multipart/form-data">
                         @csrf
-                        <x-button type="button" id="agregarSelect" class="bg-green-700 hover:bg-green-500 border-2 border-geen-950" >Agregar Otra descripción</x-button>
+                        <x-button type="button" id="agregarSelect" class="mb-6  mt-6 bg-green-700 hover:bg-yellow-500 border-2 border-green-950" >Agregar Otra descripción</x-button>
                         <div>
                             <x-input id="sol_id" class="block mt-1 w-full" type="hidden" name="sol_id"
                                 :value="$sol_id" required autofocus autocomplete="sol_id" />
@@ -56,10 +56,10 @@
                         </div>
                         <div class="flex mt-4">
 
-                            <x-button class="bg-green-700 hover:bg-green-500 border-2 border-geen-950">
+                            <x-button class="bg-green-700 hover:bg-green-500 border-2 border-green-950">
                                 {{ __('Finalizar') }}
                             </x-button>
-                            <x-link href="{{ url()->previous() }}" class="mx-3">Atras</x-link>
+                            <x-link href="{{ url()->previous() }}" class=" mx-3 bg-green-700 hover:bg-red-800 border-2 border-green-950">Atras</x-link>
                         </div>
                     </form>
                 </div>

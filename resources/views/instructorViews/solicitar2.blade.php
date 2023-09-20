@@ -54,10 +54,10 @@
                         </div>
 
                         <div class="flex mt-4 ">
-                            <x-button class="bg-green-700 hover:bg-green-500 border-2 border-geen-950">
+                            <x-button class="bg-green-700 hover:bg-green-500 border-2 border-green-950">
                                 {{ __('Siguiente') }}
                             </x-button>
-                            <x-link href="{{ url()->previous() }}" class="mx-3">Atras</x-link>
+                            <x-link href="{{ url()->previous() }}" class="mx-3 bg-green-700 hover:bg-red-800 border-2 border-green-950">Atras</x-link>
                         </div>
                 </div>
             </div>
