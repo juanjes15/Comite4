@@ -77,11 +77,11 @@
 
 
                     <div class="flex mt-4">
-                        <x-button class="bg-green-700 hover:bg-green-500 border-2 border-geen-950">
+                        <x-button class="bg-green-700 hover:bg-green-500 border-2 border-green-950">
                             {{ __('Finalizar') }}
                         </x-button>
                         <x-link href="{{ url()->previous() }}"
-                            class="mx-3 text-blue-500 hover:underline">Atrás</x-link>
+                            class="mx-3 bg-green-700 hover:bg-red-800 border-2 border-green-950">Atrás</x-link>
                     </div>
                 </div>
             </div>
