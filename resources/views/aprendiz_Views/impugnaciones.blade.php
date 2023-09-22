@@ -4,45 +4,53 @@
             {{ __('Agregar nueva impugnación') }}
         </h2>
     </x-slot>
-    <body class="bg-gray-100">
-        <div class="container mx-auto mt-8">
-            <form class="mt-4" action="" method="POST" enctype="multipart/form-data">
-                @csrf
 
-                <div class="mb-4">
-                    <label class="block mb-2" for="fecha_impugnacion">Fecha de impugnación</label>
-                    <input type="date" name="fecha_impugnacion" id="fecha_impugnacion" class="w-full px-4 py-2 border rounded">
-                </div>
+    <body class="bg-gray-100  ">
+        <div class=" bg-green-50 shadow-xl
+        px-1 py-12 rounded mt-8">
+            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8  ">
+                <div class="container mx-auto mt-8">
+                    <form class="mt-4" action="" method="POST" enctype="multipart/form-data">
+                        @csrf
 
-                <div class="mb-4">
-                    <label class="block mb-2" for="motivo_impugnacion">Motivo de impugnación</label>
-                    <textarea name="motivo_impugnacion" id="motivo_impugnacion" class="w-full px-4 py-2 border rounded" rows="4"></textarea>
-                </div>
+                        <div class="mb-4">
+                            <label class="block mb-2" for="fecha_impugnacion">Fecha de impugnación</label>
+                            <input type="date" name="fecha_impugnacion" id="fecha_impugnacion"
+                                class="w-full px-4 py-2 border rounded">
+                        </div>
 
-                <div class="mb-4">
-                    <label class="block mb-2">Subir archivos</label>
-                    <input type="file" name="archivos" id="archivos" class="hidden" accept=".pdf,.doc,.docx" onchange="updateFileName(this)">
-                    <label for="archivos" class="px-4 py-2 bg-blue-500 text-white rounded cursor-pointer hover:bg-blue-600">
-                        <i class="fas fa-cloud-upload-alt mr-2"></i> Examinar
-                    </label>
-                    <span id="selected-file" class="ml-2"></span>
-                </div>
+                        <div class="mb-4">
+                            <label class="block mb-2" for="motivo_impugnacion">Motivo de impugnación</label>
+                            <textarea name="motivo_impugnacion" id="motivo_impugnacion" class="w-full px-4 py-2 border rounded" rows="4"></textarea>
+                        </div>
 
-                <div class="mb-4">
-                    <button type="submit" class="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600">
-                        <i class="fas fa-check-circle mr-2"></i> Enviar
-                    </button>
-                    <a href="" class="px-4 py-2 border rounded">
-                        <i class="fas fa-times-circle mr-2"></i> Cancelar
-                    </a>
+                        <div>
+                            <x-label for="pru_url" value="{{ __('Anexar impugnacion') }}" />
+                            <input class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" id="pru_url" type="file" name="pru_url" accept="image/*">
+                            @error('pru_url')
+                                <small class="text-danger">{{ $message }}</small>
+                            @enderror
+                        </div>
+
+                        <div class="mb-1 mt-6  ">
+                            <button type="submit" class="bg-green-700 hover:bg-green-500 border-2 border-green-950 px-3 py-1  text-black rounded ">
+                                <i class="fas fa-check-circle mr-1"></i> Enviar
+                            </button>
+                            <a href="" class="px-3 py-1 ml-3 bg-green-700 hover:bg-red-800 border-2 border-green-950 border rounded">
+                                <i class="fas fa-times-circle mr-1 "></i> Cancelar
+                            </a>
+                        </div>
+                    </form>
                 </div>
-            </form>
+            </body>
+            <script>
+                function updateFileName(input) {
+                    const selectedFile = document.getElementById('selected-file');
+                    selectedFile.textContent = input.files[0] ? input.files[0].name : '';
+                }
+            </script>
+
+            </div>
         </div>
-    </body>
-    <script>
-        function updateFileName(input) {
-            const selectedFile = document.getElementById('selected-file');
-            selectedFile.textContent = input.files[0] ? input.files[0].name : '';
-        }
-    </script>
+
 </x-app-layout>
