@@ -7,7 +7,7 @@
 
     <body class="bg-gray-100">
         <div class="py-12 ">
-            <div class="relative overflow-x-auto shadow-md sm:rounded-lg px-4 py-4 bg-green-50 shadow-xl">
+            <div class="relative overflow-x-auto sm:rounded-lg px-4 py-4 bg-green-50 shadow-xl">
                 <div class="container mx-auto p-4">
                     <h2 class="text-2xl font-semibold mb-4">Anexar pruebas</h2>
                     <form>
@@ -34,7 +34,7 @@
                     </form>
                     <div class="flex justify-center mt-2 py-4">
                         <button type="submit"
-                            class="bg-green-700 hover:bg-green-500 border-2 border-green-950  px-4 py-2 rounded  flex items-center flex items-center">
+                            class="bg-green-700 hover:bg-green-500 border-2 border-green-950  px-4 py-2 rounded  flex items-center ">
                             <span class="mr-2">Enviar Información</span>
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20"
                                 fill="currentColor">
