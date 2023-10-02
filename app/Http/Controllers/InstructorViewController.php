@@ -216,7 +216,7 @@ class InstructorViewController extends Controller
     {
         $this->authorize('administrar');
 
-        // Obtén los valores seleccionados en la sesión
+        // Obtén los valores seleccionados en el formulario
         $selectedCapId = $request->input('cap_id');
         $selectedArtIds = $request->input('art_id', []);
         $selectedNumIds = $request->input('num_id', []);
@@ -231,8 +231,12 @@ class InstructorViewController extends Controller
         $sol_id = session('sol_id');
 
         // Verificar si se han seleccionado descripciones
-        if (!empty($selectedNumIds) && is_array($selectedNumIds) && !empty($selectedArtIds) && is_array($selectedArtIds)) {
-            // Itera sobre los valores seleccionados y crea un registro para cada combinación
+        if (!empty($selectedNumIds) && !empty($selectedArtIds)) {
+            // Convertir $selectedNumIds y $selectedArtIds en arrays si no lo son
+            $selectedNumIds = is_array($selectedNumIds) ? $selectedNumIds : [$selectedNumIds];
+            $selectedArtIds = is_array($selectedArtIds) ? $selectedArtIds : [$selectedArtIds];
+
+            // Iterar sobre los valores seleccionados y crear un registro para cada combinación
             foreach ($selectedNumIds as $numId) {
                 foreach ($selectedArtIds as $artId) {
                     Norma_Infringida::create([
@@ -248,15 +252,6 @@ class InstructorViewController extends Controller
         // Redirecciona a la vista 'solicitarResumen'
         return redirect()->route('instructorViews.solicitarResumen');
     }
-
-
-
-
-
-
-
-
-
 
 
     public function plan_MejoramientoP()
@@ -306,4 +301,3 @@ class InstructorViewController extends Controller
         return view('instructorViews.detalles_comite');
     }
 }
-
