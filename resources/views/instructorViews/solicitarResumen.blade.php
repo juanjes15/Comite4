@@ -103,7 +103,7 @@
                 }
             }).then(() => {
                 // Redirige a la otra vista después de hacer clic en "Aceptar"
-                window.location.href = "{{ route('solicitudComites.index') }}";
+                window.location.href = "{{ route('instructorViews.solicitar1') }}";
 
             });
         });
