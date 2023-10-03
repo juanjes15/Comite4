@@ -29,9 +29,6 @@
                             </p>
                         @endforeach
 
-
-
-
                         <p><strong>Fecha de Solicitud:</strong> {{ $solicitud->sol_fecha }}</p>
                         <p><strong>Lugar:</strong> {{ $solicitud->sol_lugar }}</p>
                         <p><strong>Asunto:</strong> {{ $solicitud->sol_asunto }}</p>
@@ -57,7 +54,6 @@
                         <p><strong>Número del Capítulo: </strong>{{ $cap_numero }} </p>
                         <p><strong>Descripción del Capítulo:</strong>{{ $cap_descripcion }}</p>
 
-
                         {{-- Articulos --}}
                         @foreach ($articulos as $articulo)
                             <strong>
@@ -68,16 +64,11 @@
                         <!-- Dentro de tu vista "solicitarResumen.blade.php" -->
                         @foreach ($numerals as $numeral)
                             <p><strong>Descripción del Numeral: </strong>{{ $numeral->num_descripcion }}</p>
-
                         @endforeach
                     </div>
 
-
-
-
-
                     <div class="flex mt-4">
-                        <x-button class="bg-green-700 hover:bg-green-500 border-2 border-green-950">
+                        <x-button id="finalizar-button" class="bg-green-700 hover:bg-green-500 border-2 border-green-950">
                             {{ __('Finalizar') }}
                         </x-button>
                         <x-link href="{{ url()->previous() }}"
@@ -88,3 +79,32 @@
         </div>
     </div>
 </x-app-layout>
+
+<!-- Agrega SweetAlert2 CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+
+<!-- Agrega SweetAlert2 JS -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
+
+<script>
+    window.addEventListener("DOMContentLoaded", function() {
+        const finalizarButton = document.querySelector("#finalizar-button");
+
+        finalizarButton.addEventListener("click", function() {
+            // Utiliza SweetAlert2 para mostrar el mensaje emergente
+            Swal.fire({
+                title: "La solicitud ha sido creada",
+                icon: "success",
+                confirmButtonText: "Aceptar"
+            }).then(() => {
+                // Redirige a la otra vista después de hacer clic en "Aceptar"
+                window.location.href = "{{ route('solicitudComites.index') }}";
+
+            });
+        });
+    });
+</script>
+
+
+
+//npm install sweetalert2
