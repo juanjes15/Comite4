@@ -95,7 +95,12 @@
             Swal.fire({
                 title: "La solicitud ha sido creada",
                 icon: "success",
-                confirmButtonText: "Aceptar"
+                confirmButtonText: "Aceptar",
+                customClass: {
+                    popup: 'bg-green-50 shadow-x', // Cambia el color de fondo de la alerta
+                    content: 'text-green-800', // Cambia el color del texto de la alerta
+                    confirmButton: 'bg-green-700 hover:bg-green-500 border-2 border-green-950' // Cambia el color del botón
+                }
             }).then(() => {
                 // Redirige a la otra vista después de hacer clic en "Aceptar"
                 window.location.href = "{{ route('solicitudComites.index') }}";
@@ -104,6 +109,7 @@
         });
     });
 </script>
+
 
 
 
