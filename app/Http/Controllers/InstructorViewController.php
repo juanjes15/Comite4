@@ -292,12 +292,31 @@ class InstructorViewController extends Controller
         //$instructors = Instructor::all();
         return view('instructorViews.detalles_antecedentes');
     }
-    public function consultar_comite()
-    {
-        return view('instructorViews.consultar_comite');
-    }
+   
     public function detalles_comite()
     {
-        return view('instructorViews.detalles_comite');
+        return view('detalles_comite');
     }
+
+    public function consultar_comite(Request $request)
+    {
+        $identificacion = $request->input('identificacion');
+        
+        // Buscar el aprendiz por identificación
+        $aprendiz = Aprendiz::where('apr_identificacion', $identificacion)->first();
+
+        if ($aprendiz) {
+            // Obtener las solicitudes de comité asociadas al aprendiz
+            $solicitudes = SolicitudxAprendiz::where('apr_id', $aprendiz->id)->pluck('sol_id');
+            $informacionSolicitudes = SolicitudComite::whereIn('sol_id', $solicitudes)->get();
+
+            return view('consultar_comite', ['aprendiz' => $aprendiz, 'solicitudes' => $informacionSolicitudes]);
+        } else {
+            // Aprendiz no encontrado, redirigir o mostrar un mensaje de error
+            return redirect()->back()->with('error', 'Aprendiz no encontrado');
+        }
+    }
+
 }
+
+
