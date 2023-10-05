@@ -38,7 +38,7 @@ class Aprendiz extends Model
      */
     public function solicitudComites(): BelongsToMany
     {
-        return $this->belongsToMany(SolicitudComite::class, 'solicitud_aprendiz', 'apr_id', 'sol_id')->as('SolicitudxAprendiz');
+        return $this->belongsToMany(SolicitudComite::class, 'solicitud_aprendiz', 'apr_id', 'sol_id')->as('Solicitud_aprendiz');
     }
 
     /**
