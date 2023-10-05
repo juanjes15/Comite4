@@ -26,6 +26,7 @@
                                 </th>
                                 @can('administrar')
                                     <th scope="col" class="px-6 py-3">
+
                                     </th>
                                 @endcan
                             </tr>
@@ -34,10 +35,11 @@
                             @forelse ($solicitudComites as $solicitud)
                                 <tr class="bg-white border-b">
                                     <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
-                                        {{ $solicitud->id}}
+                                        {{ $solicitud->id }}
                                     </td>
                                     <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
-                                        {{ $instructors[$solicitud->id]->ins_nombres }} {{ $instructors[$solicitud->id]->ins_apellidos }}
+                                        {{ $instructors[$solicitud->id]->ins_nombres }}
+                                        {{ $instructors[$solicitud->id]->ins_apellidos }}
                                     </td>
 
                                     <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
@@ -45,9 +47,23 @@
                                     </td>
                                     @can('administrar')
                                         <td scope="col" class="px-6 py-3">
-                                            <!-- Agrega aquí el código para las acciones de administrar -->
+                                        @can('administrar')
+                                            <td class="px-6 py-4">
+                                                <x-link
+                                                    href="{{ route('gestorComiteViews.detalles', ['id' => $solicitud->id]) }}">Detalles</x-link>
+
+
+                                                <form method="POST" class="inline-block">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <x-danger-button type="submit" onclick="return confirm('¿Está seguro?')">
+                                                        Eliminar</x-danger-button>
+                                                </form>
+                                            </td>
+                                        @endcan
                                         </td>
                                     @endcan
+
                                 </tr>
                             @empty
                                 <tr class="bg-white border-b">
@@ -56,6 +72,7 @@
                                     </td>
                                 </tr>
                             @endforelse
+
                         </tbody>
                     </table>
 
@@ -64,6 +81,6 @@
                 </div>
             </div>
         </div>
-        {{-- {!! $fichas->links() !!} --}}
+
     </div>
 </x-app-layout>
