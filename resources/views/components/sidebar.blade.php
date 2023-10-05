@@ -53,14 +53,7 @@
                     <span class="flex-1 ml-3 whitespace-nowrap">Plan mejoramiento</span>
                 </a>
             </li>
-            <li>
-                <a href="{{ route('instructorViews.registrar_novedades') }}" class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 group">
-                    <svg class="flex-shrink-0 w-5 h-10 text-green-800 transition duration-75 group-hover:text-gray-900" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 18"  transform="translate(-3,-2)">
-                        <path  d="M 18.414062 2 C 18.158188 2 17.902031 2.0974687 17.707031 2.2929688 L 16 4 L 20 8 L 21.707031 6.2929688 C 22.098031 5.9019687 22.098031 5.2689063 21.707031 4.8789062 L 19.121094 2.2929688 C 18.925594 2.0974687 18.669937 2 18.414062 2 z M 14.5 5.5 L 3 17 L 3 21 L 7 21 L 18.5 9.5 L 14.5 5.5 z" />
-                    </svg>
-                    <span class="flex-1 ml-3 whitespace-nowrap">Registrar novedades</span>
-                </a>
-            </li>
+            
             <li>
                 <a href="{{ route('instructorViews.anexar_info') }}" class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 group">
                     <svg class="flex-shrink-0 w-5 h-10 text-green-800 transition duration-75 group-hover:text-gray-900" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 18" transform="translate(-4,-2)">

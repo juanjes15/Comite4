@@ -272,9 +272,7 @@ class InstructorViewController extends Controller
 
     public function registrar_novedades()
     {
-        $aprendizs = Aprendiz::all();
-        $programas = Programa::all();
-        return view('instructorViews.registrar_novedades', compact('aprendizs', 'programas'));
+        return view('instructorViews.registrar_novedades');
     }
 
     public function anexar_info()
@@ -301,7 +299,39 @@ class InstructorViewController extends Controller
 //no da
     public function consultar_comite(Request $request)
     {
-        return view('instructorViews.consultar_comite');
+         // Obtén las solicitudes de comité con paginación y carga la relación 'aprendizs'
+         $solicitudComites = SolicitudComite::with('aprendizs')->latest()->paginate(5);
+
+         $instructors = [];
+         $solicitudDates = [];
+         $learnersBySolicitud = []; // Arreglo para agrupar aprendices por solicitud de comité
+ 
+         foreach ($solicitudComites as $solicitud) {
+             // Obtener el instructor asociado a la solicitud
+             $instructor = $solicitud->instructor;
+ 
+             // Obtener la fecha de creación de la solicitud
+             $fechaCreacion = $solicitud->created_at;
+ 
+             // Almacenar la información en los arreglos
+             $instructors[$solicitud->id] = $instructor;
+             $solicitudDates[$solicitud->id] = $fechaCreacion;
+         }
+ 
+         foreach ($solicitudComites as $solicitud) {
+             $solicitudId = $solicitud->id;
+ 
+             // Verificar si existen aprendices relacionados con esta solicitud
+             if ($solicitud->aprendizs->isNotEmpty()) {
+                 $learnersBySolicitud[$solicitudId] = $solicitud->aprendizs;
+             } else {
+                 $learnersBySolicitud[$solicitudId] = [];
+             }
+         }
+ 
+         return view('instructorViews.consultar_comite', compact('solicitudComites', 'instructors', 'solicitudDates', 'learnersBySolicitud'))
+             ->with('i', (request()->input('page', 1) - 1) * 5);
+       
     }
 
 
