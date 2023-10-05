@@ -18,50 +18,53 @@
                         <thead class="text-xs text-gray-700 uppercase bg-gray-50 ">
                             <tr>
                                 <th scope="col" class="px-6 py-3">
-                                    Codigo
+                                    ID solicitud
                                 </th>
                                 <th scope="col" class="px-6 py-3">
-                                    Estado
+                                    Instructor
                                 </th>
                                 <th scope="col" class="px-6 py-3">
                                     Fecha
                                 </th>
                                 <th scope="col" class="px-6 py-3">
-                                    Aprendiz
-                                </th>
-                                <th scope="col" class="px-6 py-3">
-                                    Acciones
+                                    
                                 </th>
                             </tr>
                         </thead>
                         <tbody>
-                            @if($solicitudes)
-                                @foreach($solicitudes as $solicitud)
-                                    <tr class="bg-white border-b">
-                                        <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
-                                            {{ $solicitud->id }}
+                        <tbody>
+                            @forelse ($fichas as $ficha)
+                                <tr class="bg-white border-b ">
+                                    <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap ">
+                                        {{ $ficha->fic_codigo }}
+                                    </td>
+                                    <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap ">
+                                        {{ $ficha->fic_inicioLectiva }}
+                                    </td>
+                                    <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap ">
+                                        {{ $ficha->fic_inicioProductiva }}
+                                    </td>
+                                    @can('administrar')
+                                        <td class="px-6 py-4">
+                                            <x-link href="{{ route('fichas.edit', $ficha) }}">Editar</x-link>
+                                            <form method="POST" action="{{ route('fichas.destroy', $ficha) }}"
+                                                class="inline-block">
+                                                @csrf
+                                                @method('DELETE')
+                                                <x-danger-button type="submit" onclick="return confirm('¿Está seguro?')">
+                                                    Eliminar</x-danger-button>
+                                            </form>
                                         </td>
-                                        <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
-                                            {{ $solicitud->sol_estado }}
-                                        </td>
-                                        <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
-                                            {{ $solicitud->sol_fecha }}
-                                        </td>
-                                        <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
-                                            {{ $solicitud->aprendiz->apr_nombre }} {{ $solicitud->aprendiz->apr_apellido }}
-                                        </td>
-                                        <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
-                                            <x-link href="{{ route('instructorViews.detalles_comite', $solicitud->id) }}" class="mx-3 mt-5 mb-6  mt-6 bg-green-700 hover:bg-yellow-500 border-2 border-green-950">Detalles</x-link>
-                                        </td>
-                                    </tr>
-                                @endforeach
-                            @else
-                                <tr>
+                                    @endcan
+                                </tr>
+                            @empty
+                                <tr class="bg-white border-b">
                                     <td colspan="5" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
-                                        No hay solicitudes de comité para este aprendiz.
+                                        {{ __('No se encontraron fichas') }}
                                     </td>
                                 </tr>
-                            @endif
+                            @endforelse
+                        </tbody>
                         </tbody>
                     </table>
                 </div>

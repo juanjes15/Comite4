@@ -302,20 +302,6 @@ class InstructorViewController extends Controller
     public function consultar_comite(Request $request)
     {
         return view('instructorViews.consultar_comite');
-        $identificacion = $request->input('identificacion');
-        
-        // Buscar el aprendiz por identificación
-        $aprendiz = Aprendiz::where('apr_identificacion', $identificacion)->first();
-
-        if ($aprendiz) {
-            // Obtener las solicitudes de comité para este aprendiz
-            $solicitudes =  $aprendiz->solicitudComites;
-
-            return view('instructorViews.consultar_comite', ['aprendiz' => $aprendiz, 'solicitudes' => $solicitudes]);
-        } else {
-            // Si el aprendiz no se encuentra, redirigir con un mensaje de error
-            return redirect()->back()->with('error', 'Aprendiz no encontrado');
-        }
     }
 
 
