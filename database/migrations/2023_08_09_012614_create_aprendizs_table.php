@@ -19,6 +19,9 @@ return new class extends Migration {
             $table->string('apr_telefono');
             $table->string('apr_direccion');
             $table->date('apr_fechaNacimiento');
+            $table->string('apr_pruImpugnacion');
+            $table->date('apr_fechaImpugnacion');
+            $table->string('apr_motivoImpugnacion');
             $table->unsignedBigInteger('fic_id');
             $table->foreign('fic_id')->references('id')->on('fichas');
             $table->timestamps();
