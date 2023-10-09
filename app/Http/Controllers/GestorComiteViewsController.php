@@ -1,13 +1,11 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\Models\SolicitudComite;
-<<<<<<< HEAD
 use App\Models\Aprendiz;
 use App\Models\SolicitudxAprendiz;
-=======
 use App\Models\Norma_Infringida;
-use App\Models\Aprendiz;
 use App\Models\Prueba;
 use App\Models\Articulo;
 use App\Models\Numeral;
@@ -15,81 +13,47 @@ use App\Models\Capitulo;
 
 
 
->>>>>>> 25a8ea7095d888ac04e24f83f98902d59a44a5d8
 
 class GestorComiteViewsController extends Controller
 {
     public function index()
-<<<<<<< HEAD
     {
-        $solicitudComites = SolicitudComite::latest()->paginate(5);
-        $solicitudxAprendiz = SolicitudxAprendiz::latest()->paginate(5);
-    
-        // Obtén el instructor para cada solicitud y almacénalo en un array asociativo
+        // Obtén las solicitudes de comité con paginación y carga la relación 'aprendizs'
+        $solicitudComites = SolicitudComite::with('aprendizs')->latest()->paginate();
+
         $instructors = [];
-        $aprendizs = [];
+        $solicitudDates = [];
+        $learnersBySolicitud = []; // Arreglo para agrupar aprendices por solicitud de comité
+
         foreach ($solicitudComites as $solicitud) {
+            // Obtener el instructor asociado a la solicitud
             $instructor = $solicitud->instructor;
-    
-            if ($instructor) {
-                $instructors[$solicitud->id] = $instructor;
-            } else {
-                $instructors[$solicitud->id] = null;
-            }
 
-            foreach ($aprendizs as $aprendiz) {
-                $aprendiz[$solicitud->id]=$aprendiz;
-            }
-            
-=======
-{
-    // Obtén las solicitudes de comité con paginación y carga la relación 'aprendizs'
-    $solicitudComites = SolicitudComite::with('aprendizs')->latest()->paginate();
+            // Obtener la fecha de creación de la solicitud
+            $fechaCreacion = $solicitud->created_at;
 
-    $instructors = [];
-    $solicitudDates = [];
-    $learnersBySolicitud = []; // Arreglo para agrupar aprendices por solicitud de comité
-
-    foreach ($solicitudComites as $solicitud) {
-        // Obtener el instructor asociado a la solicitud
-        $instructor = $solicitud->instructor;
-
-        // Obtener la fecha de creación de la solicitud
-        $fechaCreacion = $solicitud->created_at;
-
-        // Almacenar la información en los arreglos
-        $instructors[$solicitud->id] = $instructor;
-        $solicitudDates[$solicitud->id] = $fechaCreacion;
-    }
-
-    foreach ($solicitudComites as $solicitud) {
-        $solicitudId = $solicitud->id;
-
-        // Verificar si existen aprendices relacionados con esta solicitud
-        if ($solicitud->aprendizs->isNotEmpty()) {
-            $learnersBySolicitud[$solicitudId] = $solicitud->aprendizs;
-        } else {
-            $learnersBySolicitud[$solicitudId] = [];
->>>>>>> 25a8ea7095d888ac04e24f83f98902d59a44a5d8
+            // Almacenar la información en los arreglos
+            $instructors[$solicitud->id] = $instructor;
+            $solicitudDates[$solicitud->id] = $fechaCreacion;
         }
 
-        
-    
-        return view('gestorComiteViews.index', compact('solicitudComites', 'instructors'))
-            ->with('i', (request()->input('page', 1) - 1) * 5);
+        foreach ($solicitudComites as $solicitud) {
+            $solicitudId = $solicitud->id;
+
+            // Verificar si existen aprendices relacionados con esta solicitud
+            if ($solicitud->aprendizs->isNotEmpty()) {
+                $learnersBySolicitud[$solicitudId] = $solicitud->aprendizs;
+            } else {
+                $learnersBySolicitud[$solicitudId] = [];
+            }
+
+
+
+            return view('gestorComiteViews.index', compact('solicitudComites', 'instructors'))
+                ->with('i', (request()->input('page', 1) - 1) * 5);
+        }
     }
-<<<<<<< HEAD
-    
-=======
 
-
-    // Establecer la sesión con los detalles de los aprendices por solicitud
-    session(['learners_by_solicitud' => $learnersBySolicitud]);
-
-    return view('gestorComiteViews.index', compact('solicitudComites', 'instructors', 'solicitudDates', 'learnersBySolicitud'))
-        ->with('i', (request()->input('page', 1) - 1) * 5);
-}
->>>>>>> 25a8ea7095d888ac04e24f83f98902d59a44a5d8
 
 
 
