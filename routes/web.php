@@ -68,11 +68,15 @@ Route::middleware([
     Route::get('/InstructorViews/solicitar5', [\App\Http\Controllers\InstructorViewController::class, 'solicitar5'])->name('instructorViews.solicitar5');
     Route::post('/InstructorViews/solicitar5', [\App\Http\Controllers\InstructorViewController::class, 'storeSolicitar5'])->name('instructorViews.storeSolicitar5');
 
+    Route::get('/InstructorViews/registrar_novedad2/{sol_id}', [\App\Http\Controllers\InstructorViewController::class, 'registrar_novedad2'])->name('instructorViews.registrar_novedad2');
+Route::put('/InstructorViews/registrar_novedad2/{sol_id}', [\App\Http\Controllers\InstructorViewController::class, 'storeRegistrar_novedad2'])->name('instructorViews.storeRegistrar_novedad2');
+
+
+    
     Route::get('/InstructorViews/solicitarResumen', [\App\Http\Controllers\InstructorViewController::class, 'solicitarResumen'])->name('instructorViews.solicitarResumen');
     Route::get('/instructorViews/plan_MejoramientoP', [\App\Http\Controllers\InstructorViewController::class, 'plan_MejoramientoP'])->name('instructorViews.plan_MejoramientoP');
     Route::get('/instructorViews/plan_Mejoramiento', [\App\Http\Controllers\InstructorViewController::class, 'plan_Mejoramiento'])->name('instructorViews.plan_Mejoramiento');
     Route::get('/instructorViews/registrar_resultado', [\App\Http\Controllers\InstructorViewController::class, 'registrar_resultado'])->name('instructorViews.registrar_resultado');
-    Route::get('/instructorViews/registrar_novedades', [\App\Http\Controllers\InstructorViewController::class, 'registrar_novedades'])->name('instructorViews.registrar_novedades');
     Route::get('/instructorViews/anexar_info', [\App\Http\Controllers\InstructorViewController::class, 'anexar_info'])->name('instructorViews.anexar_info');
     Route::get('/instructorViews/consultar_antecedentes', [\App\Http\Controllers\InstructorViewController::class, 'consultar_antecedentes'])->name('instructorViews.consultar_antecedentes');
     Route::get('/instructorViews/detalles_antecedentes', [\App\Http\Controllers\InstructorViewController::class, 'detalles_antecedentes'])->name('instructorViews.detalles_antecedentes');

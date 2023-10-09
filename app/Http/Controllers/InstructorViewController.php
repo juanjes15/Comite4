@@ -270,12 +270,6 @@ class InstructorViewController extends Controller
         return view('instructorViews.registrar_resultado');
     }
 
-    public function registrar_novedades()
-    {
-        $aprendizs = Aprendiz::all();
-        $programas = Programa::all();
-        return view('instructorViews.registrar_novedades');
-    }
 
     public function anexar_info()
     {
@@ -292,7 +286,7 @@ class InstructorViewController extends Controller
         //$instructors = Instructor::all();
         return view('instructorViews.detalles_antecedentes');
     }
-   
+
     public function detalles_comite(SolicitudComite $solicituds)
     {
 
@@ -360,46 +354,77 @@ class InstructorViewController extends Controller
             'normaxd'
         ));
     }
-     
+
     public function consultar_comite(Request $request)
     {
-         // Obtén las solicitudes de comité con paginación y carga la relación 'aprendizs'
-         $solicitudComites = SolicitudComite::with('aprendizs')->latest()->paginate(5);
+        // Obtén las solicitudes de comité con paginación y carga la relación 'aprendizs'
+        $solicitudComites = SolicitudComite::with('aprendizs')->latest()->paginate(5);
 
-         $instructors = [];
-         $solicitudDates = [];
-         $learnersBySolicitud = []; // Arreglo para agrupar aprendices por solicitud de comité
- 
-         foreach ($solicitudComites as $solicitud) {
-             // Obtener el instructor asociado a la solicitud
-             $instructor = $solicitud->instructor;
- 
-             // Obtener la fecha de creación de la solicitud
-             $fechaCreacion = $solicitud->created_at;
- 
-             // Almacenar la información en los arreglos
-             $instructors[$solicitud->id] = $instructor;
-             $solicitudDates[$solicitud->id] = $fechaCreacion;
-         }
- 
-         foreach ($solicitudComites as $solicitud) {
-             $solicitudId = $solicitud->id;
- 
-             // Verificar si existen aprendices relacionados con esta solicitud
-             if ($solicitud->aprendizs->isNotEmpty()) {
-                 $learnersBySolicitud[$solicitudId] = $solicitud->aprendizs;
-             } else {
-                 $learnersBySolicitud[$solicitudId] = [];
-             }
-         }
- 
-         return view('instructorViews.consultar_comite', compact('solicitudComites', 'instructors', 'solicitudDates', 'learnersBySolicitud'))
-             ->with('i', (request()->input('page', 1) - 1) * 5);
-       
+        $instructors = [];
+        $solicitudDates = [];
+        $learnersBySolicitud = []; // Arreglo para agrupar aprendices por solicitud de comité
+
+        foreach ($solicitudComites as $solicitud) {
+            // Obtener el instructor asociado a la solicitud
+            $instructor = $solicitud->instructor;
+
+            // Obtener la fecha de creación de la solicitud
+            $fechaCreacion = $solicitud->created_at;
+
+            // Almacenar la información en los arreglos
+            $instructors[$solicitud->id] = $instructor;
+            $solicitudDates[$solicitud->id] = $fechaCreacion;
+        }
+
+        foreach ($solicitudComites as $solicitud) {
+            $solicitudId = $solicitud->id;
+
+            // Verificar si existen aprendices relacionados con esta solicitud
+            if ($solicitud->aprendizs->isNotEmpty()) {
+                $learnersBySolicitud[$solicitudId] = $solicitud->aprendizs;
+            } else {
+                $learnersBySolicitud[$solicitudId] = [];
+            }
+        }
+
+        return view('instructorViews.consultar_comite', compact('solicitudComites', 'instructors', 'solicitudDates', 'learnersBySolicitud'))
+            ->with('i', (request()->input('page', 1) - 1) * 5);
+    }
+
+    //Registrar Novedades
+
+    public function registrar_novedad2($sol_id)
+    {
+        $this->authorize('administrar');
+        // Obtener las áreas de los instructores
+        $areas = Instructor::distinct()->pluck('ins_area');
+
+        // Obtener los instructores ordenados alfabéticamente por ins_nombres
+        $instructors = Instructor::orderBy('ins_area')->get();
+
+        $solicitud = SolicitudComite::findOrFail($sol_id);
+
+        return view('instructorViews.registrar_novedad2', compact('instructors', 'areas', 'solicitud'));
     }
 
 
 
+    public function storeRegistrar_novedad2(Request $request)
+    {
+        $this->authorize('administrar');
+        // Obtener la solicitud existente por su ID
+        $sol_id = $request->input('sol_id');
+        $solicitud = SolicitudComite::findOrFail($sol_id);
+
+        // Actualizar los campos de la solicitud con los datos del formulario
+        $solicitud->update($request->all());
+
+        // Almacena el ID de solicitud en la sesión
+        session(['sol_id' => $solicitud->id]);
+
+        // Almacena el ID de solicitud en una variable local
+        $sol_id = $solicitud->id;
+
+        return redirect()->route('instructorViews.registrar_novedad3', compact('sol_id'));
+    }
 }
-
-

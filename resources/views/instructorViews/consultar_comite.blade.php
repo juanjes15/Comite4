@@ -37,9 +37,7 @@
                                     @can('administrar')
                                         <td scope="col" class="px-6 py-3">
                                         <x-link href="detalles_comite">Detalles</x-link><!-- Agrega aquí el código para las acciones de administrar -->
-                                        <x-link href="#">Hola
-                                                                                                                                           
-                                        </x-link>
+                                        
                                         </td>
                                     @endcan
                                 </tr>
@@ -54,6 +52,7 @@
                     </table>
                 </div>
             </div>
+            
             <x-link href="{{ url()->previous() }}" class="mx-3 mx-5 mb-6  bg-green-700 hover:bg-red-800 border-2 border-green-950">Atras</x-link>
         </div>
     </div>

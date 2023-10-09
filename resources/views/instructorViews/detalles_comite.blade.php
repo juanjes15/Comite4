@@ -72,7 +72,7 @@
         <div class="py-12 max-w-7xl mx-auto sm:px-6 lg:px-8">
             @can('administrar')
                         <td scope="col" class="px-6 py-3">
-                        <x-link href="registrar_novedades">Registrar novedades</x-link><!-- Agrega aquí el código para las acciones de administrar -->
+                        <x-link href="{{ route('instructorViews.registrar_novedad2', ['sol_id' => $solicitud->id ]) }}">Registrar novedades</x-link><!-- Agrega aquí el código para las acciones de administrar -->
                         </td>
             @endcan
         </div>
