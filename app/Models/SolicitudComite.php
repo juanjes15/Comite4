@@ -60,6 +60,7 @@ class SolicitudComite extends Model
         return $this->belongsToMany(Aprendiz::class, 'solicitud_aprendiz', 'sol_id', 'apr_id')->as('SolicitudxAprendiz');
     }
 
+
     /**
      * The numerals that belong to the SolicitudComite
      *
