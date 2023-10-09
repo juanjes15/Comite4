@@ -12,25 +12,32 @@
                     @can('administrar')
                     <x-link href="{{ route('instructorViews.solicitar1') }}" class="m-4">Crear Solicitud </x-link>
                     @endcan
-                    <table class="w-full text-sm text-left text-gray-500 ">
-                        <thead class="text-xs text-gray-700 uppercase bg-gray-50 ">
+                    <table class="w-full text-sm text-left text-gray-500">
+                        <thead class="text-xs text-gray-700 uppercase bg-gray-50">
                             <tr>
                                 <th scope="col" class="px-6 py-3">
-                                    Instructor
+                                    Id
                                 </th>
                                 <th scope="col" class="px-6 py-3">
-                                    Aprendices Solicitados
+                                    Instructor
                                 </th>
                                 <th scope="col" class="px-6 py-3">
                                     Fecha
                                 </th>
                                 @can('administrar')
+<<<<<<< HEAD
                                 <th scope="col" class="px-6 py-3">
                                 </th>
+=======
+                                    <th scope="col" class="px-6 py-3">
+
+                                    </th>
+>>>>>>> 25a8ea7095d888ac04e24f83f98902d59a44a5d8
                                 @endcan
                             </tr>
                         </thead>
                         <tbody>
+<<<<<<< HEAD
 
                             @foreach ($solicitudComites as $solicitud)
                             <tr class="bg-white border-b">
@@ -59,12 +66,57 @@
 
 
 
+=======
+                            @forelse ($solicitudComites as $solicitud)
+                                <tr class="bg-white border-b">
+                                    <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
+                                        {{ $solicitud->id }}
+                                    </td>
+                                    <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
+                                        {{ $instructors[$solicitud->id]->ins_nombres }}
+                                        {{ $instructors[$solicitud->id]->ins_apellidos }}
+                                    </td>
+
+                                    <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
+                                        {{ $solicitudDates[$solicitud->id] }}
+                                    </td>
+                                    @can('administrar')
+                                        <td scope="col" class="px-6 py-3">
+                                        @can('administrar')
+                                            <td class="px-6 py-4">
+                                                <x-link
+                                                    href="{{ route('gestorComiteViews.detalles', ['id' => $solicitud->id]) }}">Detalles</x-link>
+
+
+                                                <form method="POST" class="inline-block">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <x-danger-button type="submit" onclick="return confirm('¿Está seguro?')">
+                                                        Eliminar</x-danger-button>
+                                                </form>
+                                            </td>
+                                        @endcan
+                                        </td>
+                                    @endcan
+
+                                </tr>
+                            @empty
+                                <tr class="bg-white border-b">
+                                    <td colspan="5" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
+                                        {{ __('No se encontraron fichas') }}
+                                    </td>
+                                </tr>
+                            @endforelse
+>>>>>>> 25a8ea7095d888ac04e24f83f98902d59a44a5d8
 
                         </tbody>
                     </table>
+
+
+
                 </div>
             </div>
         </div>
-        {{-- {!! $fichas->links() !!} --}}
+
     </div>
 </x-app-layout>
