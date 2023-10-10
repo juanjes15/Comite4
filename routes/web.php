@@ -71,6 +71,8 @@ Route::middleware([
     Route::get('/InstructorViews/registrar_novedad2/{sol_id}', [\App\Http\Controllers\InstructorViewController::class, 'registrar_novedad2'])->name('instructorViews.registrar_novedad2');
 Route::put('/InstructorViews/registrar_novedad2/{sol_id}', [\App\Http\Controllers\InstructorViewController::class, 'storeRegistrar_novedad2'])->name('instructorViews.storeRegistrar_novedad2');
 
+Route::get('/InstructorViews/registrar_novedad3/{sol_id}', [\App\Http\Controllers\InstructorViewController::class, 'registrar_novedad3'])->name('instructorViews.registrar_novedad3');
+Route::put('/InstructorViews/registrar_novedad3/{sol_id}', [\App\Http\Controllers\InstructorViewController::class, 'storeRegistrar_novedad3'])->name('instructorViews.storeRegistrar_novedad3');
 
     
     Route::get('/InstructorViews/solicitarResumen', [\App\Http\Controllers\InstructorViewController::class, 'solicitarResumen'])->name('instructorViews.solicitarResumen');

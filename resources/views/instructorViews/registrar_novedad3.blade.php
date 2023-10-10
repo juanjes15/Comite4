@@ -13,6 +13,7 @@
                     <x-validation-errors class="mb-4" />
                     <form method="POST" action="{{ route('instructorViews.storeSolicitar3') }}">
                         @csrf
+                        @method('PUT')
                         <x-button type="button" id="agregarSelect"  class="mb-6  mt-6 bg-green-700 hover:bg-yellow-500 border-2 border-green-950"  >Agregar Aprendiz</x-button>
                         <div>
                             <x-input id="sol_id" class="block mt-1 w-full" type="hidden" name="sol_id"
@@ -30,12 +31,23 @@
                                 @endforeach
                             </select>
                         </div>
-
+                        
                         <br>
                         <div id="contenedorSelects" class="mt-4">
                             <!-- Este será el contenedor de los nuevos campos <select> -->
                         </div>
                         <br>
+
+                        <!-- Mostrar los aprendices relacionados -->
+                        <div>
+                            <x-label for="aprendices_relacionados" value="{{ __(' Aprendices Relacionados') }}" />
+                            <ul>
+                                @foreach ($aprendicesRelacionados as $relacion)
+                                    <li>{{ $relacion->aprendiz->apr_nombres }} {{ $relacion->aprendiz->apr_apellidos }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+
                         <div class="flex mt-4">
                             <x-button class="bg-green-700 hover:bg-green-500 border-2 border-green-950">
                                 {{ __('Siguiente') }}
@@ -74,3 +86,4 @@
 
 
 </x-app-layout>
+

@@ -427,4 +427,58 @@ class InstructorViewController extends Controller
 
         return redirect()->route('instructorViews.registrar_novedad3', compact('sol_id'));
     }
+
+    public function registrar_novedad3($sol_id)
+    {
+        $this->authorize('administrar');
+        $solicitudxAprendices = SolicitudxAprendiz::where('sol_id', $sol_id)->get();
+        $aprendicesRelacionados = [];
+
+        foreach ($solicitudxAprendices as $relacion) {
+            // Verifica si el aprendiz relacionado existe
+            if ($relacion->aprendiz) {
+                $aprendicesRelacionados[] = $relacion->aprendiz;
+            }
+    }
+        $aprendizs = Aprendiz::all();
+        // Accede al valor de 'sol_id' almacenado en la sesión
+        $sol_id = session('sol_id');
+        $solicitud = SolicitudComite::findOrFail($sol_id);
+        
+        return view('instructorViews.registrar_novedad3', compact('aprendizs', 'sol_id', 'solicitud', 'aprendicesRelacionados'));
+    }
+
+
+    public function storeRegistrar_novedad3(Request $request)
+    {
+        $this->authorize('administrar');
+
+        // Obtén el ID de solicitud almacenado en la sesión
+        $sol_id = session('sol_id');
+        $solicitud = SolicitudComite::findOrFail($sol_id);
+        // Itera a través de los campos <select> dinámicos
+        foreach ($request->all() as $key => $value) {
+            // Verifica si el campo comienza con 'nuevo_aprendiz_'
+            if (strpos($key, 'nuevo_aprendiz_') === 0) {
+                // El campo es un aprendiz seleccionado
+                $apr_id = $value;
+
+                // Crea una entrada en la tabla 'solicitudxaprendiz'
+                SolicitudxAprendiz::update([
+                    'sol_id' => $sol_id,
+                    'apr_id' => $apr_id,
+                ]);
+            }
+        }
+        // Actualizar los campos de la solicitud con los datos del formulario
+        $solicitud->update($request->all());
+
+        // Almacena el ID de solicitud en la sesión
+        session(['sol_id' => $solicitud->id]);
+
+        // Almacena el ID de solicitud en una variable local
+        $sol_id = $solicitud->id;
+
+        return redirect()->route('instructorViews.registrar_novedad4', compact('sol_id'));
+    }
 }

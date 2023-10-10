@@ -10,14 +10,15 @@
             <div class="bg-green-50 shadow-xl overflow-hidden shadow-xl sm:rounded-lg">
                 <div class="relative overflow-x-auto shadow-md sm:rounded-lg px-4 py-4">
                     <x-validation-errors class="mb-4" />
-                    <form method="POST" action="{{ route('instructorViews.storeRegistrar_novedad2', $solicitud->id) }}">
+                    <form method="POST" action="{{ route('instructorViews.storeRegistrar_novedad3', $solicitud->id) }}">
                         @csrf
                         @method('PUT')
                         <div>
                             <x-label for="ins_id" value="{{ __('Instructor') }}" />
                             <select name="ins_id" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
-                                <option value="">--Seleccione el Instructor--</option>
                                 @foreach ($instructors as $instructor)
+                                <option value="$solicitud->id"> {{ $instructor->ins_nombres }}
+                                    {{ $instructor->ins_apellidos }} - {{ $instructor->ins_area }}</option>
                                 <option value="{{ $instructor->id }}">{{ $instructor->ins_nombres }}
                                     {{ $instructor->ins_apellidos }} - {{ $instructor->ins_area }}
                                 </option>
