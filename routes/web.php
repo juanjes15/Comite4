@@ -67,13 +67,16 @@ Route::middleware([
 
     Route::get('/InstructorViews/solicitar5', [\App\Http\Controllers\InstructorViewController::class, 'solicitar5'])->name('instructorViews.solicitar5');
     Route::post('/InstructorViews/solicitar5', [\App\Http\Controllers\InstructorViewController::class, 'storeSolicitar5'])->name('instructorViews.storeSolicitar5');
-
+    //----------------
     Route::get('/InstructorViews/registrar_novedad2/{sol_id}', [\App\Http\Controllers\InstructorViewController::class, 'registrar_novedad2'])->name('instructorViews.registrar_novedad2');
-Route::put('/InstructorViews/registrar_novedad2/{sol_id}', [\App\Http\Controllers\InstructorViewController::class, 'storeRegistrar_novedad2'])->name('instructorViews.storeRegistrar_novedad2');
+    Route::put('/InstructorViews/registrar_novedad2/{sol_id}', [\App\Http\Controllers\InstructorViewController::class, 'storeRegistrar_novedad2'])->name('instructorViews.storeRegistrar_novedad2');
 
-Route::get('/InstructorViews/registrar_novedad3/{sol_id}', [\App\Http\Controllers\InstructorViewController::class, 'registrar_novedad3'])->name('instructorViews.registrar_novedad3');
-Route::put('/InstructorViews/registrar_novedad3/{sol_id}', [\App\Http\Controllers\InstructorViewController::class, 'storeRegistrar_novedad3'])->name('instructorViews.storeRegistrar_novedad3');
+    Route::get('/InstructorViews/registrar_novedad3/{sol_id}', [\App\Http\Controllers\InstructorViewController::class, 'registrar_novedad3'])->name('instructorViews.registrar_novedad3');
+    Route::put('/InstructorViews/registrar_novedad3/{sol_id}', [\App\Http\Controllers\InstructorViewController::class, 'storeRegistrar_novedad3'])->name('instructorViews.storeRegistrar_novedad3');
 
+    Route::get('/InstructorViews/registrar_novedad4/{sol_id}', [\App\Http\Controllers\InstructorViewController::class, 'registrar_novedad4'])->name('instructorViews.registrar_novedad4');
+    Route::put('/InstructorViews/registrar_novedad4/{sol_id}', [\App\Http\Controllers\InstructorViewController::class, 'storeRegistrar_novedad4'])->name('instructorViews.storeRegistrar_novedad4');
+    //------------------
     
     Route::get('/InstructorViews/solicitarResumen', [\App\Http\Controllers\InstructorViewController::class, 'solicitarResumen'])->name('instructorViews.solicitarResumen');
     Route::get('/instructorViews/plan_MejoramientoP', [\App\Http\Controllers\InstructorViewController::class, 'plan_MejoramientoP'])->name('instructorViews.plan_MejoramientoP');

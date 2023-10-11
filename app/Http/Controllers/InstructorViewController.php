@@ -448,7 +448,6 @@ class InstructorViewController extends Controller
         return view('instructorViews.registrar_novedad3', compact('aprendizs', 'sol_id', 'solicitud', 'aprendicesRelacionados'));
     }
 
-
     public function storeRegistrar_novedad3(Request $request)
     {
         $this->authorize('administrar');
@@ -456,6 +455,10 @@ class InstructorViewController extends Controller
         // Obtén el ID de solicitud almacenado en la sesión
         $sol_id = session('sol_id');
         $solicitud = SolicitudComite::findOrFail($sol_id);
+
+        // Obtén los IDs de los aprendices ya relacionados con la solicitud
+        $aprendicesRelacionadosIds = $solicitud->aprendizs->pluck('id')->toArray();
+
         // Itera a través de los campos <select> dinámicos
         foreach ($request->all() as $key => $value) {
             // Verifica si el campo comienza con 'nuevo_aprendiz_'
@@ -463,22 +466,52 @@ class InstructorViewController extends Controller
                 // El campo es un aprendiz seleccionado
                 $apr_id = $value;
 
-                // Crea una entrada en la tabla 'solicitudxaprendiz'
-                SolicitudxAprendiz::update([
-                    'sol_id' => $sol_id,
-                    'apr_id' => $apr_id,
-                ]);
+                // Verifica si el aprendiz ya está relacionado con la solicitud
+                if (!in_array($apr_id, $aprendicesRelacionadosIds)) {
+                    // El aprendiz no está relacionado, crea una entrada en la tabla 'solicitudxaprendiz'
+                    SolicitudxAprendiz::create([
+                        'sol_id' => $sol_id,
+                        'apr_id' => $apr_id,
+                    ]);
+                }
             }
         }
-        // Actualizar los campos de la solicitud con los datos del formulario
-        $solicitud->update($request->all());
 
-        // Almacena el ID de solicitud en la sesión
-        session(['sol_id' => $solicitud->id]);
-
-        // Almacena el ID de solicitud en una variable local
-        $sol_id = $solicitud->id;
-
+        // Redirige al siguiente paso del formulario
         return redirect()->route('instructorViews.registrar_novedad4', compact('sol_id'));
+    }
+
+
+    public function registrar_novedad4()
+    {
+        $this->authorize('administrar');
+        // Accede al valor de 'sol_id' almacenado en la sesión
+        $sol_id = session('sol_id');
+
+        return view('instructorViews. registrar_novedad4', compact('sol_id'));
+    }
+
+    public function storeRegistrar_novedad4(Request $request)
+    {
+        $this->authorize('administrar');
+
+        // Subir y almacenar el archivo
+        if ($request->hasFile('pru_url')) {
+            $file = $request->file('pru_url');
+            $path = $file->store('pruebas'); // Almacena el archivo en la carpeta 'pruebas' dentro del almacenamiento
+
+            // Crea un registro en la tabla 'pruebas'
+            Prueba::create([
+                'pru_tipo' => $request->pru_tipo,
+                'pru_descripcion' => $request->pru_descripcion,
+                'pru_fecha' => $request->pru_fecha,
+                'pru_url' => $path,
+                'sol_id' => session('sol_id'),
+            ]);
+
+            return redirect()->route('instructorViews.solicitar5')->with('success', 'La prueba se ha subido exitosamente.');
+        }
+
+        return back()->with('error', 'Ocurrió un error al subir la prueba.');
     }
 }

@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Solicitud N° ') . $sol_id . ('   - Añadir aprendices a la solicitud') }}
+            {{ __('Registrar noedades ') . ('   - Añadir más aprendices a la solicitud') }}
         </h2>
     </x-slot>
 
@@ -11,7 +11,7 @@
             <div class="bg-green-50 shadow-xl overflow-hidden shadow-xl sm:rounded-lg">
                 <div class="relative overflow-x-auto shadow-md sm:rounded-lg px-4 py-4">
                     <x-validation-errors class="mb-4" />
-                    <form method="POST" action="{{ route('instructorViews.storeSolicitar3') }}">
+                    <form method="POST" action="{{ route('instructorViews.storeRegistrar_novedad3', ['sol_id' => $sol_id]) }}">
                         @csrf
                         @method('PUT')
                         <x-button type="button" id="agregarSelect"  class="mb-6  mt-6 bg-green-700 hover:bg-yellow-500 border-2 border-green-950"  >Agregar Aprendiz</x-button>
