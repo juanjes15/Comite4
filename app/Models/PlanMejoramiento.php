@@ -14,5 +14,6 @@ class PlanMejoramiento extends Model
     protected $fillable = [
         'descripcion',
         'url_documento',
+        'email',
     ];
 }

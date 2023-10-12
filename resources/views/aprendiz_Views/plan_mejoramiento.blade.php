@@ -59,22 +59,43 @@
 
                 
                 <form action="{{ route('aprendiz_Views.plan_mejoramiento') }}" method="POST" enctype="multipart/form-data">
-                    @csrf
+    @csrf
 
-                    <div class="mb-4 flex items-center">
-                        <div class="w-1/2 mr-2">
-                            <label class="block text-sm font-medium text-gray-700">Descripción</label>
-                            <input type="text" name="descripcion" class="mt-1 p-2 w-full border rounded-md" placeholder="Ingrese una descripción">
-                        </div>
-                        <div class="w-1/2 mr-2">
-                            <label class="block text-sm font-medium text-gray-700">Subir Archivos</label>
-                            <input type="file" name="url_documento" class="mt-1">
-                        </div>
-                        <div class="w-1/2 ml-2">
-                            <button type="submit" class="bg-green-700 hover:bg-green-500 py-1 px-1 ml-9 border-2 border-green-950 rounded transition duration-300 ease-in-out">Enviar Archivo</button>
-                        </div>
-                    </div>
-                </form>
+    <div class="mb-4">
+        <div class="flex items-center">
+            <div class="w-1/2 mr-2">
+                <label class="block text-sm font-medium text-gray-700">Email</label>
+                <input type="email" name="email" class="mt-1 p-2 w-full border rounded-md" placeholder="Ingrese el email">
+                @error('email')
+                    <span class="text-red-500 text-sm my-1">{{$message}}</span>
+                @enderror
+            </div>
+        </div>
+    </div>
+
+    <div class="mb-4">
+        <div class="flex items-center">
+            <div class="w-1/2 mr-2">
+                <label class="block text-sm font-medium text-gray-700">Descripción</label>
+                <input type="text" name="descripcion" class="mt-1 p-2 w-full border rounded-md" placeholder="Ingrese una descripción">
+                @error('descripcion')
+                    <span class="text-red-500 text-sm my-1">{{$message}}</span>
+                @enderror
+            </div>
+            <div class="w-1/2 mr-2">
+                <label class="block text-sm font-medium text-gray-700">Subir Archivos</label>
+                <input type="file" name="url_documento" class="mt-1">
+                @error('url_documento')
+                    <span class="text-red-500 text-sm my-1">{{$message}}</span>
+                @enderror
+            </div>
+            <div class="w-1/2 ml-2">
+                <button type="submit" class="bg-green-700 hover:bg-green-500 py-1 px-1 ml-9 border-2 border-green-950 rounded transition duration-300 ease-in-out">Enviar Archivo</button>
+            </div>
+        </div>
+    </div>
+</form>
+
 
     <div class="mb-4">
                     <label class="block text-sm font-medium text-gray-700">Calificación del Documento</label>

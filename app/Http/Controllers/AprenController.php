@@ -11,6 +11,10 @@ use App\Models\Capitulo;
 use App\Models\Prueba;
 use App\Models\PlanMejoramiento;
 use App\Models\Aprendiz;
+use App\Notifications\planMejoramientoNoti;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Notification;
+
 
 
 
@@ -54,13 +58,25 @@ class AprenController extends Controller
     
         if ($request->isMethod('post')) {
             // Validar los datos del formulario
-            $request->validate([
+            $data = $request->validate([
+                'email' => 'required|email',
                 'descripcion' => 'required|string',
                 'url_documento' => 'required|file|mimes:jpeg,png,gif', // Puedes ajustar las reglas de validación según tus necesidades
             ]);
+
+            //Validar email
+            try {
+                Notification::route('mail', 'magonzalez4826@misena.edu.co')->notify(new planMejoramientoNoti($data));
+            } catch (Exception $exception) {
+                Log::error($exception);
+                return redirect()->back()->with(['error' => 'Whoops! Por favor intenta más tarde']);
+            }
+            
+            return redirect()->back()->with(['success' => '¡Gracias!']);
     
             // Crear una nueva instancia del modelo Prueba y asignar los valores
             $plan_mejoramiento = new PlanMejoramiento();
+            $plan_mejoramiento->email = $request->input('email');
             $plan_mejoramiento->descripcion = $request->input('descripcion');
             $plan_mejoramiento->url_documento = $request->file('url_documento')->store('plan_mejoramiento'); // Guardar el archivo en una ubicación deseada
     

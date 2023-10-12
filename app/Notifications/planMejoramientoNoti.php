@@ -7,16 +7,17 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class mandarImpugnacion extends Notification
+class planMejoramientoNoti extends Notification
 {
     use Queueable;
+    public $data;
 
     /**
      * Create a new notification instance.
      */
-    public function __construct()
+    public function __construct($data)
     {
-        //
+        $this->data = $data;
     }
 
     /**
@@ -35,9 +36,11 @@ class mandarImpugnacion extends Notification
     public function toMail(object $notifiable): MailMessage
     {
         return (new MailMessage)
-                    ->line('The introduction to the notification.')
-                    ->action('Notification Action', url('/'))
-                    ->line('Thank you for using our application!');
+                    ->replyTo($this->data['email'])
+                    ->line('Hola, tienes una nueva notificacion')
+                    ->line('El mensaje es: ')
+                    ->line('Descripción: ' . $this->data['descripcion'])
+                    ->line('URL del documento: ' . $this->data['url_documento']);
     }
 
     /**

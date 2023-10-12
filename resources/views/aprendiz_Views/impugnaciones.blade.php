@@ -33,6 +33,9 @@
     <div class="mb-4">
     <label class="block mb-2" for="identificacion">Identificación del aprendiz</label>
     <input type="text" name="apr_identificacion" id="identificacion" class="w-full px-4 py-2 border rounded">
+    @error('apr_identificacion')
+        <span class="text-red-500 text-sm my-1">{{$message}} </span>
+    @enderror
 </div>
 
 
@@ -40,11 +43,17 @@
         <label class="block mb-2" for="fecha_impugnacion">Fecha de impugnación</label>
         <input type="date" name="apr_fechaImpugnacion" id="fecha_impugnacion"
             class="w-full px-4 py-2 border rounded">
+            @error('apr_fechaImpugnacion')
+                <span class="text-red-500 text-sm my-1">{{$message}} </span>
+            @enderror
     </div>
 
     <div class="mb-4">
         <label class="block mb-2" for="motivo_impugnacion">Motivo de impugnación</label>
         <textarea name="apr_motivoImpugnacion" id="motivo_impugnacion" class="w-full px-4 py-2 border rounded" rows="4"></textarea>
+        @error('apr_motivoImpugnacion')
+            <span class="text-red-500 text-sm my-1">{{$message}} </span>
+        @enderror
     </div>
 
     <div>
