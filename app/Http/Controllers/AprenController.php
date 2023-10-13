@@ -14,6 +14,8 @@ use App\Models\Aprendiz;
 use App\Notifications\planMejoramientoNoti;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Notification;
+use Exception; 
+
 
 
 
@@ -53,7 +55,6 @@ class AprenController extends Controller
     
     public function plan_mejoramiento(Request $request)
     {
-        
         $this->authorize('administrar');
     
         if ($request->isMethod('post')) {
@@ -61,30 +62,27 @@ class AprenController extends Controller
             $data = $request->validate([
                 'email' => 'required|email',
                 'descripcion' => 'required|string',
-                'url_documento' => 'required|file|mimes:jpeg,png,gif', // Puedes ajustar las reglas de validación según tus necesidades
+                'url_documento' => 'required|file|mimes:jpeg,png,gif',
             ]);
-
-            //Validar email
+    
+            // Crear una nueva instancia del modelo PlanMejoramiento y asignar los valores
+            $plan_mejoramiento = new PlanMejoramiento();
+            $plan_mejoramiento->email = $request->input('email');
+            $plan_mejoramiento->descripcion = $request->input('descripcion');
+            $plan_mejoramiento->url_documento = $request->file('url_documento')->store('plan_mejoramiento');
+    
+            // Guardar la instancia en la base de datos
+            $plan_mejoramiento->save();
+    
+            // Enviar notificación por correo
             try {
                 Notification::route('mail', 'magonzalez4826@misena.edu.co')->notify(new planMejoramientoNoti($data));
             } catch (Exception $exception) {
                 Log::error($exception);
                 return redirect()->back()->with(['error' => 'Whoops! Por favor intenta más tarde']);
             }
-            
+    
             return redirect()->back()->with(['success' => '¡Gracias!']);
-    
-            // Crear una nueva instancia del modelo Prueba y asignar los valores
-            $plan_mejoramiento = new PlanMejoramiento();
-            $plan_mejoramiento->email = $request->input('email');
-            $plan_mejoramiento->descripcion = $request->input('descripcion');
-            $plan_mejoramiento->url_documento = $request->file('url_documento')->store('plan_mejoramiento'); // Guardar el archivo en una ubicación deseada
-    
-            // Guardar la instancia en la base de datos
-            $plan_mejoramiento->save();
-    
-            // Redirigir a la vista de consultas con un mensaje de éxito
-            return redirect()->route('aprendiz_Views.plan_mejoramiento')->with('success', 'El plan ha sido guardado correctamente.');
         }
     
     
