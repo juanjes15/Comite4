@@ -10,6 +10,7 @@ use App\Models\Prueba;
 use App\Models\Articulo;
 use App\Models\Numeral;
 use App\Models\Capitulo;
+use App\Http\Controllers\InstructorViewController;
 
 
 
@@ -63,8 +64,10 @@ class GestorComiteViewsController extends Controller
      */
     public function show(SolicitudComite $solicituds)
     {
-
         $this->authorize('administrar');
+        $getInstructorView = new InstructorViewController();
+
+        
 
         // Obtén el ID de la solicitud desde la sesión
         $sol_id = session('sol_id');
