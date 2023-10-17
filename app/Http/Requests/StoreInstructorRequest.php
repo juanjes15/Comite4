@@ -27,6 +27,7 @@ class StoreInstructorRequest extends FormRequest
             'ins_apellidos' => 'required',
             'ins_email' => 'required',
             'ins_telefono' => 'required',
+            'ins_area' => 'required',
         ];
     }
 }

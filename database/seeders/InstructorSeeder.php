@@ -19,6 +19,7 @@ class InstructorSeeder extends Seeder
                 'ins_apellidos' => fake()->lastName(),
                 'ins_email' => fake()->email(),
                 'ins_telefono' => fake()->phoneNumber(),
+                'ins_area' => fake()->jobTitle(),
             ]);
         }
     }
