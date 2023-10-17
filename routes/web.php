@@ -90,7 +90,13 @@ Route::middleware([
     Route::get('/aprendiz/detalles', [\App\Http\Controllers\AprenController::class, 'detalles'])->name('aprendiz_Views.detalles');
 
     Route::get('/aprendiz/impugnaciones', [\App\Http\Controllers\AprenController::class, 'impugnaciones'])->name('aprendiz_Views.impugnaciones');
+
     Route::post('/aprendiz/impugnaciones', [\App\Http\Controllers\AprenController::class, 'impugnaciones'])->name('aprendiz_Views.impugnaciones');
+
+
+
+    Route::get('/gestorComiteViews/detalles', [\App\Http\Controllers\GestorComiteViewsController::class, 'detalles'])->name('gestorComiteViews.detalles');
+    Route::get('/gestorComiteViews/gFechas', [\App\Http\Controllers\GestorComiteViewsController::class, 'gFechas'])->name('gestorComiteViews.gFechas');
 
 
 
