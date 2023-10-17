@@ -10,42 +10,36 @@
             <div class="relative overflow-x-auto sm:rounded-lg px-4 py-4 bg-green-50 shadow-xl">
                 <div class="container mx-auto p-4">
                     <h2 class="text-2xl font-semibold mb-4">Anexar pruebas</h2>
-                    <form>
+                    <form method="POST" action="{{ route('aprendiz_Views.consultas') }}" enctype="multipart/form-data">
+    @csrf
 
-                        @csrf
-                        <div class=" ">
-                            <div class="mb-4">
-                                <label class="block text-sm font-medium text-gray-700">Descripción:</label>
-                                <textarea name="descripcion"
-                                    class="form-input mt-1 w-full rounded-md focus:ring focus:ring-indigo-200 focus:ring-opacity-50"></textarea>
-                            </div>
 
-                            <div>
-                                <x-label for="pru_url" value="{{ __('Anexar prueba') }}" />
-                                <input
-                                    class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
-                                    id="pru_url" type="file" name="pru_url" accept="image/*">
-                                @error('pru_url')
-                                    <small class="text-danger">{{ $message }}</small>
-                                @enderror
-                            </div>
-                        </div>
+    <div class="mb-4">
+        <label class="block text-sm font-medium text-gray-700">Descripción:</label>
+        <textarea name="pru_descripcion" class="form-input mt-1 w-full rounded-md focus:ring focus:ring-indigo-200 focus:ring-opacity-50"></textarea>
+        @error('pru_descripcion')
+            <small class="text-danger">{{ $message }}</small>
+        @enderror
+    </div>
 
-                    </form>
-                    <div class="flex justify-center mt-2 py-4">
-                        <button type="submit"
-                            class="bg-green-700 hover:bg-green-500 border-2 border-green-950  px-4 py-2 rounded  flex items-center ">
-                            <span class="mr-2">Enviar Información</span>
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20"
-                                fill="currentColor">
-                                <path
-                                    d="M10 2a2 2 0 0 1 2 2v6a1 1 0 0 1-2 0V4a1 1 0 0 0-1-1H4a1 1 0 0 1 0-2h5a2 2 0 0 1 0 4H7v6a2 2 0 1 1-4 0V4a4 4 0 0 1 4-4h5a4 4 0 0 1 4 4v6a4 4 0 0 1-4 4v-6a2 2 0 0 1 0-4z" />
-                            </svg>
-                        </button>
-
-                        <div class="flex justify-center mt-2">
-
-                        </div>
+    <div>
+        <x-label for="pru_url" value="{{ __('Anexar prueba (Solo se admiten documentos)') }}" />
+        <br>
+        <input class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
+            id="pru_url" type="file" name="pru_url" accept="image/*">
+        @error('pru_url')
+            <small class="text-danger">{{ $message }}</small>
+        @enderror
+    </div>
+<br>
+    <button type="submit" class="bg-green-700 hover:bg-green-500 border-2 border-green-950 px-4 py-2 rounded flex items-center">
+        <span class="mr-2">Enviar Información</span>
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+            <path d="M10 2a2 2 0 0 1 2 2v6a1 1 0 0 1-2 0V4a1 1 0 0 0-1-1H4a1 1 0 0 1 0-2h5a2 2 0 0 1 0 4H7v6a2 2 0 1 1-4 0V4a4 4 0 0 1 4-4h5a4 4 0 0 1 4 4v6a4 4 0 0 1-4 4v-6a2 2 0 0 1 0-4z" />
+        </svg>
+    </button>
+</form>
+        </div>
                         @if (session('message'))
                             <div class="bg-green-200 text-green-800 mt-4 px-4 py-2 rounded">{{ session('message') }}
                             </div>
@@ -167,5 +161,11 @@
                 </div>
 
             </div>
+            @if(session('success'))
+    <script>
+        alert('{{ session('success') }}');
+        window.location.href = '{{ route('aprendiz_Views.consultas') }}';
+    </script>
+@endif
 
 </x-app-layout>
