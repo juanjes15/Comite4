@@ -11,6 +11,11 @@ use App\Models\Articulo;
 use App\Models\Numeral;
 use App\Models\Capitulo;
 use App\Http\Controllers\InstructorViewController;
+use Illuminate\Http\Request;
+use App\Models\Instructor;
+use App\Models\Programa;
+
+
 
 
 
