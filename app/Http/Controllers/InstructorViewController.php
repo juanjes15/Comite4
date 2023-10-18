@@ -119,6 +119,7 @@ class InstructorViewController extends Controller
         $numerals = Numeral::whereIn('id', $selectedNumIds)->get();
 
 
+        
 
 
         return view('instructorViews.solicitarResumen', compact(
