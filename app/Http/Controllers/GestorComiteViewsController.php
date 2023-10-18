@@ -60,6 +60,18 @@ class GestorComiteViewsController extends Controller
         }
     }
 
+    public function detalles($solicitud)
+    {
+        // Obtén los detalles de la solicitud utilizando el ID proporcionado
+        $solicitud = SolicitudComite::find($solicitud);
+        if (!$solicitud) {
+            // Manejo de solicitud no encontrada, por ejemplo, redireccionar o mostrar un mensaje de error.
+        }
+    
+        // Ahora puedes pasar $solicitud a la vista para mostrar los detalles específicos.
+        return view('GestorComiteViews.detalles', ['solicitud' => $solicitud]);
+    }
+    
 
 
 
@@ -70,9 +82,9 @@ class GestorComiteViewsController extends Controller
     public function show(SolicitudComite $solicituds)
     {
         $this->authorize('administrar');
-        $getInstructorView = new InstructorViewController();
+       
 
-        
+
 
         // Obtén el ID de la solicitud desde la sesión
         $sol_id = session('sol_id');
