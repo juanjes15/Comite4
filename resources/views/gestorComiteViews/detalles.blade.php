@@ -35,27 +35,46 @@
                         <p><strong>Estado:</strong> {{ $solicitud->sol_estado }}</p>
                     </div>
 
-                    <!-- Prueba Information -->
-                    @if ($prueba)
-                        <div class="bg-green-100 p-4 rounded-lg mb-4">
-                            <h3 class="text-lg font-semibold mb-2">Información de la Prueba</h3>
-                            <p>Tipo de Prueba: {{ $prueba->pru_tipo }}</p>
-                            <p>Url: {{ $prueba->pru_url }}</p>
-                            <p><strong>Descripción de la Prueba:</strong> {{ $prueba->pru_descripcion }}</p>
-                            <p><strong>Fecha de la Prueba:</strong> {{ $prueba->pru_fecha }}</p>
-                        </div>
-                    @endif
                     <!-- Información de las Faltas -->
+
+                    <div class="bg-green-100 p-4 rounded-lg mb-4">
+                        <h3 class="text-lg font-semibold mb-2">Información de las Faltas</h3>
+
+                        <p><strong>Número del Capítulo: </strong>{{ $cap_numero }} </p>
+                        <p><strong>Descripción del Capítulo:</strong>{{ $cap_descripcion }}</p>
+
+                        {{-- Articulos --}}
+                        @foreach ($articulos as $articulo)
+                            <strong>
+                                <p> Articulo seleccionado :
+                            </strong> {{ $articulo->art_descripcion }}</p>
+                        @endforeach
+
+                        <!-- Dentro de tu vista "solicitarResumen.blade.php" -->
+                        @foreach ($numerals as $numeral)
+                            <p><strong>Descripción del Numeral: </strong>{{ $numeral->num_descripcion }}</p>
+                        @endforeach
+                    </div>
 
                     
 
-                    <div class="flex mt-4">
+                    <div class="flex mt-4  ">
                         <x-button id="finalizar-button"
                             class="bg-green-700 hover:bg-green-500 border-2 border-green-950">
-                            {{ __('Finalizar') }}
+                            {{ __('Aceptar comite') }}
                         </x-button>
-                        <x-link href="{{ url()->previous() }}"
-                            class="mx-3 bg-green-700 hover:bg-red-800 border-2 border-green-950">Atrás</x-link>
+                        <x-button id="finalizar-button"
+                            class="bg-green-700 hover:bg-green-500 border-2 border-green-950 mx-4 ">
+                            {{ __('Programar comite') }}
+                        </x-button>
+                        <x-button id="finalizar-button"
+                            class="bg-green-700 hover:bg-green-500 border-2 border-green-950 ">
+                            {{ __('Negar comite') }}
+                        </x-button>
+                        <x-link href="{{ route('gestorComiteViews.index')}}"
+                            class="mx-3 bg-green-700 hover:bg-red-800 border-2 border-green-950">
+                            {{ __('Atrás') }}
+                        </x-link>
                     </div>
                 </div>
             </div>

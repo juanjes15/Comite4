@@ -164,21 +164,21 @@ class GestorComiteViewsController extends Controller
         $selectedCapId = session('selected_cap_id');
         // Obtén el capítulo relacionado con el $selectedCapId
         $capitulo = Capitulo::find($selectedCapId);
-        
-        
-        
-        // Obtén los valores seleccionados en la sesión para artículos
-        $selectedArtIds = session('selected_art_ids', []); // Obtener los valores, si no hay ninguno, se usará un array vacío
-        // Obtén los artículos relacionados con los $selectedArtIds
+
+        // Ahora, puedes acceder al campo cap_numero
+        $cap_numero = $capitulo ? $capitulo->cap_numero : null;
+        $cap_descripcion = $capitulo ? $capitulo->cap_descripcion : null;
+
+        $selectedArtIds = (array)session('selected_art_ids', []); // Cast a array si no hay ninguno, se usará un array vacío
         $articulos = Articulo::whereIn('id', $selectedArtIds)->get();
+
 
         // Recupera la solicitud de comité con sus aprendices y numerales relacionados
         $solicitudComite = SolicitudComite::with('aprendizs', 'numerals')->find($sol_id);
 
         // Ahora, puedes acceder a los aprendices y numerales relacionados
-        $aprendices = $solicitudComite->aprendizs;
-        $numerals = $solicitudComite->numerals;
-        
+        $aprendices = $solicitudComite ? $solicitudComite->aprendizs : [];
+        $numerals = $solicitudComite ? $solicitudComite->numerals : [];
 
         // Ahora puedes pasar todas estas variables a la vista para mostrar los detalles específicos.
         return view('GestorComiteViews.detalles', compact(
@@ -187,8 +187,8 @@ class GestorComiteViewsController extends Controller
             'aprendiz',
             'prueba',
             'selectedCapId',
-            
-           
+            'cap_numero',
+            'cap_descripcion',
             'selectedArtIds',
             'articulos',
             'aprendices',
