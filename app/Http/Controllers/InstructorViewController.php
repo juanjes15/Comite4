@@ -119,7 +119,7 @@ class InstructorViewController extends Controller
         $numerals = Numeral::whereIn('id', $selectedNumIds)->get();
 
 
-        
+
 
 
         return view('instructorViews.solicitarResumen', compact(
@@ -130,7 +130,7 @@ class InstructorViewController extends Controller
             'selectedCapId',
             'cap_numero',
             'selectedArtIds',
-            'articulos', 
+            'articulos',
             'cap_descripcion',
             'numerals',
             'normaxd'
@@ -281,22 +281,27 @@ class InstructorViewController extends Controller
         return view('instructorViews.detalles_antecedentes');
     }
 
-    public function detalles_comite(SolicitudComite $solicituds)
+    public function detalles_comite($solicitud)
     {
-
         $this->authorize('administrar');
 
-        // Obtén el ID de la solicitud desde la sesión
-        $sol_id = session('sol_id');
+        // Obtén los detalles de la solicitud utilizando el ID proporcionado
+        $solicitud = SolicitudComite::find($solicitud);
+
+        // Verifica si la solicitud se encontró
+        if (!$solicitud) {
+            // Manejo de solicitud no encontrada, por ejemplo, redireccionar o mostrar un mensaje de error.
+            return redirect()->route('tu_ruta_de_redireccion'); // Reemplaza 'tu_ruta_de_redireccion' por la ruta apropiada
+        }
+
+        // Obtén el ID de la solicitud
+        $sol_id = $solicitud->id;
 
         // Obtén las faltas relacionadas con la solicitud
         $normasInfringidas = Norma_Infringida::where('sol_id', $sol_id)->get();
 
         // Obtén el ID del aprendiz desde la sesión
         $apr_id = session('apr_id');
-
-        // Obtén los datos de la solicitud
-        $solicitud = SolicitudComite::find($sol_id);
 
         // Obtén los datos del aprendiz
         $aprendiz = Aprendiz::find($apr_id);
@@ -310,44 +315,37 @@ class InstructorViewController extends Controller
         $capitulo = Capitulo::find($selectedCapId);
 
         // Ahora, puedes acceder al campo cap_numero
-        $cap_numero = $capitulo->cap_numero;
-        $cap_descripcion = $capitulo->cap_descripcion;
+        $cap_numero = $capitulo ? $capitulo->cap_numero : null;
+        $cap_descripcion = $capitulo ? $capitulo->cap_descripcion : null;
 
-        // Obtén los valores seleccionados en la sesión para artículos
-        $selectedArtIds = session('selected_art_ids', []); // Obtener los valores, si no hay ninguno, se usará un array vacío
-        // Obtén los artículos relacionados con los $selectedArtIds
-        $articulos = Articulo::where('id', $selectedArtIds)->get();
+        $selectedArtIds = (array)session('selected_art_ids', []); // Cast a array si no hay ninguno, se usará un array vacío
+        $articulos = Articulo::whereIn('id', $selectedArtIds)->get();
 
-        //Consulta JJ
-        // Recupera la solicitud de comité con sus aprendices relacionados
+
+        // Recupera la solicitud de comité con sus aprendices y numerales relacionados
         $solicitudComite = SolicitudComite::with('aprendizs', 'numerals')->find($sol_id);
-        // Ahora, puedes acceder a los aprendices relacionados
-        $aprendices = $solicitudComite->aprendizs;
-        $normaxd = $solicitudComite->numerals;
 
+        // Ahora, puedes acceder a los aprendices y numerales relacionados
+        $aprendices = $solicitudComite ? $solicitudComite->aprendizs : [];
+        $numerals = $solicitudComite ? $solicitudComite->numerals : [];
 
-        // Obtén los IDs de numerales almacenados en la sesión
-        $selectedNumIds = session('selected_num_ids', []);
-        // Filtra los numerales por los IDs almacenados en la sesión
-        $numerals = Numeral::whereIn('id', $selectedNumIds)->get();
-
-
-
-
+        // Ahora puedes pasar todas estas variables a la vista para mostrar los detalles específicos.
         return view('instructorViews.detalles_comite', compact(
             'solicitud',
+            'normasInfringidas',
             'aprendiz',
             'prueba',
-            'aprendices',
             'selectedCapId',
             'cap_numero',
-            'selectedArtIds',
-            'articulos', // Agregamos la variable $articulos aquí
             'cap_descripcion',
-            'numerals',
-            'normaxd'
+            'selectedArtIds',
+            'articulos',
+            'aprendices',
+            'numerals'
         ));
     }
+
+
 
     public function consultar_comite(Request $request)
     {
@@ -422,6 +420,8 @@ class InstructorViewController extends Controller
         return redirect()->route('instructorViews.registrar_novedad3', compact('sol_id'));
     }
 
+    
+
     public function registrar_novedad3($sol_id)
     {
         $this->authorize('administrar');
@@ -433,12 +433,12 @@ class InstructorViewController extends Controller
             if ($relacion->aprendiz) {
                 $aprendicesRelacionados[] = $relacion->aprendiz;
             }
-    }
+        }
         $aprendizs = Aprendiz::all();
         // Accede al valor de 'sol_id' almacenado en la sesión
         $sol_id = session('sol_id');
         $solicitud = SolicitudComite::findOrFail($sol_id);
-        
+
         return view('instructorViews.registrar_novedad3', compact('aprendizs', 'sol_id', 'solicitud', 'aprendicesRelacionados'));
     }
 

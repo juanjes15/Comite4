@@ -17,7 +17,14 @@
                             <x-label for="ins_id" value="{{ __('Instructor') }}" />
                             <select name="ins_id"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
-                              
+                                @foreach ($instructors as $instructor)
+                                <option value="{{ $instructor->id }}">
+                                    {{ $solicitud->instructor->ins_nombres }}
+                                    {{ $solicitud->instructor->ins_apellidos }}
+                                    - {{ $instructor->ins_area }}
+                                </option>
+                                @endforeach
+
                                 @foreach ($instructors as $instructor)
                                     <option value="{{ $instructor->id }}">{{ $instructor->ins_nombres }}
                                         {{ $instructor->ins_apellidos }} - {{ $instructor->ins_area }} </option>
