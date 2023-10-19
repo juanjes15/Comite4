@@ -21,6 +21,9 @@ class AprendizSeeder extends Seeder
                 'apr_telefono' => fake()->phoneNumber(),
                 'apr_direccion' => fake()->address(),
                 'apr_fechaNacimiento' => fake()->date(),
+                'apr_pruImpugnacion' => fake()->date(),
+                'apr_fechaImpugnacion' => fake()->date(),
+                'apr_motivoImpugnacion' => fake()->date(),
                 'fic_id' => fake()->numberBetween(1, 10),
             ]);
         }

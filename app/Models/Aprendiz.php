@@ -17,6 +17,10 @@ class Aprendiz extends Model
         'apr_telefono',
         'apr_direccion',
         'apr_fechaNacimiento',
+        'apr_pruImpugnacion',
+        'apr_fechaImpugnacion',
+        'apr_motivoImpugnacion',
+
         'fic_id',
     ];
     

@@ -2,14 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreSolicitar3Request;
-use App\Http\Requests\StoreSolicitar5Request;
-use App\Http\Requests\StoreSolicitarResumenRequest;
+
 use Illuminate\Http\Request;
-use App\Http\Requests\StoreSolicitudComiteRequest;
-use App\Http\Requests\StorePruebaRequest;
-use App\Http\Requests\UpdateSolicitudComiteRequest;
-use Illuminate\View\View;
 use App\Models\Aprendiz;
 use App\Models\SolicitudComite;
 use App\Models\Instructor;
@@ -20,7 +14,6 @@ use App\Models\Norma_Infringida;
 use App\Models\Numeral;
 use App\Models\Prueba;
 use App\Models\SolicitudxAprendiz;
-use Illuminate\Support\Facades\Storage;
 
 class InstructorViewController extends Controller
 {
@@ -126,6 +119,7 @@ class InstructorViewController extends Controller
         $numerals = Numeral::whereIn('id', $selectedNumIds)->get();
 
 
+        
 
 
         return view('instructorViews.solicitarResumen', compact(
@@ -136,7 +130,7 @@ class InstructorViewController extends Controller
             'selectedCapId',
             'cap_numero',
             'selectedArtIds',
-            'articulos', // Agregamos la variable $articulos aquí
+            'articulos', 
             'cap_descripcion',
             'numerals',
             'normaxd'
