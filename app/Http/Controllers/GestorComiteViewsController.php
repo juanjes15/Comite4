@@ -58,9 +58,10 @@ class GestorComiteViewsController extends Controller
 
 
 
-            return view('gestorComiteViews.index', compact('solicitudComites', 'instructors'))
-                ->with('i', (request()->input('page', 1) - 1) * 5);
+            
         }
+        return view('gestorComiteViews.index', compact('solicitudComites', 'instructors'))
+                ->with('i', (request()->input('page', 1) - 1) * 5);
     }
 
 

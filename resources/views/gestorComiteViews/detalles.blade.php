@@ -56,7 +56,7 @@
                         @endforeach
                     </div>
 
-                    
+
 
                     <div class="flex mt-4  ">
                         <x-button id="finalizar-button"
@@ -67,11 +67,13 @@
                             class="bg-green-700 hover:bg-green-500 border-2 border-green-950 mx-4 ">
                             {{ __('Programar comite') }}
                         </x-button>
-                        <x-button id="finalizar-button"
-                            class="bg-green-700 hover:bg-green-500 border-2 border-green-950 ">
-                            {{ __('Negar comite') }}
-                        </x-button>
-                        <x-link href="{{ route('gestorComiteViews.index')}}"
+                        <form method="POST" action="{{ route('gestorComiteViews.destroy', $solicitud) }}" class="inline-block">
+                            @csrf
+                            @method('DELETE')
+                            <x-danger-button type="submit" onclick="return confirm('¿Está seguro?')">
+                                Negar negar</x-danger-button>
+                        </form>
+                        <x-link href="{{ route('gestorComiteViews.index') }}"
                             class="mx-3 bg-green-700 hover:bg-red-800 border-2 border-green-950">
                             {{ __('Atrás') }}
                         </x-link>
