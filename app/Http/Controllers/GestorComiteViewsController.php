@@ -20,6 +20,9 @@ use App\Models\Programa;
 
 
 
+
+
+
 class GestorComiteViewsController extends Controller
 {
     public function index()
@@ -142,7 +145,7 @@ class GestorComiteViewsController extends Controller
         // Verifica si la solicitud se encontró
         if (!$solicitud) {
             // Manejo de solicitud no encontrada, por ejemplo, redireccionar o mostrar un mensaje de error.
-            return redirect()->route('tu_ruta_de_redireccion'); // Reemplaza 'tu_ruta_de_redireccion' por la ruta apropiada
+            return redirect()->route('gestorComiteViews.index'); // Reemplaza 'tu_ruta_de_redireccion' por la ruta apropiada
         }
 
         // Obtén el ID de la solicitud
@@ -195,4 +198,20 @@ class GestorComiteViewsController extends Controller
             'numerals'
         ));
     }
+
+
+    public function destroy(SolicitudComite $solicitud)
+{
+    $this->authorize('administrar');
+
+
+    // Elimina los registros relacionados en la tabla pruebas
+    Prueba::where('sol_id', $solicitud->id)->delete();
+
+    // Luego elimina la solicitud de comité
+    $solicitud->delete();
+
+    return redirect()->route('gestorComiteViews.index');
+}
+
 }

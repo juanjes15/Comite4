@@ -79,6 +79,7 @@ Route::middleware([
     Route::get('/gestorComiteViews/detalles', [\App\Http\Controllers\GestorComiteViewsController::class, 'detalles'])->name('gestorComiteViews.detalles');
     Route::get('/gestorComiteViews/gFechas', [\App\Http\Controllers\GestorComiteViewsController::class, 'gFechas'])->name('gestorComiteViews.gFechas');
     Route::get('/gestorComiteViews/detalles/{solicitud}', 'App\Http\Controllers\GestorComiteViewsController@detalles')->name('gestorComiteViews.detalles');
+    Route::delete('/gestor-comite-views/{solicitud}', 'App\Http\Controllers\GestorComiteViewsController@destroy')->name('gestorComiteViews.destroy');
 
 
 //Estas son las rutas de la vista del aprendiz

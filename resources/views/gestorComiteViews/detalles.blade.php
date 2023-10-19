@@ -105,7 +105,7 @@
                     }
                 }).then(() => {
                     // Redirige a la otra vista después de hacer clic en "Aceptar"
-                    window.location.href = "{{ route('instructorViews.solicitar1') }}";
+                    window.location.href = "{{ route('gestorComiteViews.index') }}";
 
                 });
             });
