@@ -77,7 +77,7 @@ Route::middleware([
     Route::get('/instructorViews/consultar_comite', [\App\Http\Controllers\InstructorViewController::class, 'consultar_comite'])->name('instructorViews.consultar_comite');
     Route::get('/instructorViews/detalles_comite', [\App\Http\Controllers\InstructorViewController::class, 'detalles_comite'])->name('instructorViews.detalles_comite');
     Route::get('/gestorComiteViews/detalles', [\App\Http\Controllers\GestorComiteViewsController::class, 'detalles'])->name('gestorComiteViews.detalles');
-    Route::get('/gestorComiteViews/gFechas', [\App\Http\Controllers\GestorComiteViewsController::class, 'gFechas'])->name('gestorComiteViews.gFechas');
+    Route::get('/gestorComiteViews/gFechas/{solicitud}', 'App\Http\Controllers\GestorComiteViewsController@gFechas')->name('gestorComiteViews.gFechas');
     Route::get('/gestorComiteViews/detalles/{solicitud}', 'App\Http\Controllers\GestorComiteViewsController@detalles')->name('gestorComiteViews.detalles');
     Route::delete('/gestor-comite-views/{solicitud}', 'App\Http\Controllers\GestorComiteViewsController@destroy')->name('gestorComiteViews.destroy');
     
