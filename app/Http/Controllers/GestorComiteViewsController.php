@@ -16,13 +16,6 @@ use App\Models\Instructor;
 use App\Models\Programa;
 
 
-
-
-
-
-
-
-
 class GestorComiteViewsController extends Controller
 {
     public function index()
@@ -106,6 +99,7 @@ class GestorComiteViewsController extends Controller
         $aprendices = $solicitudComite ? $solicitudComite->aprendizs : [];
         $numerals = $solicitudComite ? $solicitudComite->numerals : [];
 
+
         // Ahora puedes pasar todas estas variables a la vista para mostrar los detalles específicos.
         return view('GestorComiteViews.detalles', compact(
             'solicitud',
@@ -122,7 +116,6 @@ class GestorComiteViewsController extends Controller
         ));
     }
 
-
     public function destroy(SolicitudComite $solicitud)
     {
         $this->authorize('administrar');
@@ -137,15 +130,30 @@ class GestorComiteViewsController extends Controller
         return redirect()->route('gestorComiteViews.index');
     }
 
-    public function show($solicitud)
+    public function gFechas($solicitud)
     {
-        // Obtén los detalles de la solicitud utilizando el ID proporcionado
+        $this->authorize('administrar');
+
+        // Busca la solicitud basada en el ID proporcionado en la URL
         $solicitud = SolicitudComite::find($solicitud);
-        dd($solicitud);
+
+        // Asegúrate de que la solicitud se encontró antes de continuar
+        if (!$solicitud) {
+            // Manejo de solicitud no encontrada, por ejemplo, redireccionar o mostrar un mensaje de error.
+            return redirect()->route('gestorComiteViews.index'); // Reemplaza 'tu_ruta_de_redireccion' por la ruta apropiada
+        }
+
+        // No necesitas definir $sol_id aquí ya que la vista gFechas no lo usa directamente.
+
+        return view('gestorComiteViews.gFechas', compact('solicitud'));
+    }
+
+    public function show(SolicitudComite $solicitud)
+    {
+        $this->authorize('administrar');
         // Obtén el ID de la solicitud
         $sol_id = $solicitud->id;
-        
-        
-        return view('gestorComiteViews.gFechas', compact('solicitud','sol_id'));
+       
+        return view('gestorComiteViews.gFechas', compact('solicitud'));
     }
 }
