@@ -64,10 +64,13 @@
                             {{ __('Aceptar comite') }}
                         </x-button>
 
-                        <x-link href="{{ route('gestorComiteViews.gFechas') }}"
-                            class="bg-green-700 hover:bg-green-500 border-2 border-green-950 mx-4 ">
+                        <x-link href="{{ route('gestorComiteViews.gFechas', ['solicitud' => $solicitud->id]) }}"
+                            class="bg-green-700 hover:bg-green-500 border-2 border-green-950 mx-4">
                             {{ __('Programar comite') }}
                         </x-link>
+
+
+
 
                         <form method="POST" action="{{ route('gestorComiteViews.destroy', $solicitud) }}"
                             class="inline-block">
