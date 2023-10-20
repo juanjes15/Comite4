@@ -97,7 +97,7 @@
             finalizarButton.addEventListener("click", function() {
                 // Utiliza SweetAlert2 para mostrar el mensaje emergente
                 Swal.fire({
-                    title: "La solicitud ha sido creada",
+                    title: "La solicitud ha sido aceptada",
                     icon: "success",
                     confirmButtonText: "Aceptar",
                     customClass: {
