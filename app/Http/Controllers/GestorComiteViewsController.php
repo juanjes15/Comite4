@@ -4,16 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Models\SolicitudComite;
 use App\Models\Aprendiz;
-use App\Models\SolicitudxAprendiz;
 use App\Models\Norma_Infringida;
 use App\Models\Prueba;
 use App\Models\Articulo;
-use App\Models\Numeral;
 use App\Models\Capitulo;
-use App\Http\Controllers\InstructorViewController;
-use Illuminate\Http\Request;
-use App\Models\Instructor;
-use App\Models\Programa;
+
 
 
 class GestorComiteViewsController extends Controller
