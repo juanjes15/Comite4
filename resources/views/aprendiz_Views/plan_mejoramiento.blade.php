@@ -14,6 +14,11 @@
                         </svg>
                         Ir Atrás
                     </button>
+                    @if(session('error'))
+<div class="alert alert-danger">
+    {{ session('error') }}
+</div>
+@endif
                 </div>
                 <p class="text-lg font-semibold mb-4">Te damos la bienvenida al Plan de Mejoramiento diseñado para ayudarte a
                     alcanzar tus objetivos académicos y profesionales de manera efectiva.</p>
@@ -110,6 +115,12 @@
         alert('{{ session('success') }}');
         window.location.href = '{{ route('aprendiz_Views.consultas') }}';
     </script>
+@endif
+
+@if(session('error'))
+<div class="alert alert-danger">
+    {{ session('error') }}
+</div>
 @endif
 
 

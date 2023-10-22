@@ -76,9 +76,9 @@ class AprenController extends Controller
     
             // Enviar notificación por correo
             try {
-                Notification::route('mail', 'magonzalez4826@misena.edu.co')->notify(new planMejoramientoNoti($data));
+                Notification::route('mail', 'maleja20172017@gmail.com')->notify(new planMejoramientoNoti($data));
             } catch (Exception $exception) {
-                Log::error($exception);
+                Log::error('Error en el controlador: ' . $exception->getMessage());
                 return redirect()->back()->with(['error' => 'Whoops! Por favor intenta más tarde']);
             }
     
@@ -169,5 +169,3 @@ class AprenController extends Controller
         return view('aprendiz_Views.reglamento', ['resultados' => $resultados]);
     }
 }
-
-
