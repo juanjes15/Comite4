@@ -40,10 +40,12 @@
 
                         <!-- Mostrar los aprendices relacionados -->
                         <div>
-                            <x-label for="aprendices_relacionados" value="{{ __(' Aprendices Relacionados') }}" />
+                            <x-label for="apr_id" value="{{ __('Aprendices Relacionados') }}" />
                             <ul>
-                                @foreach ($aprendicesRelacionados as $relacion)
-                                    <li>{{ $relacion->aprendiz->apr_nombres }} {{ $relacion->aprendiz->apr_apellidos }}</li>
+                                @foreach ($solicitud->aprendizs as $aprendiz)
+                                    <li value="{{ $aprendiz->id }}">
+                                        {{$aprendiz->apr_nombres }} {{ $aprendiz->apr_apellidos }}
+                                    </li>
                                 @endforeach
                             </ul>
                         </div>

@@ -424,22 +424,10 @@ class InstructorViewController extends Controller
 
     public function registrar_novedad3($sol_id)
     {
-        $this->authorize('administrar');
-        $solicitudxAprendices = SolicitudxAprendiz::where('sol_id', $sol_id)->get();
-        $aprendicesRelacionados = [];
-
-        foreach ($solicitudxAprendices as $relacion) {
-            // Verifica si el aprendiz relacionado existe
-            if ($relacion->aprendiz) {
-                $aprendicesRelacionados[] = $relacion->aprendiz;
-            }
-        }
         $aprendizs = Aprendiz::all();
-        // Accede al valor de 'sol_id' almacenado en la sesión
-        $sol_id = session('sol_id');
         $solicitud = SolicitudComite::findOrFail($sol_id);
 
-        return view('instructorViews.registrar_novedad3', compact('aprendizs', 'sol_id', 'solicitud', 'aprendicesRelacionados'));
+        return view('instructorViews.registrar_novedad3', compact('aprendizs', 'solicitud'));
     }
 
     public function storeRegistrar_novedad3(Request $request)
@@ -450,26 +438,12 @@ class InstructorViewController extends Controller
         $sol_id = session('sol_id');
         $solicitud = SolicitudComite::findOrFail($sol_id);
 
-        // Obtén los IDs de los aprendices ya relacionados con la solicitud
-        $aprendicesRelacionadosIds = $solicitud->aprendizs->pluck('id')->toArray();
+        // Actualizar los campos de la solicitud con los datos del formulario
+        $solicitud->update($request->all());
 
-        // Itera a través de los campos <select> dinámicos
-        foreach ($request->all() as $key => $value) {
-            // Verifica si el campo comienza con 'nuevo_aprendiz_'
-            if (strpos($key, 'nuevo_aprendiz_') === 0) {
-                // El campo es un aprendiz seleccionado
-                $apr_id = $value;
+        // Almacena el ID de solicitud en la sesión
+        session(['sol_id' => $solicitud->id]);
 
-                // Verifica si el aprendiz ya está relacionado con la solicitud
-                if (!in_array($apr_id, $aprendicesRelacionadosIds)) {
-                    // El aprendiz no está relacionado, crea una entrada en la tabla 'solicitudxaprendiz'
-                    SolicitudxAprendiz::create([
-                        'sol_id' => $sol_id,
-                        'apr_id' => $apr_id,
-                    ]);
-                }
-            }
-        }
 
         // Redirige al siguiente paso del formulario
         return redirect()->route('instructorViews.registrar_novedad4', compact('sol_id'));
@@ -481,29 +455,36 @@ class InstructorViewController extends Controller
         $this->authorize('administrar');
         // Accede al valor de 'sol_id' almacenado en la sesión
         $sol_id = session('sol_id');
+        // Obtén la solicitud y sus pruebas asociadas
+        $solicitud = SolicitudComite::with('pruebas')->where('id', $sol_id)->first();
 
-        return view('instructorViews. registrar_novedad4', compact('sol_id'));
+        return view('instructorViews.registrar_novedad4', compact('sol_id','solicitud'));
     }
 
     public function storeRegistrar_novedad4(Request $request)
     {
         $this->authorize('administrar');
 
+        // Accede al valor de 'sol_id' almacenado en la sesión
+        $sol_id = session('sol_id');
+        
+        // Busca el registro existente en la tabla 'pruebas' por 'sol_id'
+        $prueba = Prueba::where('sol_id', $sol_id)->first();
+
         // Subir y almacenar el archivo
         if ($request->hasFile('pru_url')) {
             $file = $request->file('pru_url');
             $path = $file->store('pruebas'); // Almacena el archivo en la carpeta 'pruebas' dentro del almacenamiento
 
-            // Crea un registro en la tabla 'pruebas'
-            Prueba::create([
+            // Actualiza el registro en la tabla 'pruebas'
+            $prueba->update([
                 'pru_tipo' => $request->pru_tipo,
                 'pru_descripcion' => $request->pru_descripcion,
                 'pru_fecha' => $request->pru_fecha,
                 'pru_url' => $path,
-                'sol_id' => session('sol_id'),
-            ]);
+        ]);
 
-            return redirect()->route('instructorViews.solicitar5')->with('success', 'La prueba se ha subido exitosamente.');
+            return redirect()->route('instructorViews.r5')->with('success', 'La prueba se ha subido exitosamente.');
         }
 
         return back()->with('error', 'Ocurrió un error al subir la prueba.');

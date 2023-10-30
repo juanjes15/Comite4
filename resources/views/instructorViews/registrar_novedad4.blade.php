@@ -10,8 +10,9 @@
             <div class="bg-green-50 shadow-xl overflow-hidden shadow-xl sm:rounded-lg">
                 <div class="relative overflow-x-auto shadow-md sm:rounded-lg px-4 py-4">
                     <x-validation-errors class="mb-4" />
-                    <form method="POST" action="{{ route('instructorViews.storeRegistrar_novedad4'['sol_id' => $sol_id]) }}" enctype="multipart/form-data">
+                    <form method="POST" action="{{ route('instructorViews.storeRegistrar_novedad4', ['sol_id'=> $sol_id]) }}" enctype="multipart/form-data">
                         @csrf
+                        @method('PUT')
                         <div>
                             <x-input id="sol_id" class="block mt-1 w-full" type="hidden" name="sol_id"
                                 :value="$sol_id" required autofocus autocomplete="sol_id" />
@@ -19,18 +20,17 @@
                         <div>
                             <x-label for="pru_tipo" value="{{ __('Tipo') }}" />
                             <x-input id="pru_tipo" class="block mt-1 w-full" type="text" name="pru_tipo"
-                                :value="old('pru_tipo')" required autofocus autocomplete="pru_tipo" />
+                            :value="$solicitud->pru_tipo" required autofocus autocomplete="pru_tipo" />
                         </div>
                         <div>
                             <x-label for="pru_descripcion" value="{{ __('Descripcion') }}" />
                             <x-input id="pru_descripcion" class="block mt-1 w-full" type="text"
-                                name="pru_descripcion" :value="old('pru_descripcion')" required autofocus
-                                autocomplete="pru_descripcion" />
+                                name="pru_descripcion" :value="$solicitud->pru_descripcion" required autofocus autocomplete="pru_descripcion" />
                         </div>
                         <div>
                             <x-label for="pru_fecha" value="{{ __('Fecha') }}" />
                             <x-input id="pru_fecha" class="block mt-1 w-full" type="date" name="pru_fecha"
-                                :value="old('pru_fecha')" required autofocus autocomplete="pru_fecha" />
+                            :value="$solicitud->pru_fecha" required autofocus autocomplete="pru_fecha" />
                         </div>
                         <div>
                             <x-label for="pru_url" value="{{ __('Anexar prueba') }}" />
