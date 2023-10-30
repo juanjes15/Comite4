@@ -12,6 +12,7 @@ return new class extends Migration {
     {
         Schema::create('comites', function (Blueprint $table) {
             $table->id();
+            $table->string('codigo');
             $table->string('com_acta');
             $table->string('com_estado');
             $table->dateTime('com_fecha');
