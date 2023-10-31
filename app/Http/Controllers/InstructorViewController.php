@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-
+use App\Http\Requests\UpdateSolicitudComiteRequest;
 use Illuminate\Http\Request;
 use App\Models\Aprendiz;
 use App\Models\SolicitudComite;
@@ -427,7 +427,7 @@ class InstructorViewController extends Controller
         $aprendizs = Aprendiz::all();
         $solicitud = SolicitudComite::findOrFail($sol_id);
 
-        return view('instructorViews.registrar_novedad3', compact('aprendizs', 'solicitud'));
+        return view('instructorViews.registrar_novedad3', compact('aprendizs', 'solicitud', 'sol_id'));
     }
 
     public function storeRegistrar_novedad3(Request $request)
@@ -436,7 +436,7 @@ class InstructorViewController extends Controller
 
         // Obtén el ID de solicitud almacenado en la sesión
         $sol_id = session('sol_id');
-        $solicitud = SolicitudComite::findOrFail($sol_id);
+        $solicitud = SolicitudxAprendiz::findOrFail($sol_id);
 
         // Actualizar los campos de la solicitud con los datos del formulario
         $solicitud->update($request->all());
@@ -484,7 +484,7 @@ class InstructorViewController extends Controller
                 'pru_url' => $path,
         ]);
 
-            return redirect()->route('instructorViews.r5')->with('success', 'La prueba se ha subido exitosamente.');
+            return redirect()->route('instructorViews.5')->with('success', 'La prueba se ha subido exitosamente.');
         }
 
         return back()->with('error', 'Ocurrió un error al subir la prueba.');
