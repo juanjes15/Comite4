@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Registrar novedades - Información Básica') }}
+            {{ __('Solicitud N° ') . $sol_id . (' - Registrar novedades - Información Básica') }}
         </h2>
     </x-slot>
 

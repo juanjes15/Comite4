@@ -14,6 +14,7 @@ use App\Models\Norma_Infringida;
 use App\Models\Numeral;
 use App\Models\Prueba;
 use App\Models\SolicitudxAprendiz;
+use Illuminate\Support\Str;
 
 class InstructorViewController extends Controller
 {
@@ -396,7 +397,7 @@ class InstructorViewController extends Controller
 
         $solicitud = SolicitudComite::findOrFail($sol_id);
 
-        return view('instructorViews.registrar_novedad2', compact('instructors', 'areas', 'solicitud'));
+        return view('instructorViews.registrar_novedad2', compact('instructors', 'areas', 'solicitud', 'sol_id'));
     }
 
 
@@ -420,7 +421,7 @@ class InstructorViewController extends Controller
         return redirect()->route('instructorViews.registrar_novedad3', compact('sol_id'));
     }
 
-    
+
 
     public function registrar_novedad3($sol_id)
     {
@@ -438,8 +439,19 @@ class InstructorViewController extends Controller
         $sol_id = session('sol_id');
         $solicitud = SolicitudxAprendiz::findOrFail($sol_id);
 
+        // Itera sobre los datos del formulario para actualizar los aprendices relacionados
+        foreach ($request->all() as $key => $value) {
+            if (Str::startsWith($key, 'apr_id_')) {
+                // Extrae el ID del aprendiz del nombre del campo
+                $aprendizId = substr($key, strlen('apr_id_'));
+
+                // Actualiza el aprendiz relacionado con el ID obtenido del campo
+                $solicitud->aprendizs()->updateExistingPivot($aprendizId, ['apr_id' => $value]);
+            }
+        }
+
         // Actualizar los campos de la solicitud con los datos del formulario
-        $solicitud->update($request->all());
+        // $solicitud->update($request->all());
 
         // Almacena el ID de solicitud en la sesión
         session(['sol_id' => $solicitud->id]);
@@ -458,7 +470,7 @@ class InstructorViewController extends Controller
         // Obtén la solicitud y sus pruebas asociadas
         $solicitud = SolicitudComite::with('pruebas')->where('id', $sol_id)->first();
 
-        return view('instructorViews.registrar_novedad4', compact('sol_id','solicitud'));
+        return view('instructorViews.registrar_novedad4', compact('sol_id', 'solicitud'));
     }
 
     public function storeRegistrar_novedad4(Request $request)
@@ -467,7 +479,7 @@ class InstructorViewController extends Controller
 
         // Accede al valor de 'sol_id' almacenado en la sesión
         $sol_id = session('sol_id');
-        
+
         // Busca el registro existente en la tabla 'pruebas' por 'sol_id'
         $prueba = Prueba::where('sol_id', $sol_id)->first();
 
@@ -482,7 +494,7 @@ class InstructorViewController extends Controller
                 'pru_descripcion' => $request->pru_descripcion,
                 'pru_fecha' => $request->pru_fecha,
                 'pru_url' => $path,
-        ]);
+            ]);
 
             return redirect()->route('instructorViews.5')->with('success', 'La prueba se ha subido exitosamente.');
         }
