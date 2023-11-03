@@ -4,9 +4,16 @@
             {{ __('Citación a comité') }}
         </h2>
     </x-slot>
+    
     <div class="my-4">
-        <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onclick="showAllModals()">Completar información de comité</button>
+        <br>
+    <button class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded" onclick="showAllModals()">Completar información de comité</button>
+
     </div>
+    <div id="message-success" class="text-green-500 hidden"></div>
+    <div id="error-message" class="text-red-500 hidden"></div>
+
+
     <table class="w-full border-collapse border border-gray-300">
         <thead>
             <tr>
@@ -15,6 +22,7 @@
                 <th class="px-4 py-2 border border-gray-300 bg-gray-200">Lugar</th>
             </tr>
         </thead>
+        
         <tbody>
             @foreach($solicitudes as $solicitud)
             <tr>
@@ -25,9 +33,12 @@
             <div id="modal-{{ $solicitud->id }}" class="fixed z-10 inset-0 overflow-y-auto hidden">
                 <div class="flex items-center justify-center min-h-screen p-4">
                     <div class="bg-white rounded-lg w-full max-w-md p-6">
-                        <h3 class="text-lg font-medium text-gray-900 mb-4">Completar Solicitud de Comité</h3>
+                    <h3 class="text-lg font-medium text-green-600 mb-4">Completar Solicitud de Comité</h3>
+
                         <form method="post" action="{{ route('comite_Views.completar') }}" enctype="multipart/form-data" onsubmit="return enviarFormulario(this, {{ $solicitud->id }});">
+                            
                             @csrf
+                            
                             <input type="hidden" name="sol_id" value="{{ $solicitud->id }}">
                             <div class="mb-4">
                                 <label for="com_codigo" class="block text-gray-700 text-sm font-bold">Código</label>
@@ -59,7 +70,29 @@
             @endforeach
         </tbody>
     </table>
+    <div id="message-modal" class="fixed z-10 inset-0 overflow-y-auto hidden">
+</div>
+
     <script>
+        function showSuccessMessage(message) {
+    var messageModal = document.getElementById("message-modal");
+    var messageTitle = document.getElementById("message-title");
+    var messageContent = document.getElementById("message-content");
+
+    messageModal.classList.remove("hidden");
+    messageTitle.textContent = "Éxito";
+    messageContent.textContent = message;
+}
+
+function showErrorMessage(message) {
+    var messageModal = document.getElementById("message-modal");
+    var messageTitle = document.getElementById("message-title");
+    var messageContent = document.getElementById("message-content");
+
+    messageModal.classList.remove("hidden");
+    messageTitle.textContent = "Error";
+    messageContent.textContent = message;
+}
         function showAllModals() {
             // Muestra el modal para todas las solicitudes
             @foreach($solicitudes as $solicitud)
@@ -80,36 +113,43 @@
         }
 
         function enviarFormulario(form, id) {
-            var modal = document.getElementById("modal-" + id);
-            var submitButton = form.querySelector('button[type="submit"]');
-            submitButton.disabled = true;
+    var modal = document.getElementById("modal-" + id);
+    var submitButton = form.querySelector('button[type="submit"]');
+    var errorMessage = document.getElementById("error-message");
 
-            var formData = new FormData(form);
-            fetch(form.action, {
-                method: 'POST',
-                body: formData,
-                headers: {
-                    'X-CSRF-TOKEN': formData.get('_token')
-                }
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    modal.classList.add("hidden");
-                    var successMessage = document.createElement('div');
-                    successMessage.innerHTML = "Registro enviado correctamente";
-                    successMessage.classList.add("text-green-500");
-                    form.appendChild(successMessage);
-                } else if (data.error) {
-                    alert(data.error);
-                    submitButton.disabled = false;
-                }
-            })
-            .catch(error => {
-                submitButton.disabled = false;
-            });
+    submitButton.disabled = true;
 
-            return false;
+    var formData = new FormData(form);
+    fetch(form.action, {
+        method: 'POST',
+        body: formData,
+        headers: {
+            'X-CSRF-TOKEN': formData.get('_token')
         }
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            modal.classList.add("hidden");
+            var successMessage = document.getElementById("message-success");
+            successMessage.textContent = "Registro enviado correctamente";
+            successMessage.classList.remove("hidden");
+        } else if (data.error) {
+            errorMessage.textContent = data.error;
+            errorMessage.classList.remove("hidden");
+            submitButton.disabled = false;
+        }
+    })
+    .catch(error => {
+        submitButton.disabled = false;
+    });
+
+    return false;
+}
+
+        
     </script>
+    <br>
+     <x-link href="{{ route('aprendiz_Views.consultas') }}" class="mx-3 mx-5 mb-6 bg-green-700 hover:bg-red-800 border-2 border-green-950">Atras</x-link>
+
 </x-app-layout>

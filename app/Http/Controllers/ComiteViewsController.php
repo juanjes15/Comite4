@@ -38,9 +38,9 @@ class ComiteViewsController extends Controller
                 $comite->com_acta = $request->file('com_acta')->store('actas');
                 $comite->save();
 
-                return response()->json(['success' => 'Comité actualizado con éxito']);
+                return redirect()->route('comite_Views.comite')->with('success', 'los anexos se han insertado correctamente.');
             } else {
-                return response()->json(['error' => 'No se encontró ningún comité con el código proporcionado.']);
+                return redirect()->back()->with(['error' => 'Whoops! Por favor intenta más tarde']);
             }
         } catch (\Exception $e) {
             Log::error($e);

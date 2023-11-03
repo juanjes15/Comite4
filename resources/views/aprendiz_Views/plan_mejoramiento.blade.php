@@ -4,16 +4,6 @@
         <div class="relative overflow-x-auto shadow-md sm:rounded-lg px-4 py-4 bg-green-50 shadow-xl" >
             <div class="max-w-3xl mx-auto p-6">
                 <div class="flex items-center justify-between mb-4">
-                    <button
-                        class="ml-4 px-4 py-2 border border-gray-300 text-gray-700 rounded-full hover:border-blue-500 hover:text-blue-500 focus:outline-none focus:border-blue-500"
-                        onclick="window.history.back()">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2 inline-block" fill="none" viewBox="0 0 24 24"
-                            stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
-                        </svg>
-                        Ir Atrás
-                    </button>
                     @if(session('error'))
 <div class="alert alert-danger">
     {{ session('error') }}
@@ -123,7 +113,7 @@
 </div>
 @endif
 
-
+<x-link href="{{ route('aprendiz_Views.consultas') }}" class="mx-3 mx-5 mb-6 bg-green-700 hover:bg-red-800 border-2 border-green-950">Atras</x-link>
 
 
 </x-app-layout>

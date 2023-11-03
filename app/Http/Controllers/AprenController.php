@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Comite;
 use App\Models\Instructor;
+use App\Models\SolicitudComite;
 use App\Models\Numeral;
 use App\Models\Articulo;
 use App\Models\Capitulo;
@@ -92,10 +93,13 @@ class AprenController extends Controller
     }
 
     public function detalles(Request $request)
-    {
-        $instructors = Instructor::all();
-        return view('aprendiz_Views.detalles', ['instructors' => $instructors]);
-    }
+{
+    $solicitud = SolicitudComite::find(1); // Reemplaza '1' por el ID de la solicitud que deseas mostrar
+    $instructor = Instructor::find($solicitud->ins_id);
+
+    return view('aprendiz_Views.detalles', compact('solicitud', 'instructor'));
+}
+
 
 
 
