@@ -15,6 +15,7 @@ use App\Models\Numeral;
 use App\Models\Prueba;
 use App\Models\SolicitudxAprendiz;
 use Illuminate\Support\Str;
+use Carbon\Carbon;
 
 class InstructorViewController extends Controller
 {
@@ -469,8 +470,11 @@ class InstructorViewController extends Controller
         $sol_id = session('sol_id');
         // Obtén la solicitud y sus pruebas asociadas
         $solicitud = SolicitudComite::with('pruebas')->where('id', $sol_id)->first();
+        //sirve para obtener datos y mostrarlos
+        $prueba = Prueba::where('sol_id', $sol_id)->first();
+        $prueba->pru_fecha = Carbon::parse($prueba->pru_fecha)->format('Y-m-d');
 
-        return view('instructorViews.registrar_novedad4', compact('sol_id', 'solicitud'));
+        return view('instructorViews.registrar_novedad4', compact('sol_id', 'solicitud','prueba'));
     }
 
     public function storeRegistrar_novedad4(Request $request)

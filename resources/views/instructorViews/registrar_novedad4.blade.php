@@ -20,21 +20,21 @@
                         <div>
                             <x-label for="pru_tipo" value="{{ __('Tipo') }}" />
                             <x-input id="pru_tipo" class="block mt-1 w-full" type="text" name="pru_tipo"
-                            :value="$solicitud->pru_tipo" required autofocus autocomplete="pru_tipo" />
+                            :value="$prueba->pru_tipo" required autofocus autocomplete="pru_tipo" />
                         </div>
                         <div>
                             <x-label for="pru_descripcion" value="{{ __('Descripcion') }}" />
                             <x-input id="pru_descripcion" class="block mt-1 w-full" type="text"
-                                name="pru_descripcion" :value="$solicitud->pru_descripcion" required autofocus autocomplete="pru_descripcion" />
+                            name="pru_descripcion" :value="$prueba->pru_descripcion" required autofocus autocomplete="pru_descripcion" />
                         </div>
                         <div>
                             <x-label for="pru_fecha" value="{{ __('Fecha') }}" />
-                            <x-input id="pru_fecha" class="block mt-1 w-full" type="date" name="pru_fecha"
-                            :value="$solicitud->pru_fecha" required autofocus autocomplete="pru_fecha" />
+                            <x-input id="pru_fecha" class="block mt-1 w-full" type="date" name="pru_fecha" :value="$prueba->pru_fecha" required autofocus autocomplete="pru_fecha" />
                         </div>
+
                         <div>
                             <x-label for="pru_url" value="{{ __('Anexar prueba') }}" />
-                            <input class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" id="pru_url" type="file" name="pru_url" accept="image/*">
+                            <input class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" id="pru_url" type="file" name="pru_url" :value="$prueba->pru_url" required autofocus autocomplete="pru_url"  accept="image/*">
                             @error('pru_url')
                                 <small class="text-danger">{{ $message }}</small>
                             @enderror
