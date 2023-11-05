@@ -500,9 +500,65 @@ class InstructorViewController extends Controller
                 'pru_url' => $path,
             ]);
 
-            return redirect()->route('instructorViews.5')->with('success', 'La prueba se ha subido exitosamente.');
+            return redirect()->route('instructorViews.registrar_novedad5',['sol_id' => $sol_id])->with('success', 'La prueba se ha subido exitosamente.');
         }
 
         return back()->with('error', 'Ocurrió un error al subir la prueba.');
     }
+
+    public function registrar_novedad5()
+    {
+        $this->authorize('administrar');
+        // Accede al valor de 'sol_id' almacenado en la sesión
+        $sol_id = session('sol_id');
+
+        $instructors = Instructor::all();
+        $capitulos = Capitulo::all();
+        $articulos = Articulo::all();
+        $numerals = Numeral::all();
+
+        return view('instructorViews.registrar_novedad5', compact('instructors', 'capitulos', 'articulos', 'numerals', 'sol_id'));
+    }
+
+    public function storeRegistrar_novedad5(Request $request)
+    {
+        $this->authorize('administrar');
+
+        // Obtén los valores seleccionados en el formulario
+        $selectedCapId = $request->input('cap_id');
+        $selectedArtIds = $request->input('art_id', []);
+        $selectedNumIds = $request->input('num_id', []);
+
+        // Almacenar los valores seleccionados en la sesión
+        session([
+            'selected_cap_id' => $selectedCapId,
+            'selected_art_ids' => $selectedArtIds,
+            'selected_num_ids' => $selectedNumIds,
+        ]);
+
+        $sol_id = session('sol_id');
+
+        // Verificar si se han seleccionado descripciones
+        if (!empty($selectedNumIds) && !empty($selectedArtIds)) {
+            // Convertir $selectedNumIds y $selectedArtIds en arrays si no lo son
+            $selectedNumIds = is_array($selectedNumIds) ? $selectedNumIds : [$selectedNumIds];
+            $selectedArtIds = is_array($selectedArtIds) ? $selectedArtIds : [$selectedArtIds];
+
+            // Iterar sobre los valores seleccionados y crear un registro para cada combinación
+            foreach ($selectedNumIds as $numId) {
+                foreach ($selectedArtIds as $artId) {
+                    Norma_Infringida::create([
+                        'sol_id' => $sol_id,
+                        'num_id' => $numId,
+                        'art_id' => $artId
+                    ]);
+                }
+            }
+        }
+
+        // Redirecciona a la vista 'solicitarResumen'
+        return redirect()->route('instructorViews.solicitarResumen');
+    }
+
+
 }

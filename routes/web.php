@@ -77,6 +77,9 @@ Route::middleware([
     Route::get('/InstructorViews/registrar_novedad4/{sol_id}', [\App\Http\Controllers\InstructorViewController::class, 'registrar_novedad4'])->name('instructorViews.registrar_novedad4');
     Route::put('/InstructorViews/registrar_novedad4/{sol_id}', [\App\Http\Controllers\InstructorViewController::class, 'storeRegistrar_novedad4'])->name('instructorViews.storeRegistrar_novedad4');
 
+    Route::get('/InstructorViews/registrar_novedad5/{sol_id}', [\App\Http\Controllers\InstructorViewController::class, 'registrar_novedad5'])->name('instructorViews.registrar_novedad5');
+    Route::put('/InstructorViews/registrar_novedad5/{sol_id}', [\App\Http\Controllers\InstructorViewController::class, 'storeRegistrar_novedad5'])->name('instructorViews.storeRegistrar_novedad5');
+    
     Route::match(['get', 'put'], '/instructorViews/detalles_comite/{solicitud}', [\App\Http\Controllers\InstructorViewController::class, 'detalles_comite'])
     ->name('instructorViews.detalles_comite');
 
