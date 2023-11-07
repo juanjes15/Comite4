@@ -16,6 +16,7 @@ class SolicitudComite extends Model
         'sol_asunto',
         'sol_motivo',
         'sol_estado',
+        'sol_fechaSolicitud',
         'ins_id',
         'apr_id',
     ];
