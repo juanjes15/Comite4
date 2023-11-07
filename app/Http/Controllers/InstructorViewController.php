@@ -511,6 +511,7 @@ class InstructorViewController extends Controller
         $this->authorize('administrar');
         // Accede al valor de 'sol_id' almacenado en la sesión
         $sol_id = session('sol_id');
+        $solicitud = SolicitudComite::findOrFail($sol_id);
 
         $instructors = Instructor::all();
         $capitulos = Capitulo::all();
@@ -537,7 +538,7 @@ class InstructorViewController extends Controller
         ]);
 
         $sol_id = session('sol_id');
-
+       
         // Verificar si se han seleccionado descripciones
         if (!empty($selectedNumIds) && !empty($selectedArtIds)) {
             // Convertir $selectedNumIds y $selectedArtIds en arrays si no lo son
@@ -557,7 +558,7 @@ class InstructorViewController extends Controller
         }
 
         // Redirecciona a la vista 'solicitarResumen'
-        return redirect()->route('instructorViews.solicitarResumen');
+        return redirect()->route('instructorViews.solicitarResumen', compact('sol_id'));
     }
 
 
