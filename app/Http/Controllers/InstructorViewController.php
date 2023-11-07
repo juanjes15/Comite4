@@ -266,12 +266,6 @@ class InstructorViewController extends Controller
         return view('instructorViews.registrar_resultado');
     }
 
-
-    public function anexar_info()
-    {
-        return view('instructorViews.anexar_info');
-    }
-
     public function consultar_antecedentes()
     {
         return view('instructorViews.consultar_antecedentes');

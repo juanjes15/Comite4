@@ -53,15 +53,7 @@
                     <span class="flex-1 ml-3 whitespace-nowrap">Plan mejoramiento</span>
                 </a>
             </li>
-            
-            <li>
-                <a href="{{ route('instructorViews.anexar_info') }}" class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 group">
-                    <svg class="flex-shrink-0 w-5 h-10 text-green-800 transition duration-75 group-hover:text-gray-900" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 18" transform="translate(-4,-2)">
-                        <path d="M12,2C6.477,2,2,6.477,2,12s4.477,10,10,10s10-4.477,10-10S17.523,2,12,2z M17,13h-4v4h-2v-4H7v-2h4V7h2v4h4V13z"/>
-                    </svg>
-                    <span class="flex-1 ml-3 whitespace-nowrap">Anexar pruebas</span>
-                </a>
-            </li>
+        
             <li>
                 <a href="{{ route('instructorViews.consultar_antecedentes') }}" class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 group">
                     <svg class="flex-shrink-0 w-5 h-10 text-green-800 transition duration-75 group-hover:text-gray-900" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 18" transform="translate(-2,-3)">
