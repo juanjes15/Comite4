@@ -59,14 +59,10 @@
 
 
                     <div class="flex mt-4  ">
-                        <x-button id="finalizar-button"
-                            class="bg-green-700 hover:bg-green-500 border-2 border-green-950">
-                            {{ __('Aceptar comite') }}
-                        </x-button>
 
-                        <x-link href="{{ route('gestorComiteViews.gFechas', ['solicitud' => $solicitud->id]) }}"
+                        <x-link  href="{{ route('gestorComiteViews.gFechas', ['solicitud' => $solicitud->id]) }}"
                             class="bg-green-700 hover:bg-green-500 border-2 border-green-950 mx-4">
-                            {{ __('Programar comite') }}
+                            {{ __('Aceptar comite') }}
                         </x-link>
 
 
@@ -90,7 +86,7 @@
         </div>
     </div>
 
-
+{{-- 
     <!-- Agrega SweetAlert2 CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
 
@@ -119,6 +115,6 @@
                 });
             });
         });
-    </script>
+    </script> --}}
 
 </x-app-layout>
