@@ -52,6 +52,8 @@ Route::middleware([
     Route::put('/users/storeInstructor/{user}', [\App\Http\Controllers\UserController::class, 'storeInstructor'])->name('users.storeInstructor');
 
     Route::post('/subir', 'Controller@subirArchivo')->name('subir');
+    
+    //Instructor
     Route::get('/InstructorViews/solicitar1', [\App\Http\Controllers\InstructorViewController::class, 'solicitar1'])->name('instructorViews.solicitar1');
     Route::get('/InstructorViews/solicitar2', [\App\Http\Controllers\InstructorViewController::class, 'solicitar2'])->name('instructorViews.solicitar2');
     Route::get('/obtener-instructores-por-area/{area}', [InstructorController::class, 'getInstructoresPorArea']);
@@ -65,24 +67,38 @@ Route::middleware([
 
     Route::get('/InstructorViews/solicitar5', [\App\Http\Controllers\InstructorViewController::class, 'solicitar5'])->name('instructorViews.solicitar5');
     Route::post('/InstructorViews/solicitar5', [\App\Http\Controllers\InstructorViewController::class, 'storeSolicitar5'])->name('instructorViews.storeSolicitar5');
+    //----------------
+    Route::get('/InstructorViews/registrar_novedad2/{sol_id}', [\App\Http\Controllers\InstructorViewController::class, 'registrar_novedad2'])->name('instructorViews.registrar_novedad2');
+    Route::put('/InstructorViews/registrar_novedad2/{sol_id}', [\App\Http\Controllers\InstructorViewController::class, 'storeRegistrar_novedad2'])->name('instructorViews.storeRegistrar_novedad2');
 
+    Route::get('/InstructorViews/registrar_novedad3/{sol_id}', [\App\Http\Controllers\InstructorViewController::class, 'registrar_novedad3'])->name('instructorViews.registrar_novedad3');
+    Route::put('/InstructorViews/registrar_novedad3/{sol_id}', [\App\Http\Controllers\InstructorViewController::class, 'storeRegistrar_novedad3'])->name('instructorViews.storeRegistrar_novedad3');
+
+    Route::get('/InstructorViews/registrar_novedad4/{sol_id}', [\App\Http\Controllers\InstructorViewController::class, 'registrar_novedad4'])->name('instructorViews.registrar_novedad4');
+    Route::put('/InstructorViews/registrar_novedad4/{sol_id}', [\App\Http\Controllers\InstructorViewController::class, 'storeRegistrar_novedad4'])->name('instructorViews.storeRegistrar_novedad4');
+
+    Route::get('/InstructorViews/registrar_novedad5/{sol_id}', [\App\Http\Controllers\InstructorViewController::class, 'registrar_novedad5'])->name('instructorViews.registrar_novedad5');
+    Route::put('/InstructorViews/registrar_novedad5/{sol_id}', [\App\Http\Controllers\InstructorViewController::class, 'storeRegistrar_novedad5'])->name('instructorViews.storeRegistrar_novedad5');
+    
+    Route::match(['get', 'put'], '/instructorViews/detalles_comite/{solicitud}', [\App\Http\Controllers\InstructorViewController::class, 'detalles_comite'])
+    ->name('instructorViews.detalles_comite');
+
+    //------------------
+    
     Route::get('/InstructorViews/solicitarResumen', [\App\Http\Controllers\InstructorViewController::class, 'solicitarResumen'])->name('instructorViews.solicitarResumen');
     Route::get('/instructorViews/plan_MejoramientoP', [\App\Http\Controllers\InstructorViewController::class, 'plan_MejoramientoP'])->name('instructorViews.plan_MejoramientoP');
     Route::get('/instructorViews/plan_Mejoramiento', [\App\Http\Controllers\InstructorViewController::class, 'plan_Mejoramiento'])->name('instructorViews.plan_Mejoramiento');
     Route::get('/instructorViews/registrar_resultado', [\App\Http\Controllers\InstructorViewController::class, 'registrar_resultado'])->name('instructorViews.registrar_resultado');
-    Route::get('/instructorViews/registrar_novedades', [\App\Http\Controllers\InstructorViewController::class, 'registrar_novedades'])->name('instructorViews.registrar_novedades');
-    Route::get('/instructorViews/anexar_info', [\App\Http\Controllers\InstructorViewController::class, 'anexar_info'])->name('instructorViews.anexar_info');
     Route::get('/instructorViews/consultar_antecedentes', [\App\Http\Controllers\InstructorViewController::class, 'consultar_antecedentes'])->name('instructorViews.consultar_antecedentes');
     Route::get('/instructorViews/detalles_antecedentes', [\App\Http\Controllers\InstructorViewController::class, 'detalles_antecedentes'])->name('instructorViews.detalles_antecedentes');
     Route::get('/instructorViews/consultar_comite', [\App\Http\Controllers\InstructorViewController::class, 'consultar_comite'])->name('instructorViews.consultar_comite');
     Route::get('/instructorViews/detalles_comite', [\App\Http\Controllers\InstructorViewController::class, 'detalles_comite'])->name('instructorViews.detalles_comite');
+    
     Route::get('/gestorComiteViews/detalles', [\App\Http\Controllers\GestorComiteViewsController::class, 'detalles'])->name('gestorComiteViews.detalles');
     Route::get('/gestorComiteViews/gFechas/{solicitud}', 'App\Http\Controllers\GestorComiteViewsController@gFechas')->name('gestorComiteViews.gFechas');
     Route::get('/gestorComiteViews/detalles/{solicitud}', 'App\Http\Controllers\GestorComiteViewsController@detalles')->name('gestorComiteViews.detalles');
     Route::delete('/gestor-comite-views/{solicitud}', 'App\Http\Controllers\GestorComiteViewsController@destroy')->name('gestorComiteViews.destroy');
     
-
-
 //Estas son las rutas de la vista del aprendiz
     Route::get('/aprendiz/consultas', [\App\Http\Controllers\AprenController::class, 'consultas'])->name('aprendiz_Views.consultas');
     Route::post('/aprendiz/consultas', [\App\Http\Controllers\AprenController::class, 'consultas'])->name('aprendiz_Views.consultas');
@@ -91,16 +107,16 @@ Route::middleware([
     Route::get('/aprendiz/plan_mejoramiento', [\App\Http\Controllers\AprenController::class, 'plan_mejoramiento'])->name('aprendiz_Views.plan_mejoramiento');
     Route::post('/aprendiz/plan_mejoramiento', [\App\Http\Controllers\AprenController::class, 'plan_mejoramiento']); // Sin un nombre de ruta específico para POST
 
-
-    
     Route::get('/aprendiz/detalles', [\App\Http\Controllers\AprenController::class, 'detalles'])->name('aprendiz_Views.detalles');
 
     Route::get('/aprendiz/impugnaciones', [\App\Http\Controllers\AprenController::class, 'impugnaciones'])->name('aprendiz_Views.impugnaciones');
+    
 
     Route::post('/aprendiz/impugnaciones', [\App\Http\Controllers\AprenController::class, 'impugnaciones'])->name('aprendiz_Views.impugnaciones');
 
+    Route::get('/gestorComiteViews/gFechas', [\App\Http\Controllers\GestorComiteViewsController::class, 'gFechas'])->name('gestorComiteViews.gFechas');
 
-
-   
+    Route::get('/comite_Views/comite', [\App\Http\Controllers\ComiteViewsController::class, 'comite'])->name('comite_Views.comite');
+    Route::post('/comite_Views/completar', [\App\Http\Controllers\ComiteViewsController::class, 'completar'])->name('comite_Views.completar');
 
 });
