@@ -12,7 +12,7 @@
                         @csrf
                         @method('gFechas')
                         
-                        <div class="p-8 m-8 text-center"> <!-- Agrega la clase 'text-center' para centrar el contenido -->
+                        <div class="p-8 m-8 text-center"> 
                             <label for="date">Fecha</label>
                             <input type="date" name="date" id="date">
                         </div>

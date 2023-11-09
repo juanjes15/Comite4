@@ -135,10 +135,10 @@ class GestorComiteViewsController extends Controller
         // Asegúrate de que la solicitud se encontró antes de continuar
         if (!$solicitud) {
             // Manejo de solicitud no encontrada, por ejemplo, redireccionar o mostrar un mensaje de error.
-            return redirect()->route('gestorComiteViews.index'); // Reemplaza 'tu_ruta_de_redireccion' por la ruta apropiada
+            return redirect()->route('gestorComiteViews.index'); 
         }
 
-        // No necesitas definir $sol_id aquí ya que la vista gFechas no lo usa directamente.
+        
 
         return view('gestorComiteViews.gFechas', compact('solicitud'));
     }
