@@ -16,6 +16,12 @@ return new class extends Migration
             $table->string('email');
             $table->string('descripcion');
             $table->string('url_documento'); // Campo para almacenar la URL del documento
+            $table->string('Area')->nullable();
+            $table->date('Fecha_inicial')->nullable();
+            $table->date('Fecha_final')->nullable();
+            $table->string('Instructor_responsable')->nullable();
+            $table->string('Objetivo_del_plan')->nullable();
+            $table->string('Indicadores_de_desempeno')->nullable();
             $table->timestamps();
         });
     }
