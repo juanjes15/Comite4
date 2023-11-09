@@ -17,6 +17,7 @@ return new class extends Migration {
             $table->string('sol_asunto');
             $table->string('sol_motivo');
             $table->string('sol_estado');
+            $table->string('sol_fechaSolicitud');
             $table->unsignedBigInteger('ins_id');
             $table->foreign('ins_id')->references('id')->on('instructors');
             $table->timestamps();

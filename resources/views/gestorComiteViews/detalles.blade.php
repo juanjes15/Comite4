@@ -4,10 +4,9 @@
             {{ __('Solicitud N° ') . $solicitud->id . '   - Resumen de la Solicitud' }}
         </h2>
     </x-slot>
-
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-green-50 shadow-xl overflow-hidden shadow-xl sm:rounded-lg">
+            <div class="bg-green-50 shadow-xl overflow-hidden  sm:rounded-lg">
                 <div class="relative overflow-x-auto shadow-md sm:rounded-lg px-4 py-4">
 
                     <!-- Validation Errors -->
@@ -24,10 +23,10 @@
                         {{-- Aprendices --}}
                         @foreach ($aprendices as $aprendiz)
                             <p><strong>Nombre del Aprendiz Solicitado: </strong>
-                                <!-- Detalles del Aprendiz -->
                                 {{ $aprendiz->apr_nombres }} {{ $aprendiz->apr_apellidos }}
                             </p>
                         @endforeach
+
 
                         <p><strong>Fecha de Solicitud:</strong> {{ $solicitud->sol_fecha }}</p>
                         <p><strong>Lugar:</strong> {{ $solicitud->sol_lugar }}</p>
@@ -36,16 +35,6 @@
                         <p><strong>Estado:</strong> {{ $solicitud->sol_estado }}</p>
                     </div>
 
-                    <!-- Prueba Information -->
-                    @if ($prueba)
-                        <div class="bg-green-100 p-4 rounded-lg mb-4">
-                            <h3 class="text-lg font-semibold mb-2">Información de la Prueba</h3>
-                            <p>Tipo de Prueba: {{ $prueba->pru_tipo }}</p>
-                            <p>Url: {{ $prueba->pru_url }}</p>
-                            <p><strong>Descripción de la Prueba:</strong> {{ $prueba->pru_descripcion }}</p>
-                            <p><strong>Fecha de la Prueba:</strong> {{ $prueba->pru_fecha }}</p>
-                        </div>
-                    @endif
                     <!-- Información de las Faltas -->
 
                     <div class="bg-green-100 p-4 rounded-lg mb-4">
@@ -66,49 +55,70 @@
                             <p><strong>Descripción del Numeral: </strong>{{ $numeral->num_descripcion }}</p>
                         @endforeach
                     </div>
-                    @can('administrar')
-                        <div class="flex mt-4 px-8 justify-center">
-                            <x-button id="finalizar-button"
-                                class="bg-green-700 hover:bg-green-500 border-2 border-green-950 mx-8">
-                                {{ __('Aceptar Comite') }}
-                            </x-button>
-                            <x-link href="{{ route('gestorComiteViews.gFechas') }}">Concertar Fecha</x-link>
-                            <x-link class="bg-green-700 hover:bg-green-500 border-2 border-green-950 mx-8 ">
-                                Cancelar Comite
-                            </x-link>
-                        </div>
-                    @endcan
+
+
+
+                    <div class="flex mt-4  ">
+                        <x-button id="finalizar-button"
+                            class="bg-green-700 hover:bg-green-500 border-2 border-green-950">
+                            {{ __('Aceptar comite') }}
+                        </x-button>
+
+                        <x-link href="{{ route('gestorComiteViews.gFechas', ['solicitud' => $solicitud->id]) }}"
+                            class="bg-green-700 hover:bg-green-500 border-2 border-green-950 mx-4">
+                            {{ __('Programar comite') }}
+                        </x-link>
+
+
+
+
+                        <form method="POST" action="{{ route('gestorComiteViews.destroy', $solicitud) }}"
+                            class="inline-block">
+                            @csrf
+                            @method('DELETE')
+                            <x-danger-button type="submit" onclick="return confirm('¿Está seguro?')">
+                                Negar negar</x-danger-button>
+                        </form>
+
+                        <x-link href="{{ route('gestorComiteViews.index') }}"
+                            class="mx-3 bg-green-700 hover:bg-red-800 border-2 border-green-950">
+                            {{ __('Atrás') }}
+                        </x-link>
+                    </div>
                 </div>
             </div>
         </div>
-</x-app-layout>
+    </div>
 
-<!-- Agrega SweetAlert2 CSS -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
 
-<!-- Agrega SweetAlert2 JS -->
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
+    <!-- Agrega SweetAlert2 CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
 
-<script>
-    window.addEventListener("DOMContentLoaded", function() {
-        const finalizarButton = document.querySelector("#finalizar-button");
+    <!-- Agrega SweetAlert2 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
 
-        finalizarButton.addEventListener("click", function() {
-            // Utiliza SweetAlert2 para mostrar el mensaje emergente
-            Swal.fire({
-                title: "El comite ha sido aceptado",
-                icon: "success",
-                confirmButtonText: "Aceptar",
-                customClass: {
-                    popup: 'bg-green-50 shadow-x', // Cambia el color de fondo de la alerta
-                    content: 'text-green-800', // Cambia el color del texto de la alerta
-                    confirmButton: 'bg-green-700 hover:bg-green-500 border-2 border-green-950' // Cambia el color del botón
-                }
-            }).then(() => {
-                // Redirige a la otra vista después de hacer clic en "Aceptar"
-                window.location.href = "{{ route('instructorViews.solicitar1') }}";
+    <script>
+        window.addEventListener("DOMContentLoaded", function() {
+            const finalizarButton = document.querySelector("#finalizar-button");
 
+            finalizarButton.addEventListener("click", function() {
+                // Utiliza SweetAlert2 para mostrar el mensaje emergente
+                Swal.fire({
+                    title: "La solicitud ha sido aceptada",
+                    icon: "success",
+                    confirmButtonText: "Aceptar",
+                    customClass: {
+                        popup: 'bg-green-50 shadow-x', // Cambia el color de fondo de la alerta
+                        content: 'text-green-800', // Cambia el color del texto de la alerta
+                        confirmButton: 'bg-green-700 hover:bg-green-500 border-2 border-green-950' // Cambia el color del botón
+                    }
+                }).then(() => {
+                    // Redirige a la otra vista después de hacer clic en "Aceptar"
+                    window.location.href = "{{ route('gestorComiteViews.index') }}";
+
+                });
             });
         });
-    });
-</script>
+    </script>
+
+</x-app-layout>
