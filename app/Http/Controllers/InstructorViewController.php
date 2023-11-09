@@ -119,7 +119,7 @@ class InstructorViewController extends Controller
         $numerals = Numeral::whereIn('id', $selectedNumIds)->get();
 
 
-        
+
 
 
         return view('instructorViews.solicitarResumen', compact(
@@ -130,7 +130,7 @@ class InstructorViewController extends Controller
             'selectedCapId',
             'cap_numero',
             'selectedArtIds',
-            'articulos', 
+            'articulos',
             'cap_descripcion',
             'numerals',
             'normaxd'
@@ -142,7 +142,11 @@ class InstructorViewController extends Controller
     {
         $this->authorize('administrar');
 
-        $solicitud = SolicitudComite::create($request->all());
+        // Asegúrate de que 'sol_fechaSolicitud' esté presente en los datos antes de asignarlo
+        $data = $request->all();
+        $data['sol_fechaSolicitud'] = $request->input('sol_fechaSolicitud', null);
+
+        $solicitud = SolicitudComite::create($data);
 
         // Almacena el ID de solicitud en la sesión
         session(['sol_id' => $solicitud->id]);
@@ -150,9 +154,9 @@ class InstructorViewController extends Controller
         // Almacena el ID de solicitud en una variable local
         $sol_id = $solicitud->id;
 
-
         return redirect()->route('instructorViews.solicitar3', compact('sol_id'));
     }
+
 
 
     // En el controlador InstructorViewController
@@ -223,7 +227,7 @@ class InstructorViewController extends Controller
             'selected_num_ids' => $selectedNumIds,
         ]);
 
-        
+
 
         // Verificar si se han seleccionado descripciones
         if (!empty($selectedNumIds) && !empty($selectedArtIds)) {

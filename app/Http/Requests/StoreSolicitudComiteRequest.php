@@ -27,6 +27,7 @@ class StoreSolicitudComiteRequest extends FormRequest
             'sol_asunto' => 'required',
             'sol_motivo' => 'required',
             'sol_estado' => 'required',
+            'sol_fechaSolicitud' => 'nullable',
             'ins_id' => 'required'
         ];
     }
