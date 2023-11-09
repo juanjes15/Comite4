@@ -15,5 +15,11 @@ class PlanMejoramiento extends Model
         'descripcion',
         'url_documento',
         'email',
+        'Area', // Agrega estos campos al $fillable
+        'Fecha_inicial',
+        'Fecha_final',
+        'Instructor_responsable',
+        'Objetivo_del_plan',
+        'Indicadores_de_desempeno',
     ];
 }

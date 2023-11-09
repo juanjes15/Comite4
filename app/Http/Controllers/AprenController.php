@@ -32,18 +32,18 @@ class AprenController extends Controller
             // Validar los datos del formulario
             $request->validate([
                 'pru_descripcion' => 'required|string',
-                'pru_url' => 'required|file|mimes:jpeg,png,gif', // Puedes ajustar las reglas de validación según tus necesidades
+                'pru_url' => 'required|file|mimes:jpeg,png,gif', 
             ]);
     
-            // Crear una nueva instancia del modelo Prueba y asignar los valores
+            
             $prueba = new Prueba();
-            $prueba->sol_id = 1; // Asigna el valor adecuado para sol_id
-            $prueba->pru_tipo = 'Tipo deseado'; // Puedes ajustar el valor según tus necesidades
+            $prueba->sol_id = 1; 
+            $prueba->pru_tipo = 'Tipo deseado'; 
             $prueba->pru_descripcion = $request->input('pru_descripcion');
-            $prueba->pru_fecha = now(); // Puedes ajustar la fecha según tus necesidades
-            $prueba->pru_url = $request->file('pru_url')->store('pruebas'); // Guardar el archivo en una ubicación deseada
+            $prueba->pru_fecha = now(); 
+            $prueba->pru_url = $request->file('pru_url')->store('pruebas'); 
     
-            // Guardar la instancia en la base de datos
+            
             $prueba->save();
     
             // Redirigir a la vista de consultas con un mensaje de éxito
@@ -59,23 +59,29 @@ class AprenController extends Controller
         $this->authorize('administrar');
     
         if ($request->isMethod('post')) {
-            // Validar los datos del formulario
             $data = $request->validate([
                 'email' => 'required|email',
                 'descripcion' => 'required|string',
                 'url_documento' => 'required|file|mimes:jpeg,png,gif',
             ]);
     
-            // Crear una nueva instancia del modelo PlanMejoramiento y asignar los valores
-            $plan_mejoramiento = new PlanMejoramiento();
-            $plan_mejoramiento->email = $request->input('email');
-            $plan_mejoramiento->descripcion = $request->input('descripcion');
-            $plan_mejoramiento->url_documento = $request->file('url_documento')->store('plan_mejoramiento');
+            
+            $planMejoramiento = PlanMejoramiento::first();
     
-            // Guardar la instancia en la base de datos
-            $plan_mejoramiento->save();
+            if ($planMejoramiento) {
+                $planMejoramiento->email = $request->input('email');
+                $planMejoramiento->descripcion = $request->input('descripcion');
+                $planMejoramiento->url_documento = $request->file('url_documento')->store('plan_mejoramiento');
+                $planMejoramiento->save();
+            } else {
+                
+                $planMejoramiento = new PlanMejoramiento();
+                $planMejoramiento->email = $request->input('email');
+                $planMejoramiento->descripcion = $request->input('descripcion');
+                $planMejoramiento->url_documento = $request->file('url_documento')->store('plan_mejoramiento');
+                $planMejoramiento->save();
+            }
     
-            // Enviar notificación por correo
             try {
                 Notification::route('mail', 'maleja20172017@gmail.com')->notify(new planMejoramientoNoti($data));
             } catch (Exception $exception) {
@@ -86,15 +92,16 @@ class AprenController extends Controller
             return redirect()->back()->with(['success' => '¡Gracias!']);
         }
     
+     
+        $planMejoramiento = PlanMejoramiento::first();
     
-        // Si es una solicitud GET, simplemente muestra la vista
-        $this->authorize('administrar');
-        return view('aprendiz_Views.plan_mejoramiento');
+       
+        return view('aprendiz_Views.plan_mejoramiento', compact('planMejoramiento'));
     }
-
+    
     public function detalles(Request $request)
 {
-    $solicitud = SolicitudComite::find(1); // Reemplaza '1' por el ID de la solicitud que deseas mostrar
+    $solicitud = SolicitudComite::find(1); 
     $instructor = Instructor::find($solicitud->ins_id);
 
     return view('aprendiz_Views.detalles', compact('solicitud', 'instructor'));
@@ -112,7 +119,7 @@ class AprenController extends Controller
         $this->authorize('administrar');
     
         if ($request->isMethod('post')) {
-            // Validar los datos del formulario
+            
             $request->validate([
                 'apr_identificacion' => 'required|string',
                 'apr_motivoImpugnacion' => 'required|string',
@@ -120,11 +127,11 @@ class AprenController extends Controller
                 'apr_pruImpugnacion' => 'required|file|mimes:jpeg,png,gif',
             ]);
     
-            // Verificar si existe un registro con la identificación proporcionada
+            
             $aprendizExistente = Aprendiz::where('apr_identificacion', $request->input('apr_identificacion'))->first();
     
             if (!$aprendizExistente) {
-                // Si no existe, muestra un mensaje de error al usuario
+                
                 return redirect()->back()->with('error', 'No se encontró ningún aprendiz con la identificación proporcionada.');
             }
     
