@@ -520,9 +520,43 @@ class InstructorViewController extends Controller
         return view('instructorViews.registrar_novedad5', compact('instructors', 'capitulos', 'articulos', 'numerals', 'sol_id'));
     }
 
-    public function storeRegistrar_novedad5(Request $request)
+    public function storeRegistrar_novedad5(Request $request, $solicitud)
     {
         $this->authorize('administrar');
+
+        // Obtén los detalles de la solicitud utilizando el ID proporcionado
+        $solicitud = SolicitudComite::find($solicitud);
+
+        // Verifica si la solicitud se encontró
+        if (!$solicitud) {
+            // Manejo de solicitud no encontrada, por ejemplo, redireccionar o mostrar un mensaje de error.
+            return redirect()->route('tu_ruta_de_redireccion'); // Reemplaza 'tu_ruta_de_redireccion' por la ruta apropiada
+        }
+
+        // Obtén el ID de la solicitud
+        $sol_id = $solicitud->id;
+
+        // Obtén las faltas relacionadas con la solicitud
+        $normasInfringidas = Norma_Infringida::where('sol_id', $sol_id)->get();
+
+        // Obtén el valor seleccionado en la sesión para capítulo
+        $selectedCapId = session('selected_cap_id');
+        // Obtén el capítulo relacionado con el $selectedCapId
+        $capitulo = Capitulo::find($selectedCapId);
+
+        // Ahora, puedes acceder al campo cap_numero
+        $cap_numero = $capitulo ? $capitulo->cap_numero : null;
+        $cap_descripcion = $capitulo ? $capitulo->cap_descripcion : null;
+
+        $selectedArtIds = (array)session('selected_art_ids', []); // Cast a array si no hay ninguno, se usará un array vacío
+        $articulos = Articulo::whereIn('id', $selectedArtIds)->get();
+
+        // Recupera la solicitud de comité con sus aprendices y numerales relacionados
+        $solicitudComite = SolicitudComite::with('aprendizs', 'numerals')->find($sol_id);
+
+        // Ahora, puedes acceder a los aprendices y numerales relacionados
+        $aprendices = $solicitudComite ? $solicitudComite->aprendizs : [];
+        $numerals = $solicitudComite ? $solicitudComite->numerals : [];
 
         // Obtén los valores seleccionados en el formulario
         $selectedCapId = $request->input('cap_id');
@@ -557,7 +591,20 @@ class InstructorViewController extends Controller
         }
 
         // Redirecciona a la vista 'solicitarResumen'
-        return redirect()->route('instructorViews.solicitarResumen', compact('sol_id'));
+        return redirect()->route('instructorViews.detalles_comite', compact(
+            'solicitud',
+            'normasInfringidas',
+            'aprendiz',
+            'prueba',
+            'selectedCapId',
+            'cap_numero',
+            'cap_descripcion',
+            'selectedArtIds',
+            'articulos',
+            'aprendices',
+            'numerals',
+        ));
+       
     }
 
 

@@ -84,9 +84,9 @@
                 </li>
             @endif
 
-            <!--INSTRUCTOR -->
+            {{-- <!--INSTRUCTOR -->
 
-            @if (auth()->user()->rol === 'Instructor')
+            @if (auth()->user()->rol === 'Instructor') --}}
 
                 <li>
                     <a href="{{ route('instructorViews.solicitar1') }}"
@@ -165,9 +165,9 @@
                         <span class="flex-1 ml-3 whitespace-nowrap">Reglamento Aprendiz</span>
                     </a>
                 </li>
-            @endif
+            {{-- @endif
 
-            <!--Termina instructor --> 
+            <!--Termina instructor -->  --}}
 
             <li>
                 <a href="{{ route('comite_Views.comite') }}"
