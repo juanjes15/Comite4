@@ -104,6 +104,7 @@ Route::middleware([
 
     Route::get('/gestorComiteViews/detalles', [\App\Http\Controllers\GestorComiteViewsController::class, 'detalles'])->name('gestorComiteViews.detalles');
     Route::get('/gestorComiteViews/gFechas/{solicitud}', 'App\Http\Controllers\GestorComiteViewsController@gFechas')->name('gestorComiteViews.gFechas');
+    Route::put('/gestorComiteViews/gFechas/{solicitud}', 'App\Http\Controllers\GestorComiteViewsController@gFechas')->name('gestorComiteViews.StoreSolicitudComiteRequest');
     Route::get('/gestorComiteViews/detalles/{solicitud}', 'App\Http\Controllers\GestorComiteViewsController@detalles')->name('gestorComiteViews.detalles');
     Route::delete('/gestor-comite-views/{solicitud}', 'App\Http\Controllers\GestorComiteViewsController@destroy')->name('gestorComiteViews.destroy');
 
