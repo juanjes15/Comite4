@@ -86,7 +86,7 @@
 
             <!--INSTRUCTOR -->
 
-            @if (auth()->user()->rol === 'Instructor', 'Administrador')
+            @if (auth()->user()->rol === 'Instructor')
 
                 <li>
                     <a href="{{ route('instructorViews.solicitar1') }}"
