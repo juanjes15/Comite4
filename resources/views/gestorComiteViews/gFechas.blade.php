@@ -4,10 +4,12 @@
             {{ __('Solicitud N° ') . $solicitud->id . '   - Resumen de la Solicitud' }}
         </h2>
     </x-slot>
+     @dd($solicitud); 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-green-50 shadow-xl overflow-hidden  sm:rounded-lg">
                 <div class="relative overflow-x-auto shadow-md sm:rounded-lg px-4 py-4">
+
                     <form action="{{ route('gestorComiteViews.gFechas', $solicitud) }}" method="post">
                         @csrf
                         @method('gFechas')
@@ -25,5 +27,6 @@
         </div>
     </div>
 </x-app-layout>
+
 
 

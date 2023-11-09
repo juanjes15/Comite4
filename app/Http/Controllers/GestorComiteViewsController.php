@@ -128,20 +128,24 @@ class GestorComiteViewsController extends Controller
     public function gFechas($solicitud)
     {
         $this->authorize('administrar');
+    
+         // Obtén los detalles de la solicitud utilizando el ID proporcionado
+         $solicitud = SolicitudComite::find($solicitud);
 
-        // Busca la solicitud basada en el ID proporcionado en la URL
-        $solicitud = SolicitudComite::find($solicitud);
-
-        // Asegúrate de que la solicitud se encontró antes de continuar
-        if (!$solicitud) {
-            // Manejo de solicitud no encontrada, por ejemplo, redireccionar o mostrar un mensaje de error.
-            return redirect()->route('gestorComiteViews.index'); 
-        }
-
-        
-
+         // Verifica si la solicitud se encontró
+         if (!$solicitud) {
+             // Manejo de solicitud no encontrada, por ejemplo, redireccionar o mostrar un mensaje de error.
+             return redirect()->route('gestorComiteViews.gFechas'); // Reemplaza 'tu_ruta_de_redireccion' por la ruta apropiada
+         }
+ 
+         // Obtén el ID de la solicitud
+         $sol_id = $solicitud->id;
+         dd($solicitud);
+    
+        // Pasa los datos de la solicitud a la vista como una variable global
         return view('gestorComiteViews.gFechas', compact('solicitud'));
     }
+    
 
     public function show(SolicitudComite $solicitud)
     {
