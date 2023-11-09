@@ -40,7 +40,7 @@ class DatabaseSeeder extends Seeder
             'password' => Hash::make('password'),
             'remember_token' => Str::random(10),
             'rol' => 'Aprendiz',
-            'aprendiz_id' => 1,
+            'apr_id' => 1,
         ]);
 
         //Creación de usuario instructor
@@ -51,7 +51,7 @@ class DatabaseSeeder extends Seeder
             'password' => Hash::make('password'),
             'remember_token' => Str::random(10),
             'rol' => 'Instructor',
-            'instructor_id' => 1,
+            'ins_id' => 1,
         ]);
 
         //Creación de usuario gestor
