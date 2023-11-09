@@ -4,19 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\SolicitudComite;
 use App\Models\Aprendiz;
-use App\Models\SolicitudxAprendiz;
 use App\Models\Norma_Infringida;
 use App\Models\Prueba;
 use App\Models\Articulo;
-use App\Models\Numeral;
 use App\Models\Capitulo;
-use App\Http\Controllers\InstructorViewController;
-use Illuminate\Http\Request;
-use App\Models\Instructor;
-use App\Models\Programa;
-
-
-
 
 
 
@@ -52,87 +43,10 @@ class GestorComiteViewsController extends Controller
             } else {
                 $learnersBySolicitud[$solicitudId] = [];
             }
-
-
-
-            return view('gestorComiteViews.index', compact('solicitudComites', 'instructors'))
-                ->with('i', (request()->input('page', 1) - 1) * 5);
         }
+        return view('gestorComiteViews.index', compact('solicitudComites', 'instructors'))
+            ->with('i', (request()->input('page', 1) - 1) * 5);
     }
-
-
-    //  /**
-    //  * Display the specified resource.
-    //  */
-    // public function show(SolicitudComite $solicituds)
-    // {
-
-    //     $this->authorize('administrar');
-
-    //     // Obtén el ID de la solicitud desde la sesión
-    //     $sol_id = session('sol_id');
-
-    //     // Obtén las faltas relacionadas con la solicitud
-    //     $normasInfringidas = Norma_Infringida::where('sol_id', $sol_id)->get();
-
-    //     // Obtén el ID del aprendiz desde la sesión
-    //     $apr_id = session('apr_id');
-
-    //     // Obtén los datos de la solicitud
-    //     $solicitud = SolicitudComite::find($sol_id);
-
-    //     // Obtén los datos del aprendiz
-    //     $aprendiz = Aprendiz::find($apr_id);
-
-    //     // Obtén los datos de la prueba
-    //     $prueba = Prueba::where('sol_id', $sol_id)->first();
-
-    //     // Obtén el valor seleccionado en la sesión para capítulo
-    //     $selectedCapId = session('selected_cap_id');
-    //     // Obtén el capítulo relacionado con el $selectedCapId
-    //     $capitulo = Capitulo::find($selectedCapId);
-
-    //     // Ahora, puedes acceder al campo cap_numero
-    //     $cap_numero = $capitulo->cap_numero;
-    //     $cap_descripcion = $capitulo->cap_descripcion;
-
-    //     // Obtén los valores seleccionados en la sesión para artículos
-    //     $selectedArtIds = session('selected_art_ids', []); // Obtener los valores, si no hay ninguno, se usará un array vacío
-    //     // Obtén los artículos relacionados con los $selectedArtIds
-    //     $articulos = Articulo::where('id', $selectedArtIds)->get();
-
-    //     //Consulta JJ
-    //     // Recupera la solicitud de comité con sus aprendices relacionados
-    //     $solicitudComite = SolicitudComite::with('aprendizs', 'numerals')->find($sol_id);
-    //     // Ahora, puedes acceder a los aprendices relacionados
-    //     $aprendices = $solicitudComite->aprendizs;
-    //     $normaxd = $solicitudComite->numerals;
-
-
-    //     // Obtén los IDs de numerales almacenados en la sesión
-    //     $selectedNumIds = session('selected_num_ids', []);
-    //     // Filtra los numerales por los IDs almacenados en la sesión
-    //     $numerals = Numeral::whereIn('id', $selectedNumIds)->get();
-
-
-
-
-    //     return view('gestorComiteViews.detalles', compact(
-    //         'solicitud',
-    //         'aprendiz',
-    //         'prueba',
-    //         'aprendices',
-    //         'selectedCapId',
-    //         'cap_numero',
-    //         'selectedArtIds',
-    //         'articulos', // Agregamos la variable $articulos aquí
-    //         'cap_descripcion',
-    //         'numerals',
-    //         'normaxd'
-    //     ));
-    // }
-
-
 
     public function detalles($solicitud)
     {
@@ -142,7 +56,7 @@ class GestorComiteViewsController extends Controller
         // Verifica si la solicitud se encontró
         if (!$solicitud) {
             // Manejo de solicitud no encontrada, por ejemplo, redireccionar o mostrar un mensaje de error.
-            return redirect()->route('tu_ruta_de_redireccion'); // Reemplaza 'tu_ruta_de_redireccion' por la ruta apropiada
+            return redirect()->route('gestorComiteViews.index'); // Reemplaza 'tu_ruta_de_redireccion' por la ruta apropiada
         }
 
         // Obtén el ID de la solicitud
@@ -180,6 +94,7 @@ class GestorComiteViewsController extends Controller
         $aprendices = $solicitudComite ? $solicitudComite->aprendizs : [];
         $numerals = $solicitudComite ? $solicitudComite->numerals : [];
 
+
         // Ahora puedes pasar todas estas variables a la vista para mostrar los detalles específicos.
         return view('GestorComiteViews.detalles', compact(
             'solicitud',
@@ -194,5 +109,46 @@ class GestorComiteViewsController extends Controller
             'aprendices',
             'numerals'
         ));
+    }
+
+    public function destroy(SolicitudComite $solicitud)
+    {
+        $this->authorize('administrar');
+
+
+        // Elimina los registros relacionados en la tabla pruebas
+        Prueba::where('sol_id', $solicitud->id)->delete();
+
+        // Luego elimina la solicitud de comité
+        $solicitud->delete();
+
+        return redirect()->route('gestorComiteViews.index');
+    }
+
+    public function gFechas($solicitud)
+    {
+        $this->authorize('administrar');
+
+        // Busca la solicitud basada en el ID proporcionado en la URL
+        $solicitud = SolicitudComite::find($solicitud);
+
+        // Asegúrate de que la solicitud se encontró antes de continuar
+        if (!$solicitud) {
+            // Manejo de solicitud no encontrada, por ejemplo, redireccionar o mostrar un mensaje de error.
+            return redirect()->route('gestorComiteViews.index'); // Reemplaza 'tu_ruta_de_redireccion' por la ruta apropiada
+        }
+
+        // No necesitas definir $sol_id aquí ya que la vista gFechas no lo usa directamente.
+
+        return view('gestorComiteViews.gFechas', compact('solicitud'));
+    }
+
+    public function show(SolicitudComite $solicitud)
+    {
+        $this->authorize('administrar');
+        // Obtén el ID de la solicitud
+        $sol_id = $solicitud->id;
+       
+        return view('gestorComiteViews.gFechas', compact('solicitud'));
     }
 }

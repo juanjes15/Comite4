@@ -56,22 +56,31 @@
                         @endforeach
                     </div>
 
-                    
+
 
                     <div class="flex mt-4  ">
                         <x-button id="finalizar-button"
                             class="bg-green-700 hover:bg-green-500 border-2 border-green-950">
                             {{ __('Aceptar comite') }}
                         </x-button>
-                        <x-button id="finalizar-button"
-                            class="bg-green-700 hover:bg-green-500 border-2 border-green-950 mx-4 ">
+
+                        <x-link href="{{ route('gestorComiteViews.gFechas', ['solicitud' => $solicitud->id]) }}"
+                            class="bg-green-700 hover:bg-green-500 border-2 border-green-950 mx-4">
                             {{ __('Programar comite') }}
-                        </x-button>
-                        <x-button id="finalizar-button"
-                            class="bg-green-700 hover:bg-green-500 border-2 border-green-950 ">
-                            {{ __('Negar comite') }}
-                        </x-button>
-                        <x-link href="{{ route('gestorComiteViews.index')}}"
+                        </x-link>
+
+
+
+
+                        <form method="POST" action="{{ route('gestorComiteViews.destroy', $solicitud) }}"
+                            class="inline-block">
+                            @csrf
+                            @method('DELETE')
+                            <x-danger-button type="submit" onclick="return confirm('¿Está seguro?')">
+                                Negar negar</x-danger-button>
+                        </form>
+
+                        <x-link href="{{ route('gestorComiteViews.index') }}"
                             class="mx-3 bg-green-700 hover:bg-red-800 border-2 border-green-950">
                             {{ __('Atrás') }}
                         </x-link>
@@ -95,7 +104,7 @@
             finalizarButton.addEventListener("click", function() {
                 // Utiliza SweetAlert2 para mostrar el mensaje emergente
                 Swal.fire({
-                    title: "La solicitud ha sido creada",
+                    title: "La solicitud ha sido aceptada",
                     icon: "success",
                     confirmButtonText: "Aceptar",
                     customClass: {
@@ -105,7 +114,7 @@
                     }
                 }).then(() => {
                     // Redirige a la otra vista después de hacer clic en "Aceptar"
-                    window.location.href = "{{ route('instructorViews.solicitar1') }}";
+                    window.location.href = "{{ route('gestorComiteViews.index') }}";
 
                 });
             });

@@ -211,6 +211,7 @@ class InstructorViewController extends Controller
     public function storeSolicitar5(Request $request)
     {
         $this->authorize('administrar');
+        $sol_id = session('sol_id');
 
         // Obtén los valores seleccionados en el formulario
         $selectedCapId = $request->input('cap_id');
@@ -224,7 +225,7 @@ class InstructorViewController extends Controller
             'selected_num_ids' => $selectedNumIds,
         ]);
 
-        $sol_id = session('sol_id');
+        
 
         // Verificar si se han seleccionado descripciones
         if (!empty($selectedNumIds) && !empty($selectedArtIds)) {
