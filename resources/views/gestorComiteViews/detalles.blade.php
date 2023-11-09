@@ -60,13 +60,11 @@
 
                     <div class="flex mt-4  ">
 
-                        <x-link  href="{{ route('gestorComiteViews.gFechas', ['solicitud' => $solicitud->id]) }}"
-                            class="bg-green-700 hover:bg-green-500 border-2 border-green-950 mx-4">
+                        <x-link href="{{ route('gestorComiteViews.gFechas', ['solicitud' => $solicitud->id]) }}" class="bg-green-700 hover:bg-green-500 border-2 border-green-950 mx-4">
                             {{ __('Aceptar comite') }}
                         </x-link>
-
-
-
+                        
+                
 
                         <form method="POST" action="{{ route('gestorComiteViews.destroy', $solicitud) }}"
                             class="inline-block">

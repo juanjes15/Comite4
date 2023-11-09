@@ -96,7 +96,6 @@ Route::middleware([
         Route::get('/instructorViews/consultar_antecedentes', [\App\Http\Controllers\InstructorViewController::class, 'consultar_antecedentes'])->name('instructorViews.consultar_antecedentes');
         Route::get('/instructorViews/detalles_antecedentes', [\App\Http\Controllers\InstructorViewController::class, 'detalles_antecedentes'])->name('instructorViews.detalles_antecedentes');
         Route::get('/instructorViews/consultar_comite', [\App\Http\Controllers\InstructorViewController::class, 'consultar_comite'])->name('instructorViews.consultar_comite');
-        
     });
 
     Route::post('/subir', 'Controller@subirArchivo')->name('subir');
@@ -104,8 +103,10 @@ Route::middleware([
     //Gestor Comite
 
     Route::get('/gestorComiteViews/detalles', [\App\Http\Controllers\GestorComiteViewsController::class, 'detalles'])->name('gestorComiteViews.detalles');
-    Route::get('/gestorComiteViews/gFechas/{solicitud}', 'App\Http\Controllers\GestorComiteViewsController@gFechas')->name('gestorComiteViews.gFechas');
-    Route::put('/gestorComiteViews/gFechas/{solicitud}', 'App\Http\Controllers\GestorComiteViewsController@gFechas')->name('gestorComiteViews.StoreSolicitudComiteRequest');
+    Route::get('/gestorComiteViews/gFechas/{solicitud}', [\App\Http\Controllers\GestorComiteViewsController::class, 'gFechas'])->name('gestorComiteViews.gFechas');
+    Route::put('/gestorComiteViews/gFechas/{solicitud}', [\App\Http\Controllers\GestorComiteViewsController::class, 'storeSolicitudComiteRequest'])->name('gestorComiteViews.storeSolicitudComiteRequest');
+
+
     Route::get('/gestorComiteViews/detalles/{solicitud}', 'App\Http\Controllers\GestorComiteViewsController@detalles')->name('gestorComiteViews.detalles');
     Route::delete('/gestor-comite-views/{solicitud}', 'App\Http\Controllers\GestorComiteViewsController@destroy')->name('gestorComiteViews.destroy');
 
@@ -124,7 +125,7 @@ Route::middleware([
 
     Route::post('/aprendiz/impugnaciones', [\App\Http\Controllers\AprenController::class, 'impugnaciones'])->name('aprendiz_Views.impugnaciones');
 
-    Route::get('/gestorComiteViews/gFechas', [\App\Http\Controllers\GestorComiteViewsController::class, 'gFechas'])->name('gestorComiteViews.gFechas');
+    
 
     Route::get('/comite_Views/comite', [\App\Http\Controllers\ComiteViewsController::class, 'comite'])->name('comite_Views.comite');
     Route::post('/comite_Views/completar', [\App\Http\Controllers\ComiteViewsController::class, 'completar'])->name('comite_Views.completar');

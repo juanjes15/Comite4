@@ -1,13 +1,14 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Http\Controllers\Controller;
 use App\Models\SolicitudComite;
 use App\Models\Aprendiz;
 use App\Models\Norma_Infringida;
 use App\Models\Prueba;
 use App\Models\Articulo;
 use App\Models\Capitulo;
+use Illuminate\Http\Request;
 
 
 
@@ -125,34 +126,58 @@ class GestorComiteViewsController extends Controller
         return redirect()->route('gestorComiteViews.index');
     }
 
-    public function gFechas($solicitud)
+    public function gFechas($solicitudId)
     {
         $this->authorize('administrar');
-    
-         // Obtén los detalles de la solicitud utilizando el ID proporcionado
-         $solicitud = SolicitudComite::find($solicitud);
 
-         // Verifica si la solicitud se encontró
-         if (!$solicitud) {
-             // Manejo de solicitud no encontrada, por ejemplo, redireccionar o mostrar un mensaje de error.
-             return redirect()->route('gestorComiteViews.gFechas'); // Reemplaza 'tu_ruta_de_redireccion' por la ruta apropiada
-         }
- 
-         // Obtén el ID de la solicitud
-         $sol_id = $solicitud->id;
-         dd($solicitud);
-    
+        // Obtén los detalles de la solicitud utilizando el ID proporcionado
+        $solicitud = SolicitudComite::find($solicitudId);
+
+        // Verifica si la solicitud se encontró
+        if (!$solicitud) {
+            // Manejo de solicitud no encontrada, por ejemplo, redireccionar o mostrar un mensaje de error.
+            return redirect()->route('gestorComiteViews.index'); // Reemplaza 'tu_ruta_de_redireccion' por la ruta apropiada
+        }
+
         // Pasa los datos de la solicitud a la vista como una variable global
         return view('gestorComiteViews.gFechas', compact('solicitud'));
     }
-    
+
+    public function storeSolicitudComiteRequest(Request $request, $solicitudId)
+    {
+        $this->authorize('administrar');
+
+        // Obtén los detalles de la solicitud utilizando el ID proporcionado
+        $solicitud = SolicitudComite::find($solicitudId);
+
+        // Verifica si la solicitud se encontró
+        if (!$solicitud) {
+            // Manejo de solicitud no encontrada, por ejemplo, redireccionar o mostrar un mensaje de error.
+            return redirect()->route('gestorComiteViews.index');
+        }
+
+        // Valida el formulario
+        $request->validate([
+            'date' => 'required|date',
+        ]);
+
+        // Guarda la fecha en el campo sol_fechaSolicitud de la solicitud
+        $solicitud->sol_fechaSolicitud = $request->date;
+        $solicitud->save();
+
+        return redirect()->route('gestorComiteViews.index');
+    }
+
+
 
     public function show(SolicitudComite $solicitud)
     {
         $this->authorize('administrar');
         // Obtén el ID de la solicitud
         $sol_id = $solicitud->id;
-       
+
         return view('gestorComiteViews.gFechas', compact('solicitud'));
     }
+
+
 }
