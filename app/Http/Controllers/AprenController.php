@@ -22,10 +22,12 @@ use Exception;
 
 
 
+
 class AprenController extends Controller
 {
     public function consultas(Request $request)
     {
+        
         $this->authorize('administrar');
     
         if ($request->isMethod('post')) {
@@ -53,6 +55,7 @@ class AprenController extends Controller
         $comites = Comite::all();
         return view('aprendiz_Views.consultas', ['comites' => $comites]);
     }
+
     
     public function plan_mejoramiento(Request $request)
     {

@@ -45,6 +45,8 @@
                     </div>
                     <div class="container mx-auto p-4 mt-8">
                         <h2 class="text-2xl font-semibold mb-4">Comités</h2>
+                        
+
                         <table class="shadow-2xl">
                             <thead class="bg-gray-300">
                                 <tr>
