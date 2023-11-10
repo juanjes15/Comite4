@@ -1,3 +1,12 @@
+@php
+    // Obtén la lista de solicitudes que aún no tienen fecha gestionada
+    $solicitudesSinFecha = \App\Models\SolicitudComite::whereNull('sol_fechaSolicitud')->get();
+
+    // Verifica si la solicitud actual no tiene fecha gestionada
+    $solicitudSinFecha = $solicitudesSinFecha->contains('id', $solicitud->id);
+
+    $fechaEnviada = session('fecha_enviada', false);
+@endphp
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
@@ -60,33 +69,37 @@
 
                     <div class="flex mt-4  ">
 
-                        <x-link  href="{{ route('gestorComiteViews.gFechas', ['solicitud' => $solicitud->id]) }}"
-                            class="bg-green-700 hover:bg-green-500 border-2 border-green-950 mx-4">
-                            {{ __('Aceptar comite') }}
-                        </x-link>
 
+                        <div class="flex mt-4">
+                            @if (!$fechaEnviada && $solicitudSinFecha)
+                                <x-link
+                                    href="{{ route('gestorComiteViews.gFechas', ['solicitud' => $solicitud->id]) }}"
+                                    class="bg-green-700 hover:bg-green-500 border-2 border-green-950 mx-4">
+                                    {{ __('Aceptar comite') }}
+                                </x-link>
+                            @endif
 
+                            @if (!$fechaEnviada && $solicitudSinFecha)
+                                <form method="POST" action="{{ route('gestorComiteViews.destroy', $solicitud) }}"
+                                    class="inline-block">
+                                    @csrf
+                                    @method('DELETE')
+                                    <x-danger-button type="submit" onclick="return confirm('¿Está seguro?')">
+                                        Negar negar</x-danger-button>
+                                </form>
+                            @endif
 
-
-                        <form method="POST" action="{{ route('gestorComiteViews.destroy', $solicitud) }}"
-                            class="inline-block">
-                            @csrf
-                            @method('DELETE')
-                            <x-danger-button type="submit" onclick="return confirm('¿Está seguro?')">
-                                Negar negar</x-danger-button>
-                        </form>
-
-                        <x-link href="{{ route('gestorComiteViews.index') }}"
-                            class="mx-3 bg-green-700 hover:bg-red-800 border-2 border-green-950">
-                            {{ __('Atrás') }}
-                        </x-link>
+                            <x-link href="{{ route('gestorComiteViews.index') }}"
+                                class="mx-3 bg-green-700 hover:bg-red-800 border-2 border-green-950">
+                                {{ __('Atrás') }}
+                            </x-link>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
 
-{{-- 
+        {{-- 
     <!-- Agrega SweetAlert2 CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
 

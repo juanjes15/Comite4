@@ -2,12 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Controller;
 use App\Models\SolicitudComite;
 use App\Models\Aprendiz;
 use App\Models\Norma_Infringida;
 use App\Models\Prueba;
 use App\Models\Articulo;
 use App\Models\Capitulo;
+use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 
 
@@ -94,7 +97,8 @@ class GestorComiteViewsController extends Controller
         $aprendices = $solicitudComite ? $solicitudComite->aprendizs : [];
         $numerals = $solicitudComite ? $solicitudComite->numerals : [];
 
-
+        // Elimina la variable de sesión cuando cargues la vista de detalles
+        session()->forget('fecha_enviada');
         // Ahora puedes pasar todas estas variables a la vista para mostrar los detalles específicos.
         return view('GestorComiteViews.detalles', compact(
             'solicitud',
@@ -125,34 +129,72 @@ class GestorComiteViewsController extends Controller
         return redirect()->route('gestorComiteViews.index');
     }
 
-    public function gFechas($solicitud)
+    public function gFechas($solicitudId)
     {
         $this->authorize('administrar');
-    
-         // Obtén los detalles de la solicitud utilizando el ID proporcionado
-         $solicitud = SolicitudComite::find($solicitud);
 
-         // Verifica si la solicitud se encontró
-         if (!$solicitud) {
-             // Manejo de solicitud no encontrada, por ejemplo, redireccionar o mostrar un mensaje de error.
-             return redirect()->route('gestorComiteViews.gFechas'); // Reemplaza 'tu_ruta_de_redireccion' por la ruta apropiada
-         }
- 
-         // Obtén el ID de la solicitud
-         $sol_id = $solicitud->id;
-         dd($solicitud);
-    
+        // Obtén los detalles de la solicitud utilizando el ID proporcionado
+        $solicitud = SolicitudComite::find($solicitudId);
+
+        // Verifica si la solicitud se encontró
+        if (!$solicitud) {
+            // Manejo de solicitud no encontrada, por ejemplo, redireccionar o mostrar un mensaje de error.
+            return redirect()->route('gestorComiteViews.index'); // Reemplaza 'tu_ruta_de_redireccion' por la ruta apropiada
+        }
+
         // Pasa los datos de la solicitud a la vista como una variable global
         return view('gestorComiteViews.gFechas', compact('solicitud'));
     }
-    
+
+    public function storeSolicitudComiteRequest(Request $request, $solicitudId)
+    {
+        $this->authorize('administrar');
+
+        // Obtén los detalles de la solicitud utilizando el ID proporcionado
+        $solicitud = SolicitudComite::find($solicitudId);
+
+        // Verifica si la solicitud se encontró
+        if (!$solicitud) {
+            // Manejo de solicitud no encontrada, por ejemplo, redireccionar o mostrar un mensaje de error.
+            return redirect()->route('gestorComiteViews.index');
+        }
+
+        // Valida el formulario
+        $request->validate([
+            'date' => [
+                'required',
+                'date',
+                Rule::unique('solicitud_comites', 'sol_fechaSolicitud')->ignore($solicitudId),
+                function ($attribute, $value, $fail) {
+                    // Verifica que la fecha no sea anterior a la fecha actual
+                    if (strtotime($value) < strtotime(now())) {
+                        $fail('La fecha no puede ser anterior a la fecha actual.');
+                    }
+                },
+            ],
+        ]);
+
+        // Guarda la fecha en el campo sol_fechaSolicitud de la solicitud
+        $solicitud->sol_fechaSolicitud = $request->date;
+        $solicitud->save();
+
+        // Establece la variable de sesión indicando que la fecha se ha enviado
+        session(['fecha_enviada' => true]);
+
+        // Muestra una alerta con SweetAlert2
+        return redirect()->route('gestorComiteViews.index')->with('status', 'success')->with('message', 'Fecha guardada correctamente.');
+    }
+
+
+
+
 
     public function show(SolicitudComite $solicitud)
     {
         $this->authorize('administrar');
         // Obtén el ID de la solicitud
         $sol_id = $solicitud->id;
-       
+
         return view('gestorComiteViews.gFechas', compact('solicitud'));
     }
 }
