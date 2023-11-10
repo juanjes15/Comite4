@@ -10,7 +10,7 @@
             <div class="bg-green-50 shadow-xl overflow-hidden shadow-xl sm:rounded-lg">
                 <div class="relative overflow-x-auto shadow-md sm:rounded-lg px-4 py-4">
                     <x-validation-errors class="mb-4" />
-                    <form method="POST" action="{{ route('instructorViews.storeRegistrar_novedad5', ['sol_id' => $sol_id]) }}" enctype="multipart/form-data">
+                    <form method="POST" action="{{ route('instructorViews.storeRegistrar_novedad5', ['sol_id' => $sol_id]) }}" >
                         @csrf
                         @method('PUT')
 
@@ -33,7 +33,7 @@
                             <x-label for="art_id" value="{{ __('Articulos') }}" />
                             <select name="art_id" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
                             @foreach ($articulos as $art)
-                                <option value="{{ $art->id }}" {{ session('selected_art_id') == $art->id ? 'selected' : '' }}>
+                                <option value="{{ $art->id }}" {{ session('selected_art_ids') == $art->id ? 'selected' : '' }}>
                                     {{ $art->art_numero }} {{ $art->art_descripcion }}
                                 </option>
                             @endforeach
@@ -62,6 +62,7 @@
                             </x-button>
                             <x-link href="{{ url()->previous() }}" class=" mx-3 bg-green-700 hover:bg-red-800 border-2 border-green-950">Atras</x-link>
                         </div>
+                        
                     </form>
                 </div>
             </div>
