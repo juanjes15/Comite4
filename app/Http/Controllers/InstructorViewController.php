@@ -473,7 +473,7 @@ class InstructorViewController extends Controller
         $prueba = Prueba::where('sol_id', $sol_id)->first();
         $prueba->pru_fecha = Carbon::parse($prueba->pru_fecha)->format('Y-m-d');
 
-        return view('instructorViews.registrar_novedad4', compact('sol_id', 'solicitud','prueba'));
+        return view('instructorViews.registrar_novedad4', compact('sol_id', 'solicitud', 'prueba'));
     }
 
     public function storeRegistrar_novedad4(Request $request)
@@ -499,7 +499,7 @@ class InstructorViewController extends Controller
                 'pru_url' => $path,
             ]);
 
-            return redirect()->route('instructorViews.registrar_novedad5',['sol_id' => $sol_id])->with('success', 'La prueba se ha subido exitosamente.');
+            return redirect()->route('instructorViews.registrar_novedad5', ['sol_id' => $sol_id])->with('success', 'La prueba se ha subido exitosamente.');
         }
 
         return back()->with('error', 'Ocurrió un error al subir la prueba.');
@@ -511,7 +511,7 @@ class InstructorViewController extends Controller
         // Accede al valor de 'sol_id' almacenado en la sesión
         $sol_id = session('sol_id');
         $solicitud = SolicitudComite::findOrFail($sol_id);
-
+        $normasInfringidas = Norma_Infringida::all();
         $instructors = Instructor::all();
         $capitulos = Capitulo::all();
         $articulos = Articulo::all();
@@ -520,12 +520,12 @@ class InstructorViewController extends Controller
         return view('instructorViews.registrar_novedad5', compact('instructors', 'capitulos', 'articulos', 'numerals', 'sol_id'));
     }
 
-    public function storeRegistrar_novedad5(Request $request, $solicitud)
+    public function storeRegistrar_novedad5(Request $request, $solicitudId)
     {
         $this->authorize('administrar');
 
-        // Obtén los detalles de la solicitud utilizando el ID proporcionado
-        $solicitud = SolicitudComite::find($solicitud);
+        // Obtén la solicitud específica por su ID
+        $solicitud = SolicitudComite::findOrFail($solicitudId);
 
         // Verifica si la solicitud se encontró
         if (!$solicitud) {
@@ -536,32 +536,10 @@ class InstructorViewController extends Controller
         // Obtén el ID de la solicitud
         $sol_id = $solicitud->id;
 
-        // Obtén las faltas relacionadas con la solicitud
-        $normasInfringidas = Norma_Infringida::where('sol_id', $sol_id)->get();
-
-        // Obtén el valor seleccionado en la sesión para capítulo
-        $selectedCapId = session('selected_cap_id');
-        // Obtén el capítulo relacionado con el $selectedCapId
-        $capitulo = Capitulo::find($selectedCapId);
-
-        // Ahora, puedes acceder al campo cap_numero
-        $cap_numero = $capitulo ? $capitulo->cap_numero : null;
-        $cap_descripcion = $capitulo ? $capitulo->cap_descripcion : null;
-
-        $selectedArtIds = (array)session('selected_art_ids', []); // Cast a array si no hay ninguno, se usará un array vacío
-        $articulos = Articulo::whereIn('id', $selectedArtIds)->get();
-
-        // Recupera la solicitud de comité con sus aprendices y numerales relacionados
-        $solicitudComite = SolicitudComite::with('aprendizs', 'numerals')->find($sol_id);
-
-        // Ahora, puedes acceder a los aprendices y numerales relacionados
-        $aprendices = $solicitudComite ? $solicitudComite->aprendizs : [];
-        $numerals = $solicitudComite ? $solicitudComite->numerals : [];
-
-        // Obtén los valores seleccionados en el formulario
-        $selectedCapId = $request->input('cap_id');
-        $selectedArtIds = $request->input('art_id', []);
-        $selectedNumIds = $request->input('num_id', []);
+        // Obtén los valores seleccionados previamente para esta solicitud desde la base de datos
+        $selectedCapId = $solicitud->cap_id;
+        $selectedArtIds = [$solicitud->art_id]; // Puedes necesitar ajustar esto según la estructura de tu base de datos
+        $selectedNumIds = explode(',', $solicitud->num_ids); // Convierte la cadena en un array de IDs
 
         // Almacenar los valores seleccionados en la sesión
         session([
@@ -571,41 +549,95 @@ class InstructorViewController extends Controller
         ]);
 
         $sol_id = session('sol_id');
-       
-        // Verificar si se han seleccionado descripciones
+
+        // Obtener los valores seleccionados del formulario
+        $selectedCapId = $request->input('cap_id');
+        $selectedArtIds = $request->input('art_id', []);
+        $selectedNumIds = $request->input('num_id', []);
+
+         // Verificar si se han seleccionado descripciones
+
         if (!empty($selectedNumIds) && !empty($selectedArtIds)) {
-            // Convertir $selectedNumIds y $selectedArtIds en arrays si no lo son
+            //Convertir $selectedNumIds y $selectedArtIds en arrays si no lo son
             $selectedNumIds = is_array($selectedNumIds) ? $selectedNumIds : [$selectedNumIds];
             $selectedArtIds = is_array($selectedArtIds) ? $selectedArtIds : [$selectedArtIds];
-
-            // Iterar sobre los valores seleccionados y crear un registro para cada combinación
-            foreach ($selectedNumIds as $numId) {
-                foreach ($selectedArtIds as $artId) {
-                    Norma_Infringida::create([
-                        'sol_id' => $sol_id,
-                        'num_id' => $numId,
-                        'art_id' => $artId
-                    ]);
-                }
-            }
         }
 
-        // Redirecciona a la vista 'solicitarResumen'
-        return redirect()->route('instructorViews.detalles_comite', compact(
-            'solicitud',
-            'normasInfringidas',
-            'aprendiz',
-            'prueba',
-            'selectedCapId',
-            'cap_numero',
-            'cap_descripcion',
-            'selectedArtIds',
-            'articulos',
-            'aprendices',
-            'numerals',
-        ));
-       
+        // Actualizar la solicitud con los nuevos valores seleccionados
+        $solicitud->update([
+            'sol_id' => $sol_id,
+            'cap_id' => $selectedCapId,
+            'art_id' => $selectedArtIds[0], // Suponiendo que solo puedes seleccionar un artículo
+            'num_ids' => implode(',', $selectedNumIds), // Convierte el array de IDs en una cadena
+            // ... otros campos que necesitas actualizar ...
+        ]);
+
+        // Redirecciona a la vista 'detalles_comite' con los datos actualizados
+        return redirect()->route('instructorViews.detalles_comite', ['solicitud' => $solicitudId]);
     }
 
 
+    // public function storeRegistrar_novedad5(Request $request, $solicitud)
+    // {
+    //     $this->authorize('administrar');
+
+    //     // Obtén los detalles de la solicitud utilizando el ID proporcionado
+    //     $solicitud = SolicitudComite::find($solicitud);
+
+    //     // Verifica si la solicitud se encontró
+    //     if (!$solicitud) {
+    //         // Manejo de solicitud no encontrada, por ejemplo, redireccionar o mostrar un mensaje de error.
+    //         return redirect()->route('tu_ruta_de_redireccion'); // Reemplaza 'tu_ruta_de_redireccion' por la ruta apropiada
+    //     }
+
+    //     // Obtén el ID de la solicitud
+    //     $sol_id = $solicitud->id;
+
+    //     // Obtén los valores seleccionados en el formulario
+    //     $selectedCapId = $request->input('cap_id');
+    //     $selectedArtIds = $request->input('art_id', []);
+    //     $selectedNumIds = $request->input('num_id', []);
+
+    //     // Almacenar los valores seleccionados en la sesión
+    //     session([
+    //         'selected_cap_id' => $selectedCapId,
+    //         'selected_art_ids' => $selectedArtIds,
+    //         'selected_num_ids' => $selectedNumIds,
+    //     ]);
+
+    //     $sol_id = session('sol_id');
+
+    //     // Verificar si se han seleccionado descripciones
+    //     if (!empty($selectedNumIds) && !empty($selectedArtIds)) {
+    //         // Convertir $selectedNumIds y $selectedArtIds en arrays si no lo son
+    //         $selectedNumIds = is_array($selectedNumIds) ? $selectedNumIds : [$selectedNumIds];
+    //         $selectedArtIds = is_array($selectedArtIds) ? $selectedArtIds : [$selectedArtIds];
+
+    //         // Iterar sobre los valores seleccionados y crear un registro para cada combinación
+    //         foreach ($selectedNumIds as $numId) {
+    //             foreach ($selectedArtIds as $artId) {
+    //                 Norma_Infringida::create([
+    //                     'sol_id' => $sol_id,
+    //                     'num_id' => $numId,
+    //                     'art_id' => $artId
+    //                 ]);
+    //             }
+    //         }
+    //     }
+
+    //     // Redirecciona a la vista 'solicitarResumen'
+    //     return redirect()->route('instructorViews.detalles_comite', compact(
+    //         'solicitud',
+    //         'normasInfringidas',
+    //         'aprendiz',
+    //         'prueba',
+    //         'selectedCapId',
+    //         'cap_numero',
+    //         'cap_descripcion',
+    //         'selectedArtIds',
+    //         'articulos',
+    //         'aprendices',
+    //         'numerals',
+    //     ));
+    // }
 }

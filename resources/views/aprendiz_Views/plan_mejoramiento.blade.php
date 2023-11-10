@@ -12,7 +12,7 @@
                 <p class="text-lg font-semibold mb-4">Te damos la bienvenida al Plan de Mejoramiento diseñado para ayudarte a alcanzar tus objetivos académicos y profesionales de manera efectiva.</p>
 
                 <div class="mb-4">
-                    <label class="block text-sm font-medium text-gray-700">Area</label>
+                    <label class="block text-sm font-medium text-gray-700">Área</label>
                     <input type="text" class="mt-1 p-2 w-full border rounded-md" value="{{ $planMejoramiento->Area }}" readonly>
                 </div>
 
@@ -50,7 +50,7 @@
                         <div class="flex items-center">
                             <div class="w-1/2 mr-2">
                                 <label class="block text-sm font-medium text-gray-700">Email</label>
-                                <input type="email" name="email" class="mt-1 p-2 w-full border rounded-md" placeholder="Ingrese el email">
+                                <input type="email" name="email" class="mt-1 p-2 w-full border rounded-md" placeholder="Ingrese el email" required>
                                 @error('email')
                                     <span class="text-red-500 text-sm my-1">{{ $message }}</span>
                                 @enderror
@@ -62,14 +62,14 @@
                         <div class="flex items-center">
                             <div class="w-1/2 mr-2">
                                 <label class="block text-sm font-medium text-gray-700">Descripción</label>
-                                <input type="text" name="descripcion" class="mt-1 p-2 w-full border rounded-md" placeholder="Ingrese una descripción">
+                                <input type="text" name="descripcion" class="mt-1 p-2 w-full border rounded-md" placeholder="Ingrese una descripción" required>
                                 @error('descripcion')
                                     <span class="text-red-500 text-sm my-1">{{ $message }}</span>
                                 @enderror
                             </div>
                             <div class="w-1/2 mr-2">
                                 <label class="block text-sm font-medium text-gray-700">Subir Archivos</label>
-                                <input type="file" name="url_documento" class="mt-1">
+                                <input type="file" name="url_documento" class="mt-1" required>
                                 @error('url_documento')
                                     <span class="text-red-500 text-sm my-1">{{ $message }}</span>
                                 @enderror
@@ -85,7 +85,7 @@
                     <label class="block text-sm font-medium text-gray-700">Calificación del Documento</label>
                     <p class="mt-1 p-2 w-full border rounded-md">Calificación obtenida: Excelente</p>
                 </div>
-                <p class="text-sm text-gray-500">Mucha suerte en el proceso.</p>
+                <p class="text-sm text-gray-500">¡Mucha suerte en el proceso!</p>
             </div>
         </div>
     </div>
@@ -103,5 +103,5 @@
         </div>
     @endif
 
-    <x-link href="{{ route('aprendiz_Views.consultas') }}" class="mx-3 mx-5 mb-6 bg-green-700 hover:bg-red-800 border-2 border-green-950">Atras</x-link>
+    <x-link href="{{ route('aprendiz_Views.consultas') }}" class="mx-3 mx-5 mb-6 bg-green-700 hover:bg-red-800 border-2 border-green-950">Atrás</x-link>
 </x-app-layout>

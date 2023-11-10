@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Solicitud N° ') . $sol_id . ('   - Añadir acciones') }}
+            {{ __('Solicitud N° ') . $sol_id . (' -  Registrar Novedades - Añadir acciones') }}
         </h2>
     </x-slot>
 
@@ -12,43 +12,44 @@
                     <x-validation-errors class="mb-4" />
                     <form method="POST" action="{{ route('instructorViews.storeRegistrar_novedad5', ['sol_id' => $sol_id]) }}" enctype="multipart/form-data">
                         @csrf
-                        <x-button type="button" id="agregarSelect" class="mb-6  mt-6 bg-green-700 hover:bg-yellow-500 border-2 border-green-950" >Agregar Otra descripción</x-button>
+                        @method('PUT')
+
+                        <x-button type="button" id="agregarSelect" class="mb-6  mt-6 bg-green-700 hover:bg-yellow-500 border-2 border-green-950">Agregar Otra descripción</x-button>
                         <div>
-                            <x-input id="sol_id" class="block mt-1 w-full" type="hidden" name="sol_id"
-                                :value="$sol_id" required autofocus autocomplete="sol_id" />
+                            <x-input id="sol_id" class="block mt-1 w-full" type="hidden" name="sol_id" :value="$sol_id" required autofocus autocomplete="sol_id" />
                         </div>
                         <div>
                             <x-label for="cap_id" value="{{ __('Capitulos') }}" />
-                            <select name="cap_id"
-                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
-                                <option value="">--Seleccione el Capitulo-</option>
-                                @foreach ($capitulos as $cap)
-                                    <option value="{{ $cap->id }}">{{ $cap->cap_numero }}
-                                        {{ $cap->cap_descripcion }}</option>
-                                @endforeach
+                            <select name="cap_id" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                            @foreach ($capitulos as $cap)
+                                <option value="{{ $cap->id }}" {{ session('selected_cap_id') == $cap->id ? 'selected' : '' }}>
+                                    {{ $cap->cap_numero }} {{ $cap->cap_descripcion }}
+                                </option>
+                            @endforeach
                             </select>
                         </div>
 
                         <div>
                             <x-label for="art_id" value="{{ __('Articulos') }}" />
-                            <select name="art_id"
-                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
-                                <option value="">--Seleccione el Articulos-</option>
-                                @foreach ($articulos as $art)
-                                    <option value="{{ $art->id }}">{{ $art->art_numero }}
-                                        {{ $art->art_descripcion }}</option>
-                                @endforeach
+                            <select name="art_id" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                            @foreach ($articulos as $art)
+                                <option value="{{ $art->id }}" {{ session('selected_art_id') == $art->id ? 'selected' : '' }}>
+                                    {{ $art->art_numero }} {{ $art->art_descripcion }}
+                                </option>
+                            @endforeach
                             </select>
                         </div>
 
                         <div>
                             <x-label for="num_id" value="{{ __('Descripción') }}" />
-                            <select id="num_id" name="num_id[]"
-                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
-                                <option value="">--Seleccione la descripción--</option>
-                                @foreach ($numerals as $num)
-                                    <option value="{{ $num->id }}" title="{{ $num->num_descripcion }}">{{ substr($num->num_descripcion, 0, 100) }}{{ strlen($num->num_descripcion) > 50 ? '...' : '' }}{{$num->num_calificacion}}</option>
-                                @endforeach
+                            <select id="num_id" name="num_id[]" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                            @foreach ($numerals as $num)
+                                <option value="{{ $num->id }}" title="{{ $num->num_descripcion }}" {{ in_array($num->id, session('selected_num_ids', [])) ? 'selected' : '' }}>
+                                    {{ substr($num->num_descripcion, 0, 100) }}
+                                    {{ strlen($num->num_descripcion) > 50 ? '...' : '' }}
+                                    {{ $num->num_calificacion }}
+                                </option>
+                            @endforeach
                             </select>
                         </div>
                         <div id="contenedorSelects" class="mt-4">
@@ -67,7 +68,7 @@
         </div>
     </div>
     <script>
-        document.getElementById('agregarSelect').addEventListener('click', function () {
+        document.getElementById('agregarSelect').addEventListener('click', function() {
             var selectOriginal = document.getElementById('num_id');
             var nuevoSelect = selectOriginal.cloneNode(true);
 
