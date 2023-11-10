@@ -28,7 +28,30 @@
             </div>
         </div>
     </div>
+    <!-- En tu vista blade -->
+@if(session('status') == 'success')
+    <!-- Agrega SweetAlert2 CSS y JS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
+
+    <script>
+        // Muestra la alerta
+        Swal.fire({
+            title: "¡Éxito!",
+            text: "{{ session('message') }}",
+            icon: "success",
+            confirmButtonText: "Aceptar",
+            customClass: {
+                popup: 'bg-green-50 shadow-x',
+                content: 'text-green-800',
+                confirmButton: 'bg-green-700 hover:bg-green-500 border-2 border-green-950'
+            }
+        });
+    </script>
+@endif
+
 </x-app-layout>
+
 
 
 

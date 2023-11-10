@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\Http\Controllers\Controller;
 use App\Models\SolicitudComite;
 use App\Models\Aprendiz;
@@ -9,6 +10,7 @@ use App\Models\Prueba;
 use App\Models\Articulo;
 use App\Models\Capitulo;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 
 
@@ -95,7 +97,8 @@ class GestorComiteViewsController extends Controller
         $aprendices = $solicitudComite ? $solicitudComite->aprendizs : [];
         $numerals = $solicitudComite ? $solicitudComite->numerals : [];
 
-
+        // Elimina la variable de sesión cuando cargues la vista de detalles
+        session()->forget('fecha_enviada');
         // Ahora puedes pasar todas estas variables a la vista para mostrar los detalles específicos.
         return view('GestorComiteViews.detalles', compact(
             'solicitud',
@@ -158,15 +161,31 @@ class GestorComiteViewsController extends Controller
 
         // Valida el formulario
         $request->validate([
-            'date' => 'required|date',
+            'date' => [
+                'required',
+                'date',
+                Rule::unique('solicitud_comites', 'sol_fechaSolicitud')->ignore($solicitudId),
+                function ($attribute, $value, $fail) {
+                    // Verifica que la fecha no sea anterior a la fecha actual
+                    if (strtotime($value) < strtotime(now())) {
+                        $fail('La fecha no puede ser anterior a la fecha actual.');
+                    }
+                },
+            ],
         ]);
 
         // Guarda la fecha en el campo sol_fechaSolicitud de la solicitud
         $solicitud->sol_fechaSolicitud = $request->date;
         $solicitud->save();
 
-        return redirect()->route('gestorComiteViews.index');
+        // Establece la variable de sesión indicando que la fecha se ha enviado
+        session(['fecha_enviada' => true]);
+
+        // Muestra una alerta con SweetAlert2
+        return redirect()->route('gestorComiteViews.index')->with('status', 'success')->with('message', 'Fecha guardada correctamente.');
     }
+
+
 
 
 
@@ -178,6 +197,4 @@ class GestorComiteViewsController extends Controller
 
         return view('gestorComiteViews.gFechas', compact('solicitud'));
     }
-
-
 }
