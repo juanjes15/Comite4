@@ -47,7 +47,7 @@ class AprenController extends Controller
             $prueba->save();
     
             // Redirigir a la vista de consultas con un mensaje de éxito
-            return redirect()->route('aprendiz_Views.consultas')->with('success', 'La prueba se ha guardado correctamente.');
+            return redirect()->route('aprendiz_Views.consultas')->with('status', 'success')->with('message', 'Las pruebas se han anexado correctamente.');
         }
     
         $comites = Comite::all();
@@ -144,7 +144,7 @@ class AprenController extends Controller
             $aprendizExistente->save();
     
             // Redirigir a la vista de consultas con un mensaje de éxito
-            return redirect()->back()->with('success', 'La impugnación ha sido enviada con éxito.');
+            return redirect()->route('aprendiz_Views.consultas')->with('status', 'success')->with('message', 'Las pruebas se han anexado correctamente.');
         }
 
         $this->authorize('administrar');

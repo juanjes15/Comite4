@@ -41,17 +41,29 @@
                             
                             <input type="hidden" name="sol_id" value="{{ $solicitud->id }}">
                             <div class="mb-4">
-                                <label for="com_codigo" class="block text-gray-700 text-sm font-bold">Código</label>
-                                <input type="text" name="com_codigo" class="border-2 border-gray-300 p-2 w-full" required>
-                            </div>
-                            <div class="mb-4">
-                                <label for="com_acta" class="block text-gray-700 text-sm font-bold">Subir Acta</label>
-                                <input type="file" name="com_acta" class="border-2 border-gray-300 p-2 w-full" required>
-                            </div>
-                            <div class="mb-4">
-                                <label for="com_recomendacion" class="block text-gray-700 text-sm font-bold">Recomendación</label>
-                                <textarea name="com_recomendacion" class="border-2 border-gray-300 p-2 w-full" required></textarea>
-                            </div>
+    <label for="com_codigo" class="block text-gray-700 text-sm font-bold">Código</label>
+    <input type="text" name="com_codigo" class="border-2 border-gray-300 p-2 w-full" required pattern="[0-9]+">
+    @error('com_codigo')
+        <span class="text-red-500 text-sm my-1">{{ $message }}</span>
+    @enderror
+</div>
+
+<div class="mb-4">
+    <label for="com_acta" class="block text-gray-700 text-sm font-bold">Subir Acta</label>
+    <input type="file" name="com_acta" class="border-2 border-gray-300 p-2 w-full" required>
+    @error('com_acta')
+        <span class="text-red-500 text-sm my-1">{{ $message }}</span>
+    @enderror
+</div>
+
+<div class="mb-4">
+    <label for="com_recomendacion" class="block text-gray-700 text-sm font-bold">Recomendación</label>
+    <textarea name="com_recomendacion" class="border-2 border-gray-300 p-2 w-full" required></textarea>
+    @error('com_recomendacion')
+        <span class="text-red-500 text-sm my-1">{{ $message }}</span>
+    @enderror
+</div>
+
                             <div class="flex justify-end">
                                 <button type="submit"
                                     class="bg-green-700 hover-bg-green-500 border-2 border-green-950 px-3 py-1 text-black rounded ">

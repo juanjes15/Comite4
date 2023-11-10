@@ -13,10 +13,9 @@
                     <form method="POST" action="{{ route('aprendiz_Views.consultas') }}" enctype="multipart/form-data">
     @csrf
 
-
     <div class="mb-4">
         <label class="block text-sm font-medium text-gray-700">Descripción:</label>
-        <textarea name="pru_descripcion" class="form-input mt-1 w-full rounded-md focus:ring focus:ring-indigo-200 focus:ring-opacity-50"></textarea>
+        <textarea name="pru_descripcion" class="form-input mt-1 w-full rounded-md focus:ring focus:ring-indigo-200 focus:ring-opacity-50" required></textarea>
         @error('pru_descripcion')
             <small class="text-danger">{{ $message }}</small>
         @enderror
@@ -26,12 +25,14 @@
         <x-label for="pru_url" value="{{ __('Anexar prueba (Solo se admiten documentos)') }}" />
         <br>
         <input class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
-            id="pru_url" type="file" name="pru_url" accept="image/*">
+            id="pru_url" type="file" name="pru_url" accept="image/*" required>
         @error('pru_url')
             <small class="text-danger">{{ $message }}</small>
         @enderror
     </div>
-<br>
+
+    <br>
+
     <button type="submit" class="bg-green-700 hover:bg-green-500 border-2 border-green-950 px-4 py-2 rounded flex items-center">
         <span class="mr-2">Enviar Información</span>
         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
@@ -39,12 +40,7 @@
         </svg>
     </button>
 </form>
-        </div>
-                        @if (session('message'))
-                            <div class="bg-green-200 text-green-800 mt-4 px-4 py-2 rounded">{{ session('message') }}
-                            </div>
-                        @endif
-                    </div>
+
                     <div class="">
                     </div>
                     <div class="container mx-auto p-4 mt-8">
@@ -161,10 +157,25 @@
                 </div>
 
             </div>
-            @if(session('success'))
+            <!-- En tu vista blade -->
+@if(session('status') == 'success')
+    <!-- Agrega SweetAlert2 CSS y JS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
+
     <script>
-        alert('{{ session('success') }}');
-        window.location.href = '{{ route('aprendiz_Views.consultas') }}';
+        // Muestra la alerta
+        Swal.fire({
+            title: "¡Éxito!",
+            text: "{{ session('message') }}",
+            icon: "success",
+            confirmButtonText: "Aceptar",
+            customClass: {
+                popup: 'bg-green-50 shadow-x',
+                content: 'text-green-800',
+                confirmButton: 'bg-green-700 hover:bg-green-500 border-2 border-green-950'
+            }
+        });
     </script>
 @endif
 
