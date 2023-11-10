@@ -10,6 +10,8 @@
             <div class="relative overflow-x-auto sm:rounded-lg px-4 py-4 bg-green-50 shadow-xl">
                 <div class="container mx-auto p-4">
                     <h2 class="text-2xl font-semibold mb-4">Anexar pruebas</h2>
+
+                    
                     <form method="POST" action="{{ route('aprendiz_Views.consultas') }}" enctype="multipart/form-data">
     @csrf
 
@@ -45,7 +47,7 @@
                     </div>
                     <div class="container mx-auto p-4 mt-8">
                         <h2 class="text-2xl font-semibold mb-4">Comités</h2>
-                        
+
 
                         <table class="shadow-2xl">
                             <thead class="bg-gray-300">
@@ -155,6 +157,7 @@
                                 @endforeach
                             </tbody>
                         </table>
+                        
                     </div>
                 </div>
 
@@ -179,6 +182,8 @@
             }
         });
     </script>
+    
 @endif
+
 
 </x-app-layout>
