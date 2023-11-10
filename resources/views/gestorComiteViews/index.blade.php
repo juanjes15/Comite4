@@ -26,6 +26,11 @@
                                 <th scope="col" class="px-6 py-3">
                                     Fecha
                                 </th>
+                                <th scope="col" class="px-6 py-3">
+                                    Ver Detalles
+                                </th>
+
+
                             </tr>
 
                         </thead>
@@ -59,16 +64,10 @@
                                     @endcan
                                 </tr>
                             @endforeach
-
-
                         </tbody>
                     </table>
-
-
-
                 </div>
             </div>
         </div>
-
     </div>
 </x-app-layout>

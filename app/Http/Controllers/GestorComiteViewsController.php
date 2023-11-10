@@ -177,6 +177,7 @@ class GestorComiteViewsController extends Controller
         // Guarda la fecha en el campo sol_fechaSolicitud de la solicitud
         $solicitud->sol_fechaSolicitud = $request->date;
         $solicitud->save();
+        
 
         // Establece la variable de sesión indicando que la fecha se ha enviado
         session(['fecha_enviada' => true]);
