@@ -11,7 +11,7 @@
             <div class="bg-green-50  overflow-hidden shadow-xl sm:rounded-lg">
                 <div class="relative overflow-x-auto shadow-md sm:rounded-lg px-4 py-4">
                     <x-validation-errors class="mb-4" />
-                    <form method="POST" action="{{ route('users.storeEstudiante', $user) }}">
+                    <form method="POST" action="{{ route('users.storeRolAprendiz', $user) }}">
                         @csrf
                         @method('PUT')
                         <div>

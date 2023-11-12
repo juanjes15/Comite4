@@ -27,12 +27,19 @@
                             <x-label for="rol" value="{{ __('Rol') }}" />
                             <select id="rol" name="rol"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
-                                <option>--Seleccione el rol--</option>
-                                <option value="Estudiante">Estudiante</option>
-                                <option value="Instructor">Instructor</option>
-                                <option value="Gestor">Gestor de comités</option>
-                                <option value="Subdirector">Subdirector</option>
-                                <option value="Administrador">Administrador</option>
+                                <option value="Invitado" @if ($user->rol === 'Invitado') selected @endif>Invitado
+                                </option>
+                                <option value="Aprendiz" @if ($user->rol === 'Aprendiz') selected @endif>Aprendiz
+                                </option>
+                                <option value="Instructor" @if ($user->rol === 'Instructor') selected @endif>Instructor
+                                </option>
+                                <option value="Gestor de Comités" @if ($user->rol === 'Gestor de Comités') selected @endif>
+                                    Gestor de Comités</option>
+                                <option value="Subdirector" @if ($user->rol === 'Subdirector') selected @endif>
+                                    Subdirector</option>
+                                <option value="Administrador" @if ($user->rol === 'Administrador') selected @endif>
+                                    Administrador
+                                </option>
                             </select>
                         </div>
                         <div class="flex mt-4">
@@ -41,6 +48,7 @@
                             </x-button>
                             <x-link href="{{ route('users.index') }}" class="mx-3">Atras</x-link>
                         </div>
+                    </form>
                 </div>
             </div>
         </div>

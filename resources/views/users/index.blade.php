@@ -7,14 +7,14 @@
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-green-50  overflow-hidden shadow-xl sm:rounded-lg">
+            <div class="bg-green-50 overflow-hidden shadow-xl sm:rounded-lg">
                 <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
-                    @can('administrar')
-                        <x-link href="{{ route('register') }}" class="m-4 mb-6  mt-6 bg-green-700 hover:bg-yellow-500 border-2 border-green-950">Añadir usuario</x-link>
-                    @endcan
+                    <x-link href="{{ route('users.create') }}"
+                        class="m-4 mb-6  mt-6 bg-green-700 hover:bg-yellow-500 border-2 border-green-950">
+                        Añadir usuario</x-link>
                     <table class=" w-full text-sm text-left text-gray-500 ">
-                        <thead class="bg-green-50 shadow-xl text-xs text-gray-700 uppercase bg-gray-50 ">
-                            <tr >
+                        <thead class="bg-green-50 shadow-xl text-xs text-gray-700 uppercase">
+                            <tr>
                                 <th scope="col" class="px-6 py-3 ">
                                     Nombres
                                 </th>
@@ -24,37 +24,35 @@
                                 <th scope="col" class="px-6 py-3">
                                     Rol
                                 </th>
-                                @can('administrar')
-                                    <th scope="col" class="px-6 py-3">
-                                    </th>
-                                @endcan
+                                <th scope="col" class="px-6 py-3">
+                                </th>
                             </tr>
                         </thead>
                         <tbody class="">
                             @forelse ($users as $user)
                                 <tr class="bg-white border-b ">
-                                    <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap ">
+                                    <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
                                         {{ $user->name }}
                                     </td>
                                     <td class="px-6 py-4 font-medium text-gray-900 truncate max-w-xs">
                                         {{ $user->email }}
                                     </td>
-                                    <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap ">
+                                    <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
                                         {{ $user->rol }}
                                     </td>
-                                    @can('administrar')
-                                        <td class="px-6 py-4 ">
-                                            <x-link href="{{ route('users.edit', $user) }} " class="bg-green-700 hover:bg-green-500 border-2 border-green-950">Asignar rol</x-link>
-                                            <form method="POST" action="{{ route('users.destroy', $user) }}"
-                                                class="inline-block">
-                                                @csrf
-                                                @method('DELETE')
-                                                <x-danger-button type="submit" onclick="return confirm('¿Está seguro?')" class=" bg-green-700 hover:bg-red-800 border-2 border-green-950
-">
-                                                    Eliminar</x-danger-button>
-                                            </form>
-                                        </td>
-                                    @endcan
+                                    <td class="px-6 py-4">
+                                        <x-link href="{{ route('users.edit', $user) }}"
+                                            class="bg-green-700 hover:bg-green-500 border-2 border-green-950">
+                                            Asignar rol</x-link>
+                                        <form method="POST" action="{{ route('users.destroy', $user) }}"
+                                            class="inline-block">
+                                            @csrf
+                                            @method('DELETE')
+                                            <x-danger-button type="submit" onclick="return confirm('¿Está seguro?')"
+                                                class="bg-green-700 hover:bg-red-800 border-2 border-green-950">
+                                                Eliminar</x-danger-button>
+                                        </form>
+                                    </td>
                                 </tr>
                             @empty
                                 <tr class="bg-white border-b">
