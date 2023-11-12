@@ -2,11 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\UpdateUserRequest;
 use App\Models\Aprendiz;
 use App\Models\Instructor;
 use App\Models\User;
+use Illuminate\Auth\Events\Registered;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rules;
+use Illuminate\Validation\Rule;
 
 class UserController extends Controller
 {
@@ -18,39 +22,65 @@ class UserController extends Controller
 
     public function create()
     {
-        $this->authorize('administrar');
-
         return view('users.create');
     }
 
-    public function store(Request $request)
+    public function store(Request $request): RedirectResponse
     {
-        $this->authorize('administrar');
+        $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:' . User::class],
+            'password' => ['required', 'confirmed', Rules\Password::defaults()],
+        ]);
 
-        User::create($request->validated());
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+            'rol' => 'Invitado'
+        ]);
+
+        event(new Registered($user));
         return redirect()->route('users.index');
+        //Auth::login($user);
+        //return redirect(RouteServiceProvider::HOME);
     }
 
     public function edit(User $user)
     {
-        $this->authorize('administrar');
-
         return view('users.edit', compact('user'));
     }
 
-    public function update(UpdateUserRequest $request, User $user)
+    public function update(Request $request, User $user)
     {
-        $this->authorize('administrar');
+        // Validación de los datos del formulario
+        $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'email', 'max:255', Rule::unique(User::class)->ignore($user->id)],
+            'rol' => ['required', 'string', 'max:55'],
+        ]);
 
-        $user->update($request->validated());
+        // Actualización de los datos del usuario
+        $user->name = $request->input('name');
+        $user->email = $request->input('email');
+        $user->rol = $request->input('rol');
+        $user->save();
 
-        if ($user->rol === 'estudiante') {
+        if ($user->rol === 'Aprendiz') {
             $aprendizs = Aprendiz::all();
-            return view('users.addEstudiante', compact('user', 'aprendizs'));
-        } else if ($user->rol === 'instructor') {
+            return view('users.addRolAprendiz', compact('user', 'aprendizs'));
+        } else if ($user->rol === 'Instructor') {
             $instructors = Instructor::all();
-            return view('users.addInstructor', compact('user', 'instructors'));
+            return view('users.addRolInstructor', compact('user', 'instructors'));
         } else {
+            //Si el usuario anteriormente era un instructor, eliminamos dicha asociación
+            if ($user->ins_id !== null) {
+                $user->instructor()->dissociate();
+            }
+            //Si el usuario anteriormente era un estudiante, eliminamos dicha asociación
+            if ($user->apr_id !== null) {
+                $user->aprendiz()->dissociate();
+            }
             return redirect()->route('users.index');
         }
     }
@@ -63,24 +93,22 @@ class UserController extends Controller
         return redirect()->route('users.index');
     }
 
-    public function addEstudiante(User $user)
+    public function addRolAprendiz(User $user)
     {
         // Implementa la lógica para agregar un estudiante aquí
-        return view('users.addEstudiante', compact('user'));
+        return view('users.addRolAprendiz', compact('user'));
     }
 
-    public function addInstructor(User $user)
+    public function addRolInstructor(User $user)
     {
         // Implementa la lógica para agregar un instructor aquí
-        return view('users.addInstructor', compact('user'));
+        return view('users.addRolInstructor', compact('user'));
     }
 
-    public function storeEstudiante(Request $request, User $user)
+    public function storeRolAprendiz(Request $request, User $user)
     {
-        $this->authorize('administrar');
-
         $validatedData = $request->validate([
-            'apr_id' => 'required',
+            'apr_id' => ['required', 'exists:aprendizs,id'],
         ]);
 
         $user->aprendiz()->associate($validatedData['apr_id']);
@@ -92,12 +120,12 @@ class UserController extends Controller
         return redirect()->route('users.index');
     }
 
-    public function storeInstructor(Request $request, User $user)
+    public function storeRolInstructor(Request $request, User $user)
     {
         $this->authorize('administrar');
 
         $validatedData = $request->validate([
-            'ins_id' => 'required',
+            'ins_id' => ['required', 'exists:instructors,id'],
         ]);
 
         $user->instructor()->associate($validatedData['ins_id']);

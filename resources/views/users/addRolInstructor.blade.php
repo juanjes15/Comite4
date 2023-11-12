@@ -16,7 +16,7 @@
                         @method('PUT')
                         <div>
                             <x-input id="user" class="block mt-1 w-full" type="text" name="user"
-                                :value="$user->id" required autofocus autocomplete="user" />
+                                :value="$user->id" required disabled hidden autofocus autocomplete="user" />
                         </div>
                         <div>
                             <x-label for="ins_id" value="{{ __('Instructores') }}" />

@@ -48,11 +48,11 @@ Route::middleware([
         Route::put('/users/{user}', [\App\Http\Controllers\UserController::class, 'update'])->name('users.update');
         Route::delete('/users/{user}', [\App\Http\Controllers\UserController::class, 'destroy'])->name('users.destroy');
 
-        Route::get('/users/addEstudiante/', [\App\Http\Controllers\UserController::class, 'addEstudiante'])->name('users.addEstudiante');
-        Route::put('/users/storeEstudiante/{user}', [\App\Http\Controllers\UserController::class, 'storeEstudiante'])->name('users.storeEstudiante');
+        Route::get('/users/addRolAprendiz/', [\App\Http\Controllers\UserController::class, 'addRolAprendiz'])->name('users.addRolAprendiz');
+        Route::put('/users/storeRolAprendiz/{user}', [\App\Http\Controllers\UserController::class, 'storeRolAprendiz'])->name('users.storeRolAprendiz');
 
-        Route::get('/users/addInstructor/', [\App\Http\Controllers\UserController::class, 'addInstructor'])->name('users.addInstructor');
-        Route::put('/users/storeInstructor/{user}', [\App\Http\Controllers\UserController::class, 'storeInstructor'])->name('users.storeInstructor');
+        Route::get('/users/addRolInstructor/', [\App\Http\Controllers\UserController::class, 'addRolInstructor'])->name('users.addRolInstructor');
+        Route::put('/users/storeRolInstructor/{user}', [\App\Http\Controllers\UserController::class, 'storeRolInstructor'])->name('users.storeRolInstructor');
     });
 
     //Rutas para el instructor

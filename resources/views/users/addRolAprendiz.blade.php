@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Relaciona el usuario con un estudiante en la base de datos') }}
+            {{ __('Relaciona el usuario con un aprendiz en la base de datos') }}
         </h2>
     </x-slot>
 
@@ -16,7 +16,7 @@
                         @method('PUT')
                         <div>
                             <x-input id="user" class="block mt-1 w-full" type="text" name="user"
-                                :value="$user->id" required autofocus autocomplete="user" />
+                                :value="$user->id" required disabled hidden autofocus autocomplete="user" />
                         </div>
                         <div>
                             <x-label for="apr_id" value="{{ __('Aprendices') }}" />
