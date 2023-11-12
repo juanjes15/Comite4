@@ -39,8 +39,8 @@ class planMejoramientoNoti extends Notification
                     ->replyTo($this->data['email'])
                     ->line('Hola, tienes una nueva notificacion')
                     ->line('Acabas de recibir un nuevo plan de mejoramiento: ')
-                    ->line('Descripción: ' . $this->data['descripcion'])
-                    ->line('URL del documento: ' . $this->data['url_documento']);
+                    ->line('Descripción: ' . $this->data['descripcion']);
+                    
     }
 
     /**

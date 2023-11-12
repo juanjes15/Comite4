@@ -89,6 +89,7 @@ class AprenController extends Controller
             try {
                 Notification::route('mail', 'maleja20172017@gmail.com')->notify(new planMejoramientoNoti($data));
             } catch (Exception $exception) {
+                dd($exception);
                 Log::error('Error en el controlador: ' . $exception->getMessage());
                 return redirect()->back()->with(['error' => 'Whoops! Por favor intenta más tarde']);
             }
