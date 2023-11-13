@@ -582,7 +582,7 @@ class InstructorViewController extends Controller
         return back()->with('error', 'Debes seleccionar al menos una descripción y un artículo.');
     }
 
-    public function detalles_registar($solicitud)
+    public function detalles_registrar($solicitud)
     {
         $this->authorize('administrar');
 
@@ -622,6 +622,8 @@ class InstructorViewController extends Controller
         $selectedArtIds = (array)session('selected_art_ids', []); // Cast a array si no hay ninguno, se usará un array vacío
         $articulos = Articulo::whereIn('id', $selectedArtIds)->get();
 
+        $selectedNumIds = (array)session('selected_num_ids', []);
+        $numeral = Numeral::WhereIn('id', $selectedNumIds)->get();
 
         // Recupera la solicitud de comité con sus aprendices y numerales relacionados
         $solicitudComite = SolicitudComite::with('aprendizs', 'numerals')->find($sol_id);
@@ -629,7 +631,7 @@ class InstructorViewController extends Controller
         // Ahora, puedes acceder a los aprendices y numerales relacionados
         $aprendices = $solicitudComite ? $solicitudComite->aprendizs : [];
         $numerals = $solicitudComite ? $solicitudComite->numerals : [];
-
+        
         // Ahora puedes pasar todas estas variables a la vista para mostrar los detalles específicos.
         return view('instructorViews.detalles_registrar', compact(
             'solicitud',
@@ -640,6 +642,8 @@ class InstructorViewController extends Controller
             'cap_numero',
             'cap_descripcion',
             'selectedArtIds',
+            'selectedNumIds',
+            'numeral',
             'articulos',
             'aprendices',
             'numerals'
