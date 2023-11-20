@@ -102,8 +102,8 @@ Route::middleware([
 
 
     Route::post('/subir', 'Controller@subirArchivo')->name('subir');
-     //Rutas para el Gestor
-    Route::middleware('checkUserRole:Gestor de Comités,Instructor,Administrador')->group(function () {
+    //Rutas para el Gestor
+    Route::middleware('checkUserRole:Gestor_Comite,Instructor,Administrador')->group(function () {
         Route::get('/gestorComiteViews/gFechas', [\App\Http\Controllers\GestorComiteViewsController::class, 'gFechas'])->name('gestorComiteViews.gFechas');
         Route::get('/gestorComiteViews/detalles', [\App\Http\Controllers\GestorComiteViewsController::class, 'detalles'])->name('gestorComiteViews.detalles');
         Route::get('/gestorComiteViews/gFechas/{solicitud}', [\App\Http\Controllers\GestorComiteViewsController::class, 'gFechas'])->name('gestorComiteViews.gFechas');
@@ -124,6 +124,5 @@ Route::middleware([
         Route::get('/comite_Views/comite', [\App\Http\Controllers\ComiteViewsController::class, 'comite'])->name('comite_Views.comite');
         Route::post('/comite_Views/completar', [\App\Http\Controllers\ComiteViewsController::class, 'completar'])->name('comite_Views.completar');
         Route::post('/comite_Views/updateEstado', [ComiteViewsController::class, 'updateEstado'])->name('comite_Views.updateEstado');
-
     });
 });

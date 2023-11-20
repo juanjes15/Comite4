@@ -61,7 +61,7 @@ class DatabaseSeeder extends Seeder
             'email_verified_at' => now(),
             'password' => Hash::make('password'),
             'remember_token' => Str::random(10),
-            'rol' => 'Gestor de Comités',
+            'rol' => 'Gestor_Comite',
         ]);
 
         
