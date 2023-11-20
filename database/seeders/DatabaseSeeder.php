@@ -63,5 +63,7 @@ class DatabaseSeeder extends Seeder
             'remember_token' => Str::random(10),
             'rol' => 'Gestor de Comités',
         ]);
+
+        
     }
 }
