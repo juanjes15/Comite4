@@ -15,10 +15,6 @@
                         @csrf
                         @method('PUT')
                         <div>
-                            <x-input id="user" class="block mt-1 w-full" type="text" name="user"
-                                :value="$user->id" required disabled hidden autofocus autocomplete="user" />
-                        </div>
-                        <div>
                             <x-label for="ins_id" value="{{ __('Instructores') }}" />
                             <select name="ins_id"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
@@ -29,6 +25,7 @@
                                 @endforeach
                             </select>
                         </div>
+                        <input type="text" name="user" hidden value="{{ $user->id }}">
                         <div class="flex mt-4">
                             <x-button>
                                 {{ __('Guardar') }}
