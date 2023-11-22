@@ -22,6 +22,18 @@
                                         <tr>
                                             <th class="px-4 py-2">
                                                 <div class="flex items-center">
+                                                    <span class="mr-2">Solicitud ID</span>
+                                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5"
+                                                        viewBox="0 0 20 20" fill="currentColor">
+                                                        <!-- Ícono, puedes personalizarlo según tus necesidades -->
+                                                        <path d="M10 3a1 1 0 011 1v10a1 1 0 11-2 0V4a1 1 0 011-1z" />
+                                                        <path
+                                                            d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" />
+                                                    </svg>
+                                                </div>
+                                            </th>
+                                            <th class="px-4 py-2">
+                                                <div class="flex items-center">
                                                     <span class="mr-2">Acta</span>
                                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5"
                                                         viewBox="0 0 20 20" fill="currentColor">
@@ -80,6 +92,7 @@
                                     <tbody>
                                         @foreach ($comites as $comite)
                                         <tr>
+                                            <td class="border px-4 py-2">{{ $comite->sol_id }}</td>
                                             <td class="border px-4 py-2">{{ $comite->com_acta }}</td>
                                             <td class="border px-4 py-2">{{ $comite->com_estado }}</td>
                                             <td class="border px-4 py-2">{{ $comite->com_fecha }}</td>
