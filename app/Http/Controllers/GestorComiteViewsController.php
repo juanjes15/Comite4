@@ -97,8 +97,14 @@ class GestorComiteViewsController extends Controller
         $aprendices = $solicitudComite ? $solicitudComite->aprendizs : [];
         $numerals = $solicitudComite ? $solicitudComite->numerals : [];
 
+        $solicitud->sol_estado = 'Aceptado';
+        $solicitud->save();
+
+        session()->forget('aceptado');
+
         // Elimina la variable de sesión cuando cargues la vista de detalles
         session()->forget('fecha_enviada');
+        session()->forget('negar');
         // Ahora puedes pasar todas estas variables a la vista para mostrar los detalles específicos.
         return view('GestorComiteViews.detalles', compact(
             'solicitud',
@@ -111,28 +117,21 @@ class GestorComiteViewsController extends Controller
             'selectedArtIds',
             'articulos',
             'aprendices',
-            'numerals'
+            'numerals',
+            
         ));
     }
 
     public function destroy(SolicitudComite $solicitud)
     {
-        $this->authorize('administrar');
-
-
-        // Elimina los registros relacionados en la tabla pruebas
-        Prueba::where('sol_id', $solicitud->id)->delete();
-
-        // Luego elimina la solicitud de comité
-        $solicitud->delete();
-
+        $solicitud->update(['sol_estado' => 'negado']);
+        session()->forget('negar');
+        
         return redirect()->route('gestorComiteViews.index');
     }
 
     public function gFechas($solicitudId)
     {
-        $this->authorize('administrar');
-
         // Obtén los detalles de la solicitud utilizando el ID proporcionado
         $solicitud = SolicitudComite::find($solicitudId);
 
@@ -148,8 +147,6 @@ class GestorComiteViewsController extends Controller
 
     public function storeSolicitudComiteRequest(Request $request, $solicitudId)
     {
-        $this->authorize('administrar');
-
         // Obtén los detalles de la solicitud utilizando el ID proporcionado
         $solicitud = SolicitudComite::find($solicitudId);
 
@@ -177,7 +174,7 @@ class GestorComiteViewsController extends Controller
         // Guarda la fecha en el campo sol_fechaSolicitud de la solicitud
         $solicitud->sol_fechaSolicitud = $request->date;
         $solicitud->save();
-        
+
 
         // Establece la variable de sesión indicando que la fecha se ha enviado
         session(['fecha_enviada' => true]);
@@ -187,15 +184,10 @@ class GestorComiteViewsController extends Controller
     }
 
 
-
-
-
     public function show(SolicitudComite $solicitud)
     {
-        $this->authorize('administrar');
         // Obtén el ID de la solicitud
         $sol_id = $solicitud->id;
-
         return view('gestorComiteViews.gFechas', compact('solicitud'));
     }
 }
