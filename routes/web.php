@@ -102,16 +102,17 @@ Route::middleware([
 
 
     Route::post('/subir', 'Controller@subirArchivo')->name('subir');
+    //Rutas para el Gestor
+    Route::middleware('checkUserRole:Gestor_Comite,Instructor,Administrador')->group(function () {
+        Route::get('/gestorComiteViews/gFechas', [\App\Http\Controllers\GestorComiteViewsController::class, 'gFechas'])->name('gestorComiteViews.gFechas');
+        Route::get('/gestorComiteViews/detalles', [\App\Http\Controllers\GestorComiteViewsController::class, 'detalles'])->name('gestorComiteViews.detalles');
+        Route::get('/gestorComiteViews/gFechas/{solicitud}', [\App\Http\Controllers\GestorComiteViewsController::class, 'gFechas'])->name('gestorComiteViews.gFechas');
+        Route::put('/gestorComiteViews/gFechas/{solicitud}', [\App\Http\Controllers\GestorComiteViewsController::class, 'storeSolicitudComiteRequest'])->name('gestorComiteViews.storeSolicitudComiteRequest');
+        Route::get('/gestorComiteViews/detalles/{solicitud}', 'App\Http\Controllers\GestorComiteViewsController@detalles')->name('gestorComiteViews.detalles');
+        Route::delete('/gestor-comite-views/{solicitud}', 'App\Http\Controllers\GestorComiteViewsController@destroy')->name('gestorComiteViews.destroy');
+    });
 
-    //Gestor Comite
-    Route::get('/gestorComiteViews/gFechas', [\App\Http\Controllers\GestorComiteViewsController::class, 'gFechas'])->name('gestorComiteViews.gFechas');
-    Route::get('/gestorComiteViews/detalles', [\App\Http\Controllers\GestorComiteViewsController::class, 'detalles'])->name('gestorComiteViews.detalles');
-    Route::get('/gestorComiteViews/gFechas/{solicitud}', [\App\Http\Controllers\GestorComiteViewsController::class, 'gFechas'])->name('gestorComiteViews.gFechas');
-    Route::put('/gestorComiteViews/gFechas/{solicitud}', [\App\Http\Controllers\GestorComiteViewsController::class, 'storeSolicitudComiteRequest'])->name('gestorComiteViews.storeSolicitudComiteRequest');
-    Route::get('/gestorComiteViews/detalles/{solicitud}', 'App\Http\Controllers\GestorComiteViewsController@detalles')->name('gestorComiteViews.detalles');
-    Route::delete('/gestor-comite-views/{solicitud}', 'App\Http\Controllers\GestorComiteViewsController@destroy')->name('gestorComiteViews.destroy');
-
-//Estas son las rutas de la vista del aprendiz
+    //Estas son las rutas de la vista del aprendiz
     Route::middleware('checkUserRole:Aprendiz,Administrador')->group(function () {
         Route::get('/aprendiz/consultas', [\App\Http\Controllers\AprenController::class, 'consultas'])->name('aprendiz_Views.consultas');
         Route::post('/aprendiz/consultas', [\App\Http\Controllers\AprenController::class, 'consultas'])->name('aprendiz_Views.consultas');
@@ -123,6 +124,5 @@ Route::middleware([
         Route::get('/comite_Views/comite', [\App\Http\Controllers\ComiteViewsController::class, 'comite'])->name('comite_Views.comite');
         Route::post('/comite_Views/completar', [\App\Http\Controllers\ComiteViewsController::class, 'completar'])->name('comite_Views.completar');
         Route::post('/comite_Views/updateEstado', [ComiteViewsController::class, 'updateEstado'])->name('comite_Views.updateEstado');
-
     });
 });
