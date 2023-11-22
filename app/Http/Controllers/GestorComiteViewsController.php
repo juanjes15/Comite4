@@ -97,14 +97,11 @@ class GestorComiteViewsController extends Controller
         $aprendices = $solicitudComite ? $solicitudComite->aprendizs : [];
         $numerals = $solicitudComite ? $solicitudComite->numerals : [];
 
-        $solicitud->sol_estado = 'Aceptado';
-        $solicitud->save();
-
-        session()->forget('aceptado');
+        session()->forget('negar');
 
         // Elimina la variable de sesión cuando cargues la vista de detalles
         session()->forget('fecha_enviada');
-        session()->forget('negar');
+
         // Ahora puedes pasar todas estas variables a la vista para mostrar los detalles específicos.
         return view('GestorComiteViews.detalles', compact(
             'solicitud',
@@ -118,19 +115,19 @@ class GestorComiteViewsController extends Controller
             'articulos',
             'aprendices',
             'numerals',
-            
+
         ));
     }
 
     public function destroy(SolicitudComite $solicitud)
     {
-        $solicitud->update(['sol_estado' => 'negado']);
-        session()->forget('negar');
-        
+        $solicitud->update(['sol_estado' => 'Negado']);
+        session(['negar' => true]);
+
         return redirect()->route('gestorComiteViews.index');
     }
 
-    public function gFechas($solicitudId)
+    public function gFechas(Request $request, $solicitudId)
     {
         // Obtén los detalles de la solicitud utilizando el ID proporcionado
         $solicitud = SolicitudComite::find($solicitudId);
@@ -138,12 +135,25 @@ class GestorComiteViewsController extends Controller
         // Verifica si la solicitud se encontró
         if (!$solicitud) {
             // Manejo de solicitud no encontrada, por ejemplo, redireccionar o mostrar un mensaje de error.
-            return redirect()->route('gestorComiteViews.index'); // Reemplaza 'tu_ruta_de_redireccion' por la ruta apropiada
+            return redirect()->route('gestorComiteViews.index');
         }
 
-        // Pasa los datos de la solicitud a la vista como una variable global
+        // Verifica si la solicitud se está aceptando (método POST)
+        if ($request->isMethod('post')) {
+            // Lógica para manejar la aceptación del comité
+            $solicitud->update(['sol_estado' => 'Aceptado']);
+
+            // Limpiar la variable de sesión
+            session()->forget('aceptado');
+
+            // Puedes redirigir a donde sea necesario después de realizar la acción
+            return redirect()->route('gestorComiteViews.detalles', ['solicitud' => $solicitudId]);
+        }
+
+        // Lógica para la vista en caso de que se acceda a la URL directamente sin POST
         return view('gestorComiteViews.gFechas', compact('solicitud'));
     }
+
 
     public function storeSolicitudComiteRequest(Request $request, $solicitudId)
     {

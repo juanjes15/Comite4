@@ -62,35 +62,48 @@
                         @endforeach
                     </div>
 
-                    <div class="flex mt-4  ">
-                        <div class="flex mt-4">
-                            @if (!$fechaEnviada && $solicitudSinFecha )
-                                <x-link
-                                    href="{{ route('gestorComiteViews.gFechas', ['solicitud' => $solicitud->id]) }}"
+                    <div class="flex mt-4">
+
+                        @unless ($fechaEnviada || $solicitud->sol_estado === 'Aceptado' || $solicitud->sol_estado === 'Negado' || session('negar'))
+                            <form id="aceptar-form-{{ $solicitud->id }}"
+                                action="{{ route('gestorComiteViews.gFechas', ['solicitud' => $solicitud->id]) }}"
+                                method="POST">
+                                @csrf
+                                <x-button type="submit"
                                     class="bg-green-700 hover:bg-green-500 border-2 border-green-950 mx-4">
                                     {{ __('Aceptar comite') }}
-                                </x-link>
-                            @endif
+                                </x-button>
+                            </form>
+                            <script>
+                                // Muestra el formulario cuando se cargue la página
+                                document.getElementById('aceptar-form-{{ $solicitud->id }}').style.display = 'inline';
+                            </script>
+                        @endunless
+                        
+                        @unless ($fechaEnviada || $solicitud->sol_estado === 'Aceptado' || $solicitud->sol_estado === 'Negado' || session('negar'))
+                            <form method="POST"
+                                action="{{ route('gestorComiteViews.destroy', ['solicitud' => $solicitud->id]) }}"
+                                class="inline-block">
+                                @csrf
+                                @method('DELETE')
+                                <x-danger-button type="submit" onclick="return confirm('¿Está seguro?')">
+                                    Negar
+                                </x-danger-button>
+                            </form>
+                        @endunless
 
-                            @if (!$fechaEnviada && $solicitudSinFecha || !$negar)
-                                <form method="POST"
-                                    action="{{ route('gestorComiteViews.destroy', ['solicitud' => $solicitud->id]) }}"
-                                    class="inline-block">
-                                    @csrf
-                                    @method('DELETE')
-                                    <x-danger-button type="submit" onclick="return confirm('¿Está seguro?')">
-                                        Negar
-                                    </x-danger-button>
-                                </form>
-                            @endif
+                        
 
 
-                            <x-link href="{{ route('gestorComiteViews.index') }}"
-                                class="mx-3 bg-green-700 hover:bg-red-800 border-2 border-green-950">
-                                {{ __('Atrás') }}
-                            </x-link>
-                        </div>
+
+
+                        <x-link href="{{ route('gestorComiteViews.index') }}"
+                            class="mx-3 bg-green-700 hover:bg-red-800 border-2 border-green-950">
+                            {{ __('Atrás') }}
+                        </x-link>
                     </div>
+
+
                 </div>
             </div>
         </div>
