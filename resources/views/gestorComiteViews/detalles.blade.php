@@ -79,7 +79,7 @@
                                 document.getElementById('aceptar-form-{{ $solicitud->id }}').style.display = 'inline';
                             </script>
                         @endunless
-                        
+
                         @unless ($fechaEnviada || $solicitud->sol_estado === 'Aceptado' || $solicitud->sol_estado === 'Negado' || session('negar'))
                             <form method="POST"
                                 action="{{ route('gestorComiteViews.destroy', ['solicitud' => $solicitud->id]) }}"
@@ -92,10 +92,7 @@
                             </form>
                         @endunless
 
-                        
-
-
-
+                    
 
                         <x-link href="{{ route('gestorComiteViews.index') }}"
                             class="mx-3 bg-green-700 hover:bg-red-800 border-2 border-green-950">
