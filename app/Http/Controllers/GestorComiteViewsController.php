@@ -147,7 +147,7 @@ class GestorComiteViewsController extends Controller
             session()->forget('aceptado');
 
             // Puedes redirigir a donde sea necesario después de realizar la acción
-            return redirect()->route('gestorComiteViews.detalles', ['solicitud' => $solicitudId]);
+            return redirect()->route('gestorComiteViews.gFechas', ['solicitud' => $solicitudId]);
         }
 
         // Lógica para la vista en caso de que se acceda a la URL directamente sin POST

@@ -50,7 +50,7 @@
                         <div>
                             <x-label for="sol_estado" value="{{ __('Estado') }}" />
                             <x-input id="sol_estado" class="block mt-1 w-full" type="text" name="sol_estado"
-                                     :value="old('sol_estado', 'Solicitado')" required autofocus autocomplete="sol_estado" disabled />
+                                     :value="old('sol_estado', 'Solicitado')" required autofocus autocomplete="sol_estado" />
                         </div>
                         
 
