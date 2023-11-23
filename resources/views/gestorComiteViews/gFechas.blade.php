@@ -24,6 +24,7 @@
                     </div>
 
                     <form action="{{ route('gestorComiteViews.gFechas', ['solicitud' => $solicitud->id]) }}" method="post">
+
                         @csrf
                         @method('put') 
                         

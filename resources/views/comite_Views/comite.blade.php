@@ -254,5 +254,5 @@ fetch(encodedUrl)
     </script>
     
 @endif
-    <x-link href="{{ route('aprendiz_Views.consultas') }}" class="mx-3 mx-5 mb-6 bg-green-700 hover:bg-red-800 border-2 border-green-950">Atras</x-link>
+    <x-link href="{{ route('aprendiz_Views.consultas') }}" class="mx-3  mb-6 bg-green-700 hover:bg-red-800 border-2 border-green-950">Atras</x-link>
 </x-app-layout>
