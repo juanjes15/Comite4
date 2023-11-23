@@ -47,15 +47,18 @@
                                 :value="old('sol_motivo')" required autofocus autocomplete="sol_motivo" />
                         </div>
 
-                        <div>
+                        <div class="hidden">
                             <x-label for="sol_estado" value="{{ __('Estado') }}" />
                             <x-input id="sol_estado" class="block mt-1 w-full" type="text" name="sol_estado"
-                                     :value="old('sol_estado', 'Solicitado')" required autofocus autocomplete="sol_estado" />
+                                :value="old('sol_estado', 'Solicitado')" required autofocus autocomplete="sol_estado" />
                         </div>
+                        
+                        <input type="hidden" name="sol_estado" value="Solicitado">
+                        
                         
 
                         <div class="flex mt-4 ">
-                            <x-button class="bg-green-700 hover:bg-green-500 border-2 border-green-950">
+                            <x-button class="bg-green-700 hover:bg-green-500 border-2 border-green-950" >
                                 {{ __('Siguiente') }}
                             </x-button>
                             <x-link href="{{ url()->previous() }}" class="mx-3 bg-green-700 hover:bg-red-800 border-2 border-green-950">Atras</x-link>
