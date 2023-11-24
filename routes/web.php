@@ -111,7 +111,7 @@ Route::middleware([
     });
 
     //Estas son las rutas de la vista del aprendiz
-    Route::middleware('checkUserRole:Aprendiz,Administrador, Gestor_Comite')->group(function () {
+    Route::middleware('checkUserRole:Aprendiz,Administrador,Gestor_Comite')->group(function () {
         Route::get('/aprendiz/consultas', [\App\Http\Controllers\AprenController::class, 'consultas'])->name('aprendiz_Views.consultas');
         Route::post('/aprendiz/consultas', [\App\Http\Controllers\AprenController::class, 'consultas'])->name('aprendiz_Views.consultas');
         Route::get('/aprendiz/plan_mejoramiento', [\App\Http\Controllers\AprenController::class, 'plan_mejoramiento'])->name('aprendiz_Views.plan_mejoramiento');
