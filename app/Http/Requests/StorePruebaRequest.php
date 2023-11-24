@@ -24,7 +24,7 @@ class StorePruebaRequest extends FormRequest
         return [
             'pru_tipo' => 'required',
             'pru_descripcion' => 'required',
-            'pru_fecha' => 'required',
+            'pru_fecha' => 'required|date|before:today',
             'pru_url' => 'required|image|max:2048',
             'sol_id' => 'required'
         ];

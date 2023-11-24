@@ -32,7 +32,7 @@ class AprendizController extends Controller
      */
     public function create()
     {
-        $this->authorize('administrar');
+       
 
         $fichas = Ficha::with('programa')
                 ->join('programas', 'fichas.pro_id', '=', 'programas.id')
@@ -47,7 +47,7 @@ class AprendizController extends Controller
      */
     public function store(StoreAprendizRequest $request)
     {
-        $this->authorize('administrar');
+       
 
         Aprendiz::create($request->validated());
         return redirect()->route('aprendizs.index');
@@ -66,7 +66,7 @@ class AprendizController extends Controller
      */
     public function edit(Aprendiz $aprendiz)
     {
-        $this->authorize('administrar');
+       
 
         $fichas = Ficha::all();
         return view('aprendizs.edit', compact('aprendiz', 'fichas'));
@@ -77,7 +77,7 @@ class AprendizController extends Controller
      */
     public function update(UpdateAprendizRequest $request, Aprendiz $aprendiz)
     {
-        $this->authorize('administrar');
+       
 
         $aprendiz->update($request->validated());
         return redirect()->route('aprendizs.index');
@@ -88,7 +88,7 @@ class AprendizController extends Controller
      */
     public function destroy(Aprendiz $aprendiz)
     {
-        $this->authorize('administrar');
+       
 
         $aprendiz->delete();
         return redirect()->route('aprendizs.index');

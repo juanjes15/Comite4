@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\UpdateSolicitudComiteRequest;
+use App\Http\Requests\StorePruebaRequest;
+use App\Http\Requests\StoreSolicitudComiteRequest;
 use Illuminate\Http\Request;
 use App\Models\Aprendiz;
 use App\Models\SolicitudComite;
@@ -26,7 +27,7 @@ class InstructorViewController extends Controller
 
     public function solicitar2()
     {
-        $this->authorize('administrar');
+        
 
         // Obtener las áreas de los instructores
         $areas = Instructor::distinct()->pluck('ins_area');
@@ -39,7 +40,7 @@ class InstructorViewController extends Controller
 
     public function solicitar3()
     {
-        $this->authorize('administrar');
+       
 
         $aprendizs = Aprendiz::all();
         // Accede al valor de 'sol_id' almacenado en la sesión
@@ -50,7 +51,7 @@ class InstructorViewController extends Controller
 
     public function solicitar4()
     {
-        $this->authorize('administrar');
+     
         // Accede al valor de 'sol_id' almacenado en la sesión
         $sol_id = session('sol_id');
 
@@ -59,7 +60,7 @@ class InstructorViewController extends Controller
 
     public function solicitar5()
     {
-        $this->authorize('administrar');
+        
         // Accede al valor de 'sol_id' almacenado en la sesión
         $sol_id = session('sol_id');
 
@@ -73,7 +74,6 @@ class InstructorViewController extends Controller
 
     public function solicitarResumen()
     {
-        $this->authorize('administrar');
 
         // Obtén el ID de la solicitud desde la sesión
         $sol_id = session('sol_id');
@@ -140,15 +140,14 @@ class InstructorViewController extends Controller
     }
 
 
-    public function storeSolicitar2(Request $request)
+    public function storeSolicitar2(StoreSolicitudComiteRequest $request)
     {
-        $this->authorize('administrar');
 
         // Asegúrate de que 'sol_fechaSolicitud' esté presente en los datos antes de asignarlo
         $data = $request->all();
         $data['sol_fechaSolicitud'] = $request->input('sol_fechaSolicitud', null);
 
-        $solicitud = SolicitudComite::create($data);
+        $solicitud = SolicitudComite::create($request->validated());
 
         // Almacena el ID de solicitud en la sesión
         session(['sol_id' => $solicitud->id]);
@@ -164,7 +163,6 @@ class InstructorViewController extends Controller
     // En el controlador InstructorViewController
     public function storeSolicitar3(Request $request)
     {
-        $this->authorize('administrar');
 
         // Obtén el ID de solicitud almacenado en la sesión
         $sol_id = session('sol_id');
@@ -188,23 +186,18 @@ class InstructorViewController extends Controller
     }
 
 
-    public function storeSolicitar4(Request $request)
+    public function storeSolicitar4(StorePruebaRequest $request)
     {
-        $this->authorize('administrar');
+        $datosValidados = $request->validated();
 
         // Subir y almacenar el archivo
         if ($request->hasFile('pru_url')) {
             $file = $request->file('pru_url');
             $path = $file->store('pruebas'); // Almacena el archivo en la carpeta 'pruebas' dentro del almacenamiento
-
+            $datosValidados['pru_url'] = $path;
+            $datosValidados['sol_id'] = session('sol_id');
             // Crea un registro en la tabla 'pruebas'
-            Prueba::create([
-                'pru_tipo' => $request->pru_tipo,
-                'pru_descripcion' => $request->pru_descripcion,
-                'pru_fecha' => $request->pru_fecha,
-                'pru_url' => $path,
-                'sol_id' => session('sol_id'),
-            ]);
+            Prueba::create($datosValidados);
 
             return redirect()->route('instructorViews.solicitar5')->with('success', 'La prueba se ha subido exitosamente.');
         }
@@ -214,7 +207,7 @@ class InstructorViewController extends Controller
 
     public function storeSolicitar5(Request $request)
     {
-        $this->authorize('administrar');
+       
         $sol_id = session('sol_id');
 
         // Obtén los valores seleccionados en el formulario
@@ -284,7 +277,7 @@ class InstructorViewController extends Controller
 
     public function detalles_comite($solicitud)
     {
-        $this->authorize('administrar');
+       
 
         // Obtén los detalles de la solicitud utilizando el ID proporcionado
         $solicitud = SolicitudComite::find($solicitud);
@@ -388,7 +381,7 @@ class InstructorViewController extends Controller
 
     public function registrar_novedad2($sol_id)
     {
-        $this->authorize('administrar');
+       
         // Obtener las áreas de los instructores
         $areas = Instructor::distinct()->pluck('ins_area');
 
@@ -404,7 +397,7 @@ class InstructorViewController extends Controller
 
     public function storeRegistrar_novedad2(Request $request)
     {
-        $this->authorize('administrar');
+       
         // Obtener la solicitud existente por su ID
         $sol_id = $request->input('sol_id');
         $solicitud = SolicitudComite::findOrFail($sol_id);
@@ -433,7 +426,6 @@ class InstructorViewController extends Controller
 
     public function storeRegistrar_novedad3(Request $request)
     {
-        $this->authorize('administrar');
 
         // Obtén el ID de solicitud almacenado en la sesión
         $sol_id = session('sol_id');
@@ -464,7 +456,7 @@ class InstructorViewController extends Controller
 
     public function registrar_novedad4()
     {
-        $this->authorize('administrar');
+    
         // Accede al valor de 'sol_id' almacenado en la sesión
         $sol_id = session('sol_id');
         // Obtén la solicitud y sus pruebas asociadas
@@ -478,7 +470,7 @@ class InstructorViewController extends Controller
 
     public function storeRegistrar_novedad4(Request $request)
     {
-        $this->authorize('administrar');
+        
 
         // Accede al valor de 'sol_id' almacenado en la sesión
         $sol_id = session('sol_id');
@@ -507,7 +499,7 @@ class InstructorViewController extends Controller
 
     public function registrar_novedad5()
     {
-        $this->authorize('administrar');
+        
         // Accede al valor de 'sol_id' almacenado en la sesión
         $sol_id = session('sol_id');
         $solicitud = SolicitudComite::findOrFail($sol_id);
@@ -524,7 +516,7 @@ class InstructorViewController extends Controller
 
     public function storeRegistrar_novedad5(Request $request, $solicitudId)
     {
-        $this->authorize('administrar');
+        
 
         $sol_id = session('sol_id');
 
@@ -584,7 +576,7 @@ class InstructorViewController extends Controller
 
     public function detalles_registrar($solicitud)
     {
-        $this->authorize('administrar');
+        
 
         // Obtén los detalles de la solicitud utilizando el ID proporcionado
         $solicitud = SolicitudComite::find($solicitud);

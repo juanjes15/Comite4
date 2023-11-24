@@ -4,9 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Comite;
-use Illuminate\Support\Facades\Log;
-use Carbon\Carbon;
-
 class ComiteViewsController extends Controller
 {
     public function comite()
@@ -17,19 +14,19 @@ class ComiteViewsController extends Controller
     }
 
     public function updateEstado(Request $request)
-{
-    $request->validate([
-        'id' => 'required|exists:comites,id',
-        'estado' => 'required|in:Terminado,Aplazado',
-        'codigo' => 'required|exists:comites,codigo',
-    ]);
+    {
+        $request->validate([
+            'id' => 'required|exists:comites,id',
+            'estado' => 'required|in:Terminado,Aplazado',
+            'codigo' => 'required|exists:comites,codigo',
+        ]);
 
-    $comite = Comite::where('codigo', $request->codigo)->first();
-    $comite->com_estado = $request->estado;
-    $comite->save();
+        $comite = Comite::where('codigo', $request->codigo)->first();
+        $comite->com_estado = $request->estado;
+        $comite->save();
 
-    return response()->json(['success' => true]);
-}
+        return response()->json(['success' => true]);
+    }
     public function completar(Request $request)
     {
         try {

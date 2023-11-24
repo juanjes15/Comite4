@@ -87,7 +87,6 @@ class UserController extends Controller
 
     public function destroy(User $user)
     {
-        $this->authorize('administrar');
 
         $user->delete();
         return redirect()->route('users.index');
@@ -122,7 +121,6 @@ class UserController extends Controller
 
     public function storeRolInstructor(Request $request, User $user)
     {
-        $this->authorize('administrar');
 
         $validatedData = $request->validate([
             'ins_id' => ['required', 'exists:instructors,id'],

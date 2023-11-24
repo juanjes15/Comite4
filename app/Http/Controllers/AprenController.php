@@ -16,8 +16,7 @@ use App\Notifications\planMejoramientoNoti;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Notification;
 use Exception; 
-use Illuminate\Support\Facades\View;
-use Illuminate\Support\Facades\Response;
+
 
 
 
@@ -29,7 +28,7 @@ class AprenController extends Controller
     public function consultas(Request $request)
     {
         
-        $this->authorize('administrar');
+        
     
         if ($request->isMethod('post')) {
             // Validar los datos del formulario
@@ -60,7 +59,7 @@ class AprenController extends Controller
     
     public function plan_mejoramiento(Request $request)
     {
-        $this->authorize('administrar');
+        
     
         if ($request->isMethod('post')) {
             $data = $request->validate([
@@ -121,7 +120,7 @@ class AprenController extends Controller
 
     public function impugnaciones(Request $request)
     {
-        $this->authorize('administrar');
+        
     
         if ($request->isMethod('post')) {
             
@@ -152,7 +151,7 @@ class AprenController extends Controller
             return redirect()->route('aprendiz_Views.consultas')->with('status', 'success')->with('message', 'Las pruebas se han anexado correctamente.');
         }
 
-        $this->authorize('administrar');
+        
         return view('aprendiz_Views.impugnaciones');
     }
 
@@ -165,7 +164,7 @@ class AprenController extends Controller
 
     public function reglamento(Request $request)
     {
-        $this->authorize('administrar');
+        
 
         $opcion = $request->input('opcion');
         $termino = $request->input('termino');

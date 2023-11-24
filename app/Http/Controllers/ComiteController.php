@@ -23,7 +23,7 @@ class ComiteController extends Controller
      */
     public function create()
     {
-        $this->authorize('administrar');
+        
 
         $solicitudComites = SolicitudComite::all();
         return view('comites.create', compact('solicitudComites'));
@@ -34,7 +34,7 @@ class ComiteController extends Controller
      */
     public function store(StoreComiteRequest $request)
     {
-        $this->authorize('administrar');
+        
 
         Comite::create($request->validated());
         return redirect()->route('comites.index');
@@ -53,7 +53,7 @@ class ComiteController extends Controller
      */
     public function edit(Comite $comite)
     {
-        $this->authorize('administrar');
+        
 
         $solicitudComites = SolicitudComite::all();
         return view('comites.edit', compact('comite', 'solicitudComites'));
@@ -64,7 +64,7 @@ class ComiteController extends Controller
      */
     public function update(UpdateComiteRequest $request, Comite $comite)
     {
-        $this->authorize('administrar');
+        
 
         $comite->update($request->validated());
         return redirect()->route('comites.index');
@@ -75,7 +75,7 @@ class ComiteController extends Controller
      */
     public function destroy(Comite $comite)
     {
-        $this->authorize('administrar');
+        
         
         $comite->delete();
         return redirect()->route('comites.index');

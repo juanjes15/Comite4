@@ -28,7 +28,7 @@ Route::middleware([
     //Route::view('/register', 'auth/register')->name('register');
 
     //Rutas para el administrador
-    Route::middleware('checkUserRole:Administrador')->group(function () {
+    Route::middleware('checkUserRole:Administrador,Gestor_Comite')->group(function () {
         Route::resources([
             'programas' => \App\Http\Controllers\ProgramaController::class,
             'fichas' => \App\Http\Controllers\FichaController::class,
@@ -57,19 +57,16 @@ Route::middleware([
     });
 
     //Rutas para el instructor
-    Route::middleware('checkUserRole:Instructor,Administrador')->group(function () {
+    Route::middleware('checkUserRole:Instructor,Administrador,Gestor_Comite')->group(function () {
         //Instructor
         Route::get('/InstructorViews/solicitar1', [\App\Http\Controllers\InstructorViewController::class, 'solicitar1'])->name('instructorViews.solicitar1');
         Route::get('/InstructorViews/solicitar2', [\App\Http\Controllers\InstructorViewController::class, 'solicitar2'])->name('instructorViews.solicitar2');
         Route::get('/obtener-instructores-por-area/{area}', [InstructorController::class, 'getInstructoresPorArea']);
         Route::post('/InstructorViews/solicitar2', [\App\Http\Controllers\InstructorViewController::class, 'storeSolicitar2'])->name('instructorViews.storeSolicitar2');
-
         Route::get('/InstructorViews/solicitar3', [\App\Http\Controllers\InstructorViewController::class, 'solicitar3'])->name('instructorViews.solicitar3');
         Route::post('/InstructorViews/solicitar3', [\App\Http\Controllers\InstructorViewController::class, 'storeSolicitar3'])->name('instructorViews.storeSolicitar3');
-
         Route::get('/InstructorViews/solicitar4', [\App\Http\Controllers\InstructorViewController::class, 'solicitar4'])->name('instructorViews.solicitar4');
         Route::post('/InstructorViews/solicitar4', [\App\Http\Controllers\InstructorViewController::class, 'storeSolicitar4'])->name('instructorViews.storeSolicitar4');
-
         Route::get('/InstructorViews/solicitar5', [\App\Http\Controllers\InstructorViewController::class, 'solicitar5'])->name('instructorViews.solicitar5');
         Route::post('/InstructorViews/solicitar5', [\App\Http\Controllers\InstructorViewController::class, 'storeSolicitar5'])->name('instructorViews.storeSolicitar5');
         //----------------
@@ -103,7 +100,7 @@ Route::middleware([
 
     Route::post('/subir', 'Controller@subirArchivo')->name('subir');
     //Rutas para el Gestor
-    Route::middleware('checkUserRole:Gestor_Comite,Instructor,Administrador')->group(function () {
+    Route::middleware('checkUserRole:Gestor_Comite,Administrador')->group(function () {
         Route::get('/gestorComiteViews/gFechas', [\App\Http\Controllers\GestorComiteViewsController::class, 'gFechas'])->name('gestorComiteViews.gFechas');
         Route::get('/gestorComiteViews/detalles', [\App\Http\Controllers\GestorComiteViewsController::class, 'detalles'])->name('gestorComiteViews.detalles');
         Route::get('/gestorComiteViews/gFechas/{solicitud}', [\App\Http\Controllers\GestorComiteViewsController::class, 'gFechas'])->name('gestorComiteViews.gFechas');
@@ -114,7 +111,7 @@ Route::middleware([
     });
 
     //Estas son las rutas de la vista del aprendiz
-    Route::middleware('checkUserRole:Aprendiz,Administrador')->group(function () {
+    Route::middleware('checkUserRole:Aprendiz,Administrador, Gestor_Comite')->group(function () {
         Route::get('/aprendiz/consultas', [\App\Http\Controllers\AprenController::class, 'consultas'])->name('aprendiz_Views.consultas');
         Route::post('/aprendiz/consultas', [\App\Http\Controllers\AprenController::class, 'consultas'])->name('aprendiz_Views.consultas');
         Route::get('/aprendiz/plan_mejoramiento', [\App\Http\Controllers\AprenController::class, 'plan_mejoramiento'])->name('aprendiz_Views.plan_mejoramiento');

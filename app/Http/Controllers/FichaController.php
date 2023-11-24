@@ -24,8 +24,8 @@ class FichaController extends Controller
      */
     public function create()
     {
-        $this->authorize('administrar');
-
+        
+        
         $programas = Programa::all();
         $instructors = Instructor::all();
         return view('fichas.create', compact('programas', 'instructors'));
@@ -36,8 +36,8 @@ class FichaController extends Controller
      */
     public function store(StoreFichaRequest $request)
     {
-        $this->authorize('administrar');
-
+        
+        
         Ficha::create($request->validated());
         return redirect()->route('fichas.index');
     }
@@ -55,8 +55,8 @@ class FichaController extends Controller
      */
     public function edit(Ficha $ficha)
     {
-        $this->authorize('administrar');
-
+        
+        
         $programas = Programa::all();
         $instructors = Instructor::all();
         return view('fichas.edit', compact('ficha', 'programas', 'instructors'));
@@ -67,8 +67,8 @@ class FichaController extends Controller
      */
     public function update(UpdateFichaRequest $request, Ficha $ficha)
     {
-        $this->authorize('administrar');
-
+        
+        
         $ficha->update($request->validated());
         return redirect()->route('fichas.index');
     }
@@ -78,8 +78,8 @@ class FichaController extends Controller
      */
     public function destroy(Ficha $ficha)
     {
-        $this->authorize('administrar');
         
+                
         $ficha->delete();
         return redirect()->route('fichas.index');
     }

@@ -23,7 +23,6 @@ class NumeralController extends Controller
      */
     public function create()
     {
-        $this->authorize('administrar');
 
         $articulos = Articulo::all();
         return view('numerals.create', compact('articulos'));
@@ -34,7 +33,6 @@ class NumeralController extends Controller
      */
     public function store(StoreNumeralRequest $request)
     {
-        $this->authorize('administrar');
 
         Numeral::create($request->validated());
         return redirect()->route('numerals.index');
@@ -53,7 +51,6 @@ class NumeralController extends Controller
      */
     public function edit(Numeral $numeral)
     {
-        $this->authorize('administrar');
 
         $articulos = Articulo::all();
         return view('numerals.edit', compact('numeral', 'articulos'));
@@ -64,7 +61,6 @@ class NumeralController extends Controller
      */
     public function update(UpdateNumeralRequest $request, Numeral $numeral)
     {
-        $this->authorize('administrar');
 
         $numeral->update($request->validated());
         return redirect()->route('numerals.index');
@@ -75,7 +71,6 @@ class NumeralController extends Controller
      */
     public function destroy(Numeral $numeral)
     {
-        $this->authorize('administrar');
         
         $numeral->delete();
         return redirect()->route('numerals.index');

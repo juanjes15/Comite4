@@ -22,8 +22,6 @@ class InstructorController extends Controller
      */
     public function create()
     {
-        $this->authorize('administrar');
-
         return view('instructors.create');
     }
 
@@ -32,8 +30,6 @@ class InstructorController extends Controller
      */
     public function store(StoreInstructorRequest $request)
     {
-        $this->authorize('administrar');
-
         Instructor::create($request->validated());
         return redirect()->route('instructors.index');
     }
@@ -51,8 +47,6 @@ class InstructorController extends Controller
      */
     public function edit(Instructor $instructor)
     {
-        $this->authorize('administrar');
-
         return view('instructors.edit', compact('instructor'));
     }
 
@@ -61,8 +55,6 @@ class InstructorController extends Controller
      */
     public function update(UpdateInstructorRequest $request, Instructor $instructor)
     {
-        $this->authorize('administrar');
-
         $instructor->update($request->validated());
         return redirect()->route('instructors.index');
     }
@@ -72,8 +64,6 @@ class InstructorController extends Controller
      */
     public function destroy(Instructor $instructor)
     {
-        $this->authorize('administrar');
-
         $instructor->delete();
         return redirect()->route('instructors.index');
     }

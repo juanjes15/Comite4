@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Aprendiz;
-use App\Models\SolicitudxAprendiz;
 use Illuminate\Http\Request;
 
 class SolicitudxAprendizController extends Controller

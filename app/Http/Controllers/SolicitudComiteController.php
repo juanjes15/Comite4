@@ -29,7 +29,6 @@ class SolicitudComiteController extends Controller
 
     public function create()
     {
-        $this->authorize('administrar');
 
         $instructors = Instructor::all();
         $aprendizs = Aprendiz::all();
@@ -48,7 +47,6 @@ class SolicitudComiteController extends Controller
      */
     public function store(StoreSolicitudComiteRequest $request)
     {
-        $this->authorize('administrar');
 
         SolicitudComite::create($request->validated());
         return redirect()->route('solicitudComites.index');
@@ -59,7 +57,6 @@ class SolicitudComiteController extends Controller
      */
     public function show(SolicitudComite $solicitudComite)
     {
-        $this->authorize('administrar');
         return view('solicitudComites.show', compact('solicitudComite'));
     }
 
@@ -69,7 +66,6 @@ class SolicitudComiteController extends Controller
      */
     public function edit(SolicitudComite $solicitudComite)
     {
-        $this->authorize('administrar');
         $instructors = Instructor::all(); // Obtén todos los instructores
         return view('solicitudComites.edit', compact('solicitudComite','instructors'));
     }
@@ -79,7 +75,6 @@ class SolicitudComiteController extends Controller
      */
     public function update(UpdateSolicitudComiteRequest $request, SolicitudComite $solicitudComite)
     {
-        $this->authorize('administrar');
 
         $solicitudComite->update($request->validated());
         return redirect()->route('solicitudComites.index');
@@ -90,7 +85,6 @@ class SolicitudComiteController extends Controller
      */
     public function destroy(SolicitudComite $solicitudComite)
     {
-        $this->authorize('administrar');
 
         $solicitudComite->delete();
         return redirect()->route('solicitudComites.index');
