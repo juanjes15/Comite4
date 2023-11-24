@@ -10,9 +10,9 @@
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
                 <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
                     <div class="flex items-center justify-between m-4">
-                        @can('administrar')
+                        
                             <x-link href="{{ route('aprendizs.create') }}" class="m-4">Añadir aprendiz</x-link>
-                        @endcan
+                        
                         <form action="{{ route('aprendizs.index') }}" method="get" class="flex-grow ml-4">
                             <label for="default-search"
                                 class="mb-2 text-sm font-medium text-gray-900 sr-only">Buscar</label>
@@ -50,10 +50,10 @@
                                 <th scope="col" class="px-6 py-3">
                                     Ficha
                                 </th>
-                                @can('administrar')
+                                
                                     <th scope="col" class="px-6 py-3">
                                     </th>
-                                @endcan
+                                
                             </tr>
                         </thead>
                         <tbody>
@@ -74,7 +74,7 @@
                                     <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap ">
                                         {{ $aprendiz->ficha->fic_codigo }}
                                     </td>
-                                    @can('administrar')
+                                    
                                         <td class="px-6 py-4">
                                             <x-link href="{{ route('aprendizs.edit', $aprendiz) }}">Editar</x-link>
                                             <form method="POST" action="{{ route('aprendizs.destroy', $aprendiz) }}"
@@ -85,7 +85,7 @@
                                                     Eliminar</x-danger-button>
                                             </form>
                                         </td>
-                                    @endcan
+                                    
                                 </tr>
                             @empty
                                 <tr class="bg-white border-b">

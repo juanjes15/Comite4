@@ -9,9 +9,9 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
                 <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
-                    @can('administrar')
-                        <x-link href="{{ route('numerals.create') }}" class="m-4">Añadir numeral</x-link>
-                    @endcan
+
+                    <x-link href="{{ route('numerals.create') }}" class="m-4">Añadir numeral</x-link>
+
                     <table class="w-full text-sm text-left text-gray-500 ">
                         <thead class="text-xs text-gray-700 uppercase bg-gray-50 ">
                             <tr>
@@ -27,10 +27,10 @@
                                 <th scope="col" class="px-6 py-3">
                                     Artículo
                                 </th>
-                                @can('administrar')
-                                    <th scope="col" class="px-6 py-3">
-                                    </th>
-                                @endcan
+
+                                <th scope="col" class="px-6 py-3">
+                                </th>
+
                             </tr>
                         </thead>
                         <tbody>
@@ -48,18 +48,18 @@
                                     <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap ">
                                         {{ $numeral->articulo->art_numero }}
                                     </td>
-                                    @can('administrar')
-                                        <td class="px-6 py-4">
-                                            <x-link href="{{ route('numerals.edit', $numeral) }}">Editar</x-link>
-                                            <form method="POST" action="{{ route('numerals.destroy', $numeral) }}"
-                                                class="inline-block">
-                                                @csrf
-                                                @method('DELETE')
-                                                <x-danger-button type="submit" onclick="return confirm('¿Está seguro?')">
-                                                    Eliminar</x-danger-button>
-                                            </form>
-                                        </td>
-                                    @endcan
+
+                                    <td class="px-6 py-4">
+                                        <x-link href="{{ route('numerals.edit', $numeral) }}">Editar</x-link>
+                                        <form method="POST" action="{{ route('numerals.destroy', $numeral) }}"
+                                            class="inline-block">
+                                            @csrf
+                                            @method('DELETE')
+                                            <x-danger-button type="submit" onclick="return confirm('¿Está seguro?')">
+                                                Eliminar</x-danger-button>
+                                        </form>
+                                    </td>
+
                                 </tr>
                             @empty
                                 <tr class="bg-white border-b">

@@ -100,7 +100,7 @@ Route::middleware([
 
     Route::post('/subir', 'Controller@subirArchivo')->name('subir');
     //Rutas para el Gestor
-    Route::middleware('checkUserRole:Gestor_Comite,Administrador')->group(function () {
+    Route::middleware('checkUserRole:Gestor_Comite,Administrador,Aprendiz')->group(function () {
         Route::get('/gestorComiteViews/gFechas', [\App\Http\Controllers\GestorComiteViewsController::class, 'gFechas'])->name('gestorComiteViews.gFechas');
         Route::get('/gestorComiteViews/detalles', [\App\Http\Controllers\GestorComiteViewsController::class, 'detalles'])->name('gestorComiteViews.detalles');
         Route::get('/gestorComiteViews/gFechas/{solicitud}', [\App\Http\Controllers\GestorComiteViewsController::class, 'gFechas'])->name('gestorComiteViews.gFechas');

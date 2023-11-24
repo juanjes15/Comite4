@@ -2,7 +2,7 @@
     <div class="bg-green-50 shadow-x">
         <div class="max-w-3x1 mx-auto p-4 mt-10">
             <div class="py-12">
-                <div class="relative overflow-x-auto shadow-md sm:rounded-lg px-4 py-4 bg-green-50 shadow-xl">
+                <div class="relative overflow-x-auto sm:rounded-lg px-4 py-4 bg-green-50 shadow-xl">
                     <div class="max-w-3xl mx-auto p-6">
                         <div class="flex items-center justify-between mb-4">
                             @if(session('error'))
