@@ -268,55 +268,6 @@ class InstructorViewController extends Controller
         return view('instructorViews.plan_MejoramientoP', compact('instructors', 'sol_id', 'solicitud'));
     }
     
-    // public function plan_MejoramientoP(StorePlanMejoramiento $request)
-    // {
-    //     $instructors = Instructor::all();
-
-    //     $sol_id = $request->input('sol_id');
-    //     $solicitud = SolicitudComite::findOrFail($sol_id);
-
-    //     // Almacena el ID de solicitud en la sesión
-    //     session(['sol_id' => $solicitud->id]);
-
-    //     $planMejoramiento = PlanMejoramiento::create($request->validated());
-    //     // // Validación de datos
-    //     // $request->validate([
-    //     //     'email' => 'required|email',
-    //     //     'descripcion' => 'required',
-    //     //     'url_documento' => 'required|file',
-    //     //     'Area' => 'required',
-    //     //     'Fecha_inicial' => 'required|date',
-    //     //     'Fecha_final' => 'required|date',
-    //     //     'Instructor_responsable' => 'required',
-    //     //     'Objetivo_del_plan' => 'required',
-    //     //     'Indicadores_de_desempeno' => 'required',
-    //     // ]);
-
-    //     // // Crear un nuevo objeto PlanMejoramiento con los datos del formulario
-    //     // $planMejoramiento = new PlanMejoramiento([
-    //     //     'email' => $request->input('email'),
-    //     //     'descripcion' => $request->input('descripcion'),
-    //     //     'url_documento' => $request->file('url_documento')->store('documentos'), // Almacena el archivo en la carpeta 'documentos'
-    //     //     'Area' => $request->input('Area'),
-    //     //     'Fecha_inicial' => $request->input('Fecha_inicial'),
-    //     //     'Fecha_final' => $request->input('Fecha_final'),
-    //     //     'Instructor_responsable' => $request->input('Instructor_responsable'),
-    //     //     'Objetivo_del_plan' => $request->input('Objetivo_del_plan'),
-    //     //     'Indicadores_de_desempeno' => $request->input('Indicadores_de_desempeno'),
-    //     // ]);
-
-    //     //Guardar el objeto en la base de datos
-    //     $planMejoramiento->save();
-
-    //     return view('instructorViews.plan_MejoramientoP', compact('instructors', 'sol_id','solicitud'));
-    // }
-    public function plan_Mejoramiento()
-    {
-        $instructors = Instructor::all();
-        $aprendizs = Aprendiz::all();
-        $programas = Programa::all();
-        return view('instructorViews.plan_Mejoramiento', compact('aprendizs', 'instructors', 'programas'));
-    }
     public function registrar_resultado()
     {
         return view('instructorViews.registrar_resultado');
