@@ -37,9 +37,8 @@
                                     </td>
 
                                     <td scope="col" class="px-6 py-3">
-                                        <x-link
-                                            href="{{ route('instructorViews.detalles_comite', ['solicitud' => $solicitud->id]) }}">Detalles</x-link><!-- Agrega aquí el código para las acciones de administrar -->
-
+                                        <x-link href="{{ route('instructorViews.detalles_comite', ['solicitud' => $solicitud->id]) }}">Detalles</x-link><!-- Agrega aquí el código para las acciones de administrar -->
+                                        <x-link href="{{ route('instructorViews.plan_MejoramientoP', ['sol_id' => $solicitud->id]) }}">Plan mejoramiento</x-link>
                                     </td>
 
                                 </tr>

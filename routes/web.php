@@ -69,7 +69,7 @@ Route::middleware([
         Route::post('/InstructorViews/solicitar4', [\App\Http\Controllers\InstructorViewController::class, 'storeSolicitar4'])->name('instructorViews.storeSolicitar4');
         Route::get('/InstructorViews/solicitar5', [\App\Http\Controllers\InstructorViewController::class, 'solicitar5'])->name('instructorViews.solicitar5');
         Route::post('/InstructorViews/solicitar5', [\App\Http\Controllers\InstructorViewController::class, 'storeSolicitar5'])->name('instructorViews.storeSolicitar5');
-        //----------------
+        
         Route::get('/InstructorViews/registrar_novedad2/{sol_id}', [\App\Http\Controllers\InstructorViewController::class, 'registrar_novedad2'])->name('instructorViews.registrar_novedad2');
         Route::put('/InstructorViews/registrar_novedad2/{sol_id}', [\App\Http\Controllers\InstructorViewController::class, 'storeRegistrar_novedad2'])->name('instructorViews.storeRegistrar_novedad2');
 
@@ -84,16 +84,12 @@ Route::middleware([
 
         Route::match(['get', 'put'], '/instructorViews/detalles_comite/{solicitud}', [\App\Http\Controllers\InstructorViewController::class, 'detalles_comite'])->name('instructorViews.detalles_comite');
         Route::get('/instructorViews/detalles_registrar/{solicitud}', [\App\Http\Controllers\InstructorViewController::class, 'detalles_registrar'])->name('instructorViews.detalles_registrar');
-
-        //------------------
-
         Route::get('/InstructorViews/solicitarResumen', [\App\Http\Controllers\InstructorViewController::class, 'solicitarResumen'])->name('instructorViews.solicitarResumen');
-        Route::get('/instructorViews/plan_MejoramientoP', [\App\Http\Controllers\InstructorViewController::class, 'plan_MejoramientoP'])->name('instructorViews.plan_MejoramientoP');
-        Route::get('/instructorViews/plan_Mejoramiento', [\App\Http\Controllers\InstructorViewController::class, 'plan_Mejoramiento'])->name('instructorViews.plan_Mejoramiento');
         Route::get('/instructorViews/registrar_resultado', [\App\Http\Controllers\InstructorViewController::class, 'registrar_resultado'])->name('instructorViews.registrar_resultado');
         Route::get('/instructorViews/consultar_antecedentes', [\App\Http\Controllers\InstructorViewController::class, 'consultar_antecedentes'])->name('instructorViews.consultar_antecedentes');
         Route::get('/instructorViews/detalles_antecedentes', [\App\Http\Controllers\InstructorViewController::class, 'detalles_antecedentes'])->name('instructorViews.detalles_antecedentes');
         Route::get('/instructorViews/consultar_comite', [\App\Http\Controllers\InstructorViewController::class, 'consultar_comite'])->name('instructorViews.consultar_comite');
+        Route::get('/instructorViews/plan_MejoramientoP', [\App\Http\Controllers\InstructorViewController::class, 'plan_MejoramientoP'])->name('instructorViews.plan_MejoramientoP');
     });
 
 

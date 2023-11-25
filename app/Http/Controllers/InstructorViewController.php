@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StorePlanMejoramiento;
 use App\Http\Requests\StorePruebaRequest;
 use App\Http\Requests\StoreSolicitudComiteRequest;
 use Illuminate\Http\Request;
@@ -14,6 +15,7 @@ use App\Models\Articulo;
 use App\Models\Norma_Infringida;
 use App\Models\Numeral;
 use App\Models\Prueba;
+use App\Models\PlanMejoramiento;
 use App\Models\SolicitudxAprendiz;
 use Illuminate\Support\Str;
 use Carbon\Carbon;
@@ -247,11 +249,67 @@ class InstructorViewController extends Controller
         return redirect()->route('instructorViews.solicitarResumen');
     }
 
-
-    public function plan_MejoramientoP()
+    public function plan_MejoramientoP(StorePlanMejoramiento $request)
     {
-        return view('instructorViews.plan_MejoramientoP');
+        $sol_id = $request->input('sol_id');
+        $solicitud = SolicitudComite::findOrFail($sol_id);
+    
+        // Almacena el ID de solicitud en la sesión
+        session(['sol_id' => $solicitud->id]);
+    
+        // Crea un nuevo objeto PlanMejoramiento con los datos validados del formulario
+        $planMejoramiento = PlanMejoramiento::create($request->validated());
+    
+        // Guarda el objeto en la base de datos
+        $planMejoramiento->save();
+    
+        $instructors = Instructor::all();
+    
+        return view('instructorViews.plan_MejoramientoP', compact('instructors', 'sol_id', 'solicitud'));
     }
+    
+    // public function plan_MejoramientoP(StorePlanMejoramiento $request)
+    // {
+    //     $instructors = Instructor::all();
+
+    //     $sol_id = $request->input('sol_id');
+    //     $solicitud = SolicitudComite::findOrFail($sol_id);
+
+    //     // Almacena el ID de solicitud en la sesión
+    //     session(['sol_id' => $solicitud->id]);
+
+    //     $planMejoramiento = PlanMejoramiento::create($request->validated());
+    //     // // Validación de datos
+    //     // $request->validate([
+    //     //     'email' => 'required|email',
+    //     //     'descripcion' => 'required',
+    //     //     'url_documento' => 'required|file',
+    //     //     'Area' => 'required',
+    //     //     'Fecha_inicial' => 'required|date',
+    //     //     'Fecha_final' => 'required|date',
+    //     //     'Instructor_responsable' => 'required',
+    //     //     'Objetivo_del_plan' => 'required',
+    //     //     'Indicadores_de_desempeno' => 'required',
+    //     // ]);
+
+    //     // // Crear un nuevo objeto PlanMejoramiento con los datos del formulario
+    //     // $planMejoramiento = new PlanMejoramiento([
+    //     //     'email' => $request->input('email'),
+    //     //     'descripcion' => $request->input('descripcion'),
+    //     //     'url_documento' => $request->file('url_documento')->store('documentos'), // Almacena el archivo en la carpeta 'documentos'
+    //     //     'Area' => $request->input('Area'),
+    //     //     'Fecha_inicial' => $request->input('Fecha_inicial'),
+    //     //     'Fecha_final' => $request->input('Fecha_final'),
+    //     //     'Instructor_responsable' => $request->input('Instructor_responsable'),
+    //     //     'Objetivo_del_plan' => $request->input('Objetivo_del_plan'),
+    //     //     'Indicadores_de_desempeno' => $request->input('Indicadores_de_desempeno'),
+    //     // ]);
+
+    //     //Guardar el objeto en la base de datos
+    //     $planMejoramiento->save();
+
+    //     return view('instructorViews.plan_MejoramientoP', compact('instructors', 'sol_id','solicitud'));
+    // }
     public function plan_Mejoramiento()
     {
         $instructors = Instructor::all();
