@@ -18,7 +18,6 @@
                     <p class="text-lg font-semibold mb-4">Te damos la bienvenida al Plan de Mejoramiento diseñado para ayudarte a alcanzar tus objetivos académicos y profesionales de manera efectiva.</p>
                     <form method="POST" action="{{ route('instructorViews.plan_MejoramientoP') }}?solicitud={{ $sol_id }}">
                         @csrf
-
                         <div class="w-1/2 mr-2">
                             <div>
                                 <label class="block text-sm font-medium text-gray-700">Email</label>

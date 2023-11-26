@@ -1,52 +1,74 @@
-<x-app-layout>    
-<div class="max-w-3x1 mx-auto p-6 mt-10">
-    <div>
-        <h1 class="text-2xl font-semibold text-gray-800 mb-4">Detalles antecedentes</h1>
-        <div class="flex flex-wrap -mx-4 mb-4">
-            <div class="w-1/2 px-4 mb-4">
-                <label class="block text-sm font-medium text-gray-700">Código</label>
-                <input type="text" class="mt-1 p-2 w-full border rounded-md focus:ring focus:ring-blue-400">
-            </div>
+<x-app-layout>
+    <x-slot name="header">
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+            {{ __('Detalles antecedentes comite') }}
+        </h2>
+    </x-slot>
 
-            <div class="w-1/2 px-4 mb-4">
-                <label class="block text-sm font-medium text-gray-700">Fecha</label>
-                <input type="date" class="mt-1 p-2 w-full border rounded-md focus:ring focus:ring-blue-400">
-            </div>
-        </div>
+    <div class="py-12">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
 
-        <div class="flex flex-wrap -mx-4 mb-4">
-            <div class="w-1/2 px-4 mb-4">
-                <label class="block text-sm font-medium text-gray-700">Estado</label>
-                <div class="mt-1 p-2 w-full border-black rounded-md focus:ring focus:ring-blue-400 bg-white">
-                    Finalizado
+                <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+                    <table class="w-full text-sm text-left text-gray-500">
+                        <thead class="text-xs text-gray-700 uppercase bg-gray-50">
+                            <tr>
+
+                                <th scope="col" class="px-6 py-3">
+                                    Instructor
+                                </th>
+                                <th scope="col" class="px-6 py-3">
+                                    Aprendices Citados
+                                </th>
+                                <th scope="col" class="px-6 py-3">
+                                    Fecha
+                                </th>
+                                <th scope="col" class="px-6 py-3">
+                                    Estado
+                                </th>
+                                <th scope="col" class="px-6 py-3">
+                                    Ver Detalles
+                                </th>
+                            </tr>
+
+                        </thead>
+                        <tbody>
+                            @foreach ($solicitudComites as $solicitud)
+                                @if ($solicitud->sol_estado === 'terminado')
+                                    <tr class="bg-white border-b">
+
+                                        <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
+                                            {{ $solicitud->instructor->ins_nombres }}
+                                            {{ $solicitud->instructor->ins_apellidos }}
+                                        </td>
+                                        <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
+                                            @foreach ($solicitud->aprendizs as $aprendiz)
+                                            {{ $aprendiz->apr_nombres }} {{ $aprendiz->apr_apellidos }},
+                                            @endforeach
+                                        </td>
+                                        <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
+                                            {{ $solicitud->sol_fecha }}
+                                        </td>
+                                        <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
+                                            {{ $solicitud->sol_estado }}
+                                        </td>
+
+                                        <td class="px-6 py-4 ">
+                                            <!-- Agrega tus botones de administración aquí -->
+                                            <x-link href="{{ route('instructorViews.detalles_comite', ['solicitud' => $solicitud->id]) }}">
+                                                <svg class="w-6 h-6 text-white dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 16">
+                                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.656 12.115a3 3 0 0 1 5.682-.015M13 5h3m-3 3h3m-3 3h3M2 1h16a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1Zm6.5 4.5a2 2 0 1 1-4 0 2 2 0 0 1 4 0Z" />
+                                                </svg>
+                                            </x-link>
+                                        </td>
+
+                                    </tr>
+                                @endif
+                            @endforeach
+                        </tbody>
+                    </table>
                 </div>
             </div>
-
-            <div class="w-1/2 px-4 mb-4">
-                <label class="block text-sm font-medium text-gray-700">Recomendación</label>
-                <input type="text" class="mt-1 p-2 w-full border rounded-md focus:ring focus:ring-blue-400">
-            </div>
-        </div>
-        <div class="flex flex-wrap -mx-4 mb-4">
-            <div class="w-1/2 px-4 mb-4">
-                <label class="block text-sm font-medium text-gray-700">Instructor solicitante</label>
-                <input type="text" class="mt-1 p-2 w-full border rounded-md focus:ring focus:ring-blue-400">
-            </div>
-
-            <div class="w-1/2 px-4 mb-4">
-                <label class="block text-sm font-medium text-gray-700">Aprendiz</label>
-                <input type="text" class="mt-1 p-2 w-full border rounded-md focus:ring focus:ring-blue-400">
-            </div>
-        </div>
-        <div class="mb-4">
-            <label class="block text-sm font-medium text-gray-700">Calificación</label>
-            <input type="text" class="mt-1 p-2 w-full border rounded-md focus:ring focus:ring-blue-400">
-        </div>
-
-        <div class="mb-4">
-            <label class="block text-sm font-medium text-gray-700">Descripción de la Citación</label>
-            <textarea class="mt-1 p-2 w-full border rounded-md focus:ring focus:ring-blue-400" rows="4"></textarea>
         </div>
     </div>
-    <x-link href="{{ url()->previous() }}" class="mx-3">Cancelar</x-link>
 </x-app-layout>

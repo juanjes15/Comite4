@@ -29,7 +29,7 @@ class InstructorViewController extends Controller
 
     public function solicitar2()
     {
-        
+
 
         // Obtener las áreas de los instructores
         $areas = Instructor::distinct()->pluck('ins_area');
@@ -42,7 +42,7 @@ class InstructorViewController extends Controller
 
     public function solicitar3()
     {
-       
+
 
         $aprendizs = Aprendiz::all();
         // Accede al valor de 'sol_id' almacenado en la sesión
@@ -53,7 +53,7 @@ class InstructorViewController extends Controller
 
     public function solicitar4()
     {
-     
+
         // Accede al valor de 'sol_id' almacenado en la sesión
         $sol_id = session('sol_id');
 
@@ -62,7 +62,7 @@ class InstructorViewController extends Controller
 
     public function solicitar5()
     {
-        
+
         // Accede al valor de 'sol_id' almacenado en la sesión
         $sol_id = session('sol_id');
 
@@ -209,7 +209,7 @@ class InstructorViewController extends Controller
 
     public function storeSolicitar5(Request $request)
     {
-       
+
         $sol_id = session('sol_id');
 
         // Obtén los valores seleccionados en el formulario
@@ -253,40 +253,131 @@ class InstructorViewController extends Controller
     {
         $sol_id = $request->input('sol_id');
         $solicitud = SolicitudComite::findOrFail($sol_id);
-    
+
         // Almacena el ID de solicitud en la sesión
         session(['sol_id' => $solicitud->id]);
-    
+
         // Crea un nuevo objeto PlanMejoramiento con los datos validados del formulario
         $planMejoramiento = PlanMejoramiento::create($request->validated());
-    
+
         // Guarda el objeto en la base de datos
         $planMejoramiento->save();
-    
+
         $instructors = Instructor::all();
-    
+
         return view('instructorViews.plan_MejoramientoP', compact('instructors', 'sol_id', 'solicitud'));
     }
-    
+
     public function registrar_resultado()
     {
         return view('instructorViews.registrar_resultado');
     }
 
     public function consultar_antecedentes()
-    {
-        return view('instructorViews.consultar_antecedentes');
+    { 
+        // Obtén las solicitudes de comité con paginación y carga la relación 'aprendizs'
+        $solicitudComites = SolicitudComite::with('aprendizs')->where('sol_estado', 'terminado')->latest()->paginate();
+
+        $instructors = [];
+        $solicitudDates = [];
+        $learnersBySolicitud = []; //Arreglo para agrupar aprendices por solicitud de comité
+
+        foreach ($solicitudComites as $solicitud) {
+            // Obtener el instructor asociado a la solicitud
+            $instructor = $solicitud->instructor;
+
+            // Obtener la fecha de creación de la solicitud
+            $fechaCreacion = $solicitud->created_at;
+
+            // Almacenar la información en los arreglos
+            $instructors[$solicitud->id] = $instructor;
+            $solicitudDates[$solicitud->id] = $fechaCreacion;
+        }
+
+        foreach ($solicitudComites as $solicitud) {
+            $solicitudId = $solicitud->id;
+
+            // Verificar si existen aprendices relacionados con esta solicitud
+            if ($solicitud->aprendizs->isNotEmpty()) {
+                $learnersBySolicitud[$solicitudId] = $solicitud->aprendizs;
+            } else {
+                $learnersBySolicitud[$solicitudId] = [];
+            }
+        }
+        return view('instructorViews.consultar_antecedentes', compact('solicitudComites', 'instructors'))
+        ->with('i', (request()->input('page', 1) - 1) * 5);
     }
 
-    public function detalles_antecedentes()
+    public function detalles_antecedentes($solicitud)
     {
+        // Obtén los detalles de la solicitud utilizando el ID proporcionado
+        $solicitud = SolicitudComite::find($solicitud);
+
+        // Verifica si la solicitud se encontró
+        if (!$solicitud) {
+            // Manejo de solicitud no encontrada, por ejemplo, redireccionar o mostrar un mensaje de error.
+            return redirect()->route('instructorViews.consultar_antecedentes'); // Reemplaza 'tu_ruta_de_redireccion' por la ruta apropiada
+        }
+
+        // Obtén el ID de la solicitud
+        $sol_id = $solicitud->id;
+
+        // Obtén las faltas relacionadas con la solicitud
+        $normasInfringidas = Norma_Infringida::where('sol_id', $sol_id)->get();
+
+        // Obtén el ID del aprendiz desde la sesión
+        $apr_id = session('apr_id');
+
+        // Obtén los datos del aprendiz
+        $aprendiz = Aprendiz::find($apr_id);
+
+        // Obtén los datos de la prueba
+        $prueba = Prueba::where('sol_id', $sol_id)->first();
+
+        // Obtén el valor seleccionado en la sesión para capítulo
+        $selectedCapId = session('selected_cap_id');
+        // Obtén el capítulo relacionado con el $selectedCapId
+        $capitulo = Capitulo::find($selectedCapId);
+
+        // Ahora, puedes acceder al campo cap_numero
+        $cap_numero = $capitulo ? $capitulo->cap_numero : null;
+        $cap_descripcion = $capitulo ? $capitulo->cap_descripcion : null;
+
+        $selectedArtIds = (array)session('selected_art_ids', []); // Cast a array si no hay ninguno, se usará un array vacío
+        $articulos = Articulo::whereIn('id', $selectedArtIds)->get();
+
+
+        // Recupera la solicitud de comité con sus aprendices y numerales relacionados
+        $solicitudComite = SolicitudComite::with('aprendizs', 'numerals')->find($sol_id);
+
+        // Ahora, puedes acceder a los aprendices y numerales relacionados
+        $aprendices = $solicitudComite ? $solicitudComite->aprendizs : [];
+        $numerals = $solicitudComite ? $solicitudComite->numerals : [];
+
+        session()->forget('negar');
+
+        // Elimina la variable de sesión cuando cargues la vista de detalles
+        session()->forget('fecha_enviada');
+           
         //$instructors = Instructor::all();
-        return view('instructorViews.detalles_antecedentes');
+        return view('instructorViews.detalles_antecedentes', compact(
+            'solicitud',
+            'normasInfringidas',
+            'aprendiz',
+            'prueba',
+            'selectedCapId',
+            'cap_numero',
+            'cap_descripcion',
+            'selectedArtIds',
+            'articulos',
+            'aprendices',
+            'numerals',
+        ));
     }
 
     public function detalles_comite($solicitud)
     {
-       
+
 
         // Obtén los detalles de la solicitud utilizando el ID proporcionado
         $solicitud = SolicitudComite::find($solicitud);
@@ -348,8 +439,6 @@ class InstructorViewController extends Controller
         ));
     }
 
-
-
     public function consultar_comite(Request $request)
     {
         // Obtén las solicitudes de comité con paginación y carga la relación 'aprendizs'
@@ -390,7 +479,7 @@ class InstructorViewController extends Controller
 
     public function registrar_novedad2($sol_id)
     {
-       
+
         // Obtener las áreas de los instructores
         $areas = Instructor::distinct()->pluck('ins_area');
 
@@ -406,7 +495,7 @@ class InstructorViewController extends Controller
 
     public function storeRegistrar_novedad2(Request $request)
     {
-       
+
         // Obtener la solicitud existente por su ID
         $sol_id = $request->input('sol_id');
         $solicitud = SolicitudComite::findOrFail($sol_id);
@@ -465,7 +554,7 @@ class InstructorViewController extends Controller
 
     public function registrar_novedad4()
     {
-    
+
         // Accede al valor de 'sol_id' almacenado en la sesión
         $sol_id = session('sol_id');
         // Obtén la solicitud y sus pruebas asociadas
@@ -479,7 +568,7 @@ class InstructorViewController extends Controller
 
     public function storeRegistrar_novedad4(Request $request)
     {
-        
+
 
         // Accede al valor de 'sol_id' almacenado en la sesión
         $sol_id = session('sol_id');
@@ -508,7 +597,7 @@ class InstructorViewController extends Controller
 
     public function registrar_novedad5()
     {
-        
+
         // Accede al valor de 'sol_id' almacenado en la sesión
         $sol_id = session('sol_id');
         $solicitud = SolicitudComite::findOrFail($sol_id);
@@ -525,7 +614,7 @@ class InstructorViewController extends Controller
 
     public function storeRegistrar_novedad5(Request $request, $solicitudId)
     {
-        
+
 
         $sol_id = session('sol_id');
 
@@ -577,7 +666,7 @@ class InstructorViewController extends Controller
             // Redirecciona a la vista 'detalles_comite'
             return redirect()->route('instructorViews.detalles_registrar', ['solicitud' => $solicitudId]);
         }
-        
+
 
         // Agrega un manejo para el caso en que no se seleccionen descripciones
         return back()->with('error', 'Debes seleccionar al menos una descripción y un artículo.');
@@ -585,7 +674,7 @@ class InstructorViewController extends Controller
 
     public function detalles_registrar($solicitud)
     {
-        
+
 
         // Obtén los detalles de la solicitud utilizando el ID proporcionado
         $solicitud = SolicitudComite::find($solicitud);
@@ -632,7 +721,7 @@ class InstructorViewController extends Controller
         // Ahora, puedes acceder a los aprendices y numerales relacionados
         $aprendices = $solicitudComite ? $solicitudComite->aprendizs : [];
         $numerals = $solicitudComite ? $solicitudComite->numerals : [];
-        
+
         // Ahora puedes pasar todas estas variables a la vista para mostrar los detalles específicos.
         return view('instructorViews.detalles_registrar', compact(
             'solicitud',
