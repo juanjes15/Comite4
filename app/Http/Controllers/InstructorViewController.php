@@ -249,19 +249,10 @@ class InstructorViewController extends Controller
         return redirect()->route('instructorViews.solicitarResumen');
     }
 
-    public function plan_MejoramientoP(StorePlanMejoramiento $request)
+    public function plan_MejoramientoP(Request $request)
     {
         $sol_id = $request->input('sol_id');
         $solicitud = SolicitudComite::findOrFail($sol_id);
-
-        // Almacena el ID de solicitud en la sesión
-        session(['sol_id' => $solicitud->id]);
-
-        // Crea un nuevo objeto PlanMejoramiento con los datos validados del formulario
-        $planMejoramiento = PlanMejoramiento::create($request->validated());
-
-        // Guarda el objeto en la base de datos
-        $planMejoramiento->save();
 
         $instructors = Instructor::all();
 

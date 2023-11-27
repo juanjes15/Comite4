@@ -37,18 +37,18 @@
                             </div>
                             <div class="mb-4">
                                 <label class="block text-sm font-medium text-gray-700">Area</label>
-                                <input type="text" class="mt-1 p-2 w-full border rounded-md" value="{{ old('Area') }}" required autofocus autocomplete="Area">
+                                <input type="text" class="mt-1 p-2 w-full border rounded-md" name="Area" value="{{ old('Area') }}" required autofocus autocomplete="Area">
                             </div>
                         </div>
                         <div class="flex mb-4">
                             <div class="w-1/2 mr-2">
                                 <label class="block text-sm font-medium text-gray-700">Fecha Inicial</label>
-                                <input type="text" class="mt-1 p-2 w-full border rounded-md" value="{{ old('Fecha_inicial') }}">
+                                <input type="date" class="mt-1 p-2 w-full border rounded-md" name="Fecha_Inicial" value="{{ old('Fecha_inicial') }}">
                             </div>
 
                             <div class="w-1/2 mr-2">
                                 <label class="block text-sm font-medium text-gray-700">Fecha Final</label>
-                                <input type="text" class="mt-1 p-2 w-full border rounded-md" value="{{ old('Fecha_final') }}">
+                                <input type="date" class="mt-1 p-2 w-full border rounded-md" name="Fecha_final" value="{{ old('Fecha_final') }}">
                             </div>
                         </div>
 
@@ -73,18 +73,18 @@
 
                         <div class="mb-4">
                             <label class="block text-sm font-medium text-gray-700">Objetivo del Plan</label>
-                            <textarea class="mt-1 p-2 w-full border rounded-md" rows="4" value="{{ old('Objetivo_del_plan') }}"></textarea>
+                            <textarea class="mt-1 p-2 w-full border rounded-md" name="Objetivo del Plan" rows="4" value="{{ old('Objetivo_del_plan') }}"></textarea>
                         </div>
 
                         <div class="mb-4">
                             <label class="block text-sm font-medium text-gray-700">Indicadores de Desempeño</label>
-                            <textarea class="mt-1 p-2 w-full border rounded-md" rows="4" value="{{ old('Indicadores_de_desempeño') }}"></textarea>
+                            <textarea class="mt-1 p-2 w-full border rounded-md" name="Indicadores de Desempeño" rows="4" value="{{ old('Indicadores_de_desempeño') }}"></textarea>
                         </div>
                     </form>
                     @if(session('error'))
-                    <div class="alert alert-danger">
-                        {{ session('error') }}
-                    </div>
+                        <div class="alert alert-danger">
+                            {{ session('error') }}
+                        </div>
                     @endif
                     <div class="flex mt-4 ">
                         <x-button class="bg-green-700 hover:bg-green-500 border-2 border-green-950">
