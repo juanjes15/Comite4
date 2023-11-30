@@ -267,7 +267,7 @@ class InstructorViewController extends Controller
     public function consultar_antecedentes()
     { 
         // Obtén las solicitudes de comité con paginación y carga la relación 'aprendizs'
-        $solicitudComites = SolicitudComite::with('aprendizs')->where('sol_estado', 'terminado')->latest()->paginate();
+        $solicitudComites = SolicitudComite::with('aprendizs')->where('sol_estado', 'negado')->latest()->paginate();
 
         $instructors = [];
         $solicitudDates = [];
