@@ -11,6 +11,8 @@ use App\Models\Articulo;
 use App\Models\Capitulo;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\comiteMail;
 
 
 
@@ -156,42 +158,50 @@ class GestorComiteViewsController extends Controller
 
 
     public function storeSolicitudComiteRequest(Request $request, $solicitudId)
-    {
-        // Obtén los detalles de la solicitud utilizando el ID proporcionado
-        $solicitud = SolicitudComite::find($solicitudId);
+{
+    // Obtén los detalles de la solicitud utilizando el ID proporcionado
+    $solicitud = SolicitudComite::find($solicitudId);
 
-        // Verifica si la solicitud se encontró
-        if (!$solicitud) {
-            // Manejo de solicitud no encontrada, por ejemplo, redireccionar o mostrar un mensaje de error.
-            return redirect()->route('gestorComiteViews.index');
-        }
-
-        // Valida el formulario
-        $request->validate([
-            'date' => [
-                'required',
-                'date',
-                Rule::unique('solicitud_comites', 'sol_fechaSolicitud')->ignore($solicitudId),
-                function ($attribute, $value, $fail) {
-                    // Verifica que la fecha no sea anterior a la fecha actual
-                    if (strtotime($value) < strtotime(now())) {
-                        $fail('La fecha no puede ser anterior a la fecha actual.');
-                    }
-                },
-            ],
-        ]);
-
-        // Guarda la fecha en el campo sol_fechaSolicitud de la solicitud
-        $solicitud->sol_fechaSolicitud = $request->date;
-        $solicitud->save();
-
-
-        // Establece la variable de sesión indicando que la fecha se ha enviado
-        session(['fecha_enviada' => true]);
-
-        // Muestra una alerta con SweetAlert2
-        return redirect()->route('gestorComiteViews.index')->with('status', 'success')->with('message', 'Fecha guardada correctamente.');
+    // Verifica si la solicitud se encontró
+    if (!$solicitud) {
+        // Manejo de solicitud no encontrada, por ejemplo, redireccionar o mostrar un mensaje de error.
+        return redirect()->route('gestorComiteViews.index');
     }
+
+    // Valida el formulario
+    $request->validate([
+        'date' => [
+            'required',
+            'date',
+            Rule::unique('solicitud_comites', 'sol_fechaSolicitud')->ignore($solicitudId),
+            function ($attribute, $value, $fail) {
+                // Verifica que la fecha no sea anterior a la fecha actual
+                if (strtotime($value) < strtotime(now())) {
+                    $fail('La fecha no puede ser anterior a la fecha actual.');
+                }
+            },
+        ],
+    ]);
+
+    // Guarda la fecha en el campo sol_fechaSolicitud de la solicitud
+    $solicitud->sol_fechaSolicitud = $request->date;
+    $solicitud->save();
+
+    // Envía el correo electrónico independientemente del estado de la solicitud
+    $details = [
+    'title' => 'Citación a comité',
+    'body' => 'Buenas, espero que este mensaje le encuentre bien. Me dirijo a usted para informarle que ha sido citado/a a participar en el próximo comité. La participación y contribución de todos los miembros son fundamentales para el éxito de nuestras actividades.',
+    'hora' => '8:00 am', // Agrega la hora según sea necesario
+    'lugar' => 'Cad A', // Agrega el lugar según sea necesario
+];
+
+    // Aquí puedes manejar el envío del correo
+    Mail::to("magonzalez4826@misena.edu.co")->send(new ComiteMail($details));
+
+    // Muestra una alerta con SweetAlert2
+    return redirect()->route('gestorComiteViews.index')->with('status', 'success')->with('message', 'Fecha guardada correctamente.');
+}
+
 
 
     public function show(SolicitudComite $solicitud)
